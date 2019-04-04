@@ -4,7 +4,7 @@
   "description": "The Marble API for the CCT College Final Project",
   "main": "app.ts",
   "scripts": {
-    "start": "ts-node ./src/server/server.ts",
+    "start": "cd src/client && npm run build && cd ../../ && ts-node ./src/server/server.ts",
     "dev": "concurrently --kill-others \"nodemon\"  \"cd src/client && npm start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
