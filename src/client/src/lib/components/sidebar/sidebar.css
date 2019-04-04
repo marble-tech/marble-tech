@@ -1,0 +1,15 @@
+@import url('../../../bootstrap.css');
+#sider {
+    position: fixed;
+    z-index: 0;
+    width: inherit;
+}
+
+#sider .active{
+    border-right: 4px solid var(--primary);
+    /* padding-left: (1rem - 4px); */
+}
+
+#sider .nav-item:hover{
+    background-color: rgba(0, 188, 212, 0.2)
+}
