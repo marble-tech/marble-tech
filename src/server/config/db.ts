@@ -20,9 +20,9 @@ export async function createDbConnection() {
     password: DATABASE_PASSWORD,
     database: DATABASE_DB,
     entities: [Challenge, User, UserChallenge],
-    extra: {
-      ssl: true
-    },
+    // extra: {
+    //   ssl: true
+    // },
     synchronize: true
   });
 
