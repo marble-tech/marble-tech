@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
+import { Route } from "../../lib/components/route/route";
 import { Header, Footer } from "../../lib/components";
 import { routes } from "../config/routing";
 

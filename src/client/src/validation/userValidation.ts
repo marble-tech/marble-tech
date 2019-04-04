@@ -24,8 +24,8 @@ export function validateUser(user: any) {
 
 export function validateLogin(info: any) {
   const schema = joi.object({
-    email: joi.string().email().required(),
-    password: joi.string().required(),
+    email: joi.string().email().required().label("Email"),
+    password: joi.string().min(6).max(12).required().label("Password"),
   }).options({ stripUnknown: true });
 
   return joi.validate(info, schema);
