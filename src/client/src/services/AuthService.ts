@@ -1,6 +1,6 @@
 import * as authGuard from '../helpers/authGuard'
 import {ApiService} from '../helpers/api'
-import * as message from '../helpers/messagesHelper'
+
 
 const api = new ApiService;
 
