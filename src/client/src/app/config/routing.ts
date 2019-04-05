@@ -19,7 +19,7 @@ export const PATHS = {
     tutorial: "/tutorial/",
     challenges: "/challenges",
     login: "/login",
-    register: "/signup",
+    register: "/register",
 }
 
 export const routes: RouteConf[] = [
@@ -27,6 +27,6 @@ export const routes: RouteConf[] = [
     { isIndex: false, title: "Tutorial", path: PATHS.tutorial, component: Tutorial, exact:false },
     { isIndex: false, title: "Challenges", path: PATHS.challenges, component: Challenges, exact:false, isProtected:true },
     { isIndex: false, title: "Login", path: PATHS.login, component: Home, exact:true },
-    { isIndex: false, title: "Sign Up", path: PATHS.register, component: Register, exact:true },
+    { isIndex: false, title: "Register", path: PATHS.register, component: Register, exact:true },
     
 ]

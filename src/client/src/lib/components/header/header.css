@@ -8,7 +8,6 @@
 .items{
     color: rgb(54, 50, 50) !important;
     font-size: 18px !important;
-    text-shadow: 100px !important;
 }
 
 .items:hover{
