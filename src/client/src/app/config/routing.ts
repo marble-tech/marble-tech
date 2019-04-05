@@ -10,7 +10,8 @@ interface RouteConf {
     title: string;
     path: string;
     component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>
-    exactPath: boolean;
+    exact: boolean;
+    isProtected?: boolean;
 }
 
 export const PATHS = {
@@ -22,10 +23,10 @@ export const PATHS = {
 }
 
 export const routes: RouteConf[] = [
-    { isIndex: true, title: "Home", path: PATHS.home, component: Home, exactPath:true, displayInNavBar:false },
-    { isIndex: false, title: "Tutorial", path: PATHS.tutorial, component: Tutorial, exactPath:false },
-    { isIndex: false, title: "Challenges", path: PATHS.challenges, component: Challenges, exactPath:false },
-    { isIndex: false, title: "Login", path: PATHS.login, component: Home, exactPath:true },
-    { isIndex: false, title: "Register", path: PATHS.register, component: Register, exactPath:true },
+    { isIndex: true, title: "Home", path: PATHS.home, component: Home, exact:true, displayInNavBar:false },
+    { isIndex: false, title: "Tutorial", path: PATHS.tutorial, component: Tutorial, exact:false },
+    { isIndex: false, title: "Challenges", path: PATHS.challenges, component: Challenges, exact:false, isProtected:true },
+    { isIndex: false, title: "Login", path: PATHS.login, component: Home, exact:true },
+    { isIndex: false, title: "Register", path: PATHS.register, component: Register, exact:true },
     
 ]

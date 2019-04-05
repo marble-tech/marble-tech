@@ -24,7 +24,14 @@ class Layout extends React.Component {
                     <React.Fragment>
                         <div className="" style={{minHeight: "800px", backgroundColor: 'var(--white)'}}>
                             {
-                                routes.map((item, key) => <Route exact={item.exactPath} path={item.path} component={item.component} key={key} />)
+                                routes.map((item, key) => {
+                                    const {...rest} = item;
+                                   return <Route 
+                                        {...rest}
+                                        key={key}
+                                    />
+
+                            })
                             }
                         </div>
                     </React.Fragment>

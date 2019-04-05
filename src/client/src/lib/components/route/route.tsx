@@ -14,24 +14,25 @@ export class Route extends React.Component<ProtectedRouteProps>{
         super(props)
     }
     render(){
-        const { component,isProtected, ...rest } = this.props;
+        const { component, isProtected, ...rest } = this.props;
+        
         if(!!isProtected){
-            return (<ReactRoute 
-                {...rest}
-                render={props =>
-                authGuard.loggedIn() ? (
-                    component
-                ) : (
-                    <Redirect
-                    to={{
-                        pathname: "/login",
+
+            if(authGuard.loggedIn()){
+               return (<ReactRoute 
+                        {...rest}
+                        component={component}
+                    />)
+            }
+            return <ReactRoute 
+                {...rest} 
+                render={props=> 
+                    <Redirect to={{
+                        pathname: "/login", 
                         state: { from: props.location }
-                    }}
-                    />
-                )
-                }
-            />
-            );
+                    }}/>
+                }/>
+        
         }else{
             return (<ReactRoute 
                 {...rest}
@@ -42,3 +43,4 @@ export class Route extends React.Component<ProtectedRouteProps>{
         
     }
 }
+
