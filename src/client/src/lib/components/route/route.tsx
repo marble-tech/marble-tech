@@ -3,7 +3,7 @@ import {  Route as ReactRoute, Redirect, RouteComponentProps } from 'react-route
 import * as authGuard from '../../../helpers/authGuard';
 
 interface ProtectedRouteProps {
-    component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>,
+    component: JSX.Element,
     path: string,
     isProtected?:boolean; 
     exact?:boolean;
@@ -15,32 +15,30 @@ export class Route extends React.Component<ProtectedRouteProps>{
     }
     render(){
         const { component, isProtected, ...rest } = this.props;
-        
         if(!!isProtected){
-
-            if(authGuard.loggedIn()){
-               return (<ReactRoute 
-                        {...rest}
-                        component={component}
-                    />)
-            }
-            return <ReactRoute 
-                {...rest} 
-                render={props=> 
-                    <Redirect to={{
-                        pathname: "/login", 
-                        state: { from: props.location }
-                    }}/>
-                }/>
+            return ( <ReactRoute 
+                    {...rest}
+                    render={props =>
+                    authGuard.loggedIn() ? (
+                        React.cloneElement(component, props={...props})
+                    ) : (
+                        <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: props.location }
+                        }}
+                        />
+                    )
+                    }
+                />
+                );
         
         }else{
             return (<ReactRoute 
                 {...rest}
-                component={component}
-            />
+                render={props =>React.cloneElement(component, props={...props})}/>
             );
         }
         
     }
 }
-

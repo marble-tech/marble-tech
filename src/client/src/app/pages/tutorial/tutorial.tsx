@@ -8,16 +8,17 @@ import { Route, Link } from 'react-router-dom';
 import { Sidebar } from '../../../lib/components/sidebar/sidebar';
 
 interface TutorialProps{
-    location: any
+    location?: any
 }
 
 export class Tutorial extends React.Component<TutorialProps>{
     render(){
+         const {location} = this.props
         return (
             <Container fluid>
                 <Row>
                 <div style={{width: '276px', minHeight: '100vh'}} className=" bg-light ">
-                    <Sidebar listItems={postsRoutes} actualPath={this.props.location.pathname}/>
+                    <Sidebar listItems={postsRoutes} actualPath={location.pathname}/>
                 </div>
                 
 
