@@ -28,14 +28,14 @@ export const PATHS = {
 }
 
 export const postsRoutes: RouteConf[] = [
-    { isIndex: true, title: 'Introduction', path: PATHS.introduction, post: post.introduction },
-    { isIndex: true, title: 'Setting Up the Project', path: PATHS.structure, post: post.structure },
-    { isIndex: false, title: 'Database Configuration', path: PATHS.database, post: post.database },
-    { isIndex: false, title: 'Creating the Entity Classes', path: PATHS.entities, post: post.entities },
-    { isIndex: false, title: 'Creating the Repositories', path: PATHS.repositories, post: post.repositories },
-    { isIndex: false, title: 'Routes and App Router', path: PATHS.router, post: post.router },
-    { isIndex: false, title: 'Implementing validation', path: PATHS.validations, post: post.validations },
-    { isIndex: false, title: 'Creating the Services', path: PATHS.services, post: post.services },
-    { isIndex: false, title: 'Creating the Controllers', path: PATHS.controllers, post: post.controllers },
-    { isIndex: false, title: ' Implementing Body Parser', path: PATHS.bodyParser, post: post.bodyParser },
+    { isIndex: true, title: '1 - Introduction', path: PATHS.introduction, post: post.introduction },
+    { isIndex: true, title: '2 - Setting Up the Project', path: PATHS.structure, post: post.structure },
+    { isIndex: false, title: '3 - Database Configuration', path: PATHS.database, post: post.database },
+    { isIndex: false, title: '4 - Creating the Entity Classes', path: PATHS.entities, post: post.entities },
+    { isIndex: false, title: '5 - Creating the Repositories', path: PATHS.repositories, post: post.repositories },
+    { isIndex: false, title: '6 - Routes and App Router', path: PATHS.router, post: post.router },
+    { isIndex: false, title: '7 - Implementing validation', path: PATHS.validations, post: post.validations },
+    { isIndex: false, title: '8 - Creating the Services', path: PATHS.services, post: post.services },
+    { isIndex: false, title: '9 - Creating the Controllers', path: PATHS.controllers, post: post.controllers },
+    { isIndex: false, title: '10 - Implementing Body Parser', path: PATHS.bodyParser, post: post.bodyParser },
 ]

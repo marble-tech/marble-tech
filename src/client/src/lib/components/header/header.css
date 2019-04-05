@@ -1,4 +1,20 @@
-#userMenu > div > div.dropdown-menu{
+/* #userMenu > div > div.dropdown-menu{
     top:109% !important;
     right: 0 !important;
+} */
+
+
+
+.items{
+    color: rgb(54, 50, 50) !important;
+    font-size: 18px !important;
+    text-shadow: 100px !important;
+}
+
+.items:hover{
+    color: black !important;
+}
+
+.dropdown-item:hover{
+    background: rgb(231, 225, 225) !important;
 }

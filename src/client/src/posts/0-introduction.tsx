@@ -1,17 +1,17 @@
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 
-export function introduction(props?:any) {
+export function introduction(props?: any) {
     return <Col>
         <h2>
             Introduction
         </h2>
 
         <p>
-        A Basic tutorial on how to build an API in node.js using TypeScript, express, TypeORM and MySQL Database.
+            A Basic tutorial on how to build an API in node.js using TypeScript, express, TypeORM and MySQL Database.
         </p>
         <p className="lead">
-        Prerequisites
+            Prerequisites
         </p>
         <ul>
             <li><a href="https://nodejs.org">Node.js</a></li>
@@ -22,14 +22,14 @@ export function introduction(props?:any) {
             Scenario
         </p>
         <p>
-        In this tutorial we are going to build a simple blog where users will have roles, profile images and can create articles.
+            In this tutorial we are going to build a simple blog where users will have roles, profile images and can create articles.
         </p>
-        
+
         <p className="lead"> Database Schema</p>
 
         <img src='/images/databaseSchema.png' width='100%' />
 
 
     </Col>;
-  }
+}
 
