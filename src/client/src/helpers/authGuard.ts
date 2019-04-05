@@ -5,6 +5,7 @@ const token_key = 'reddit_clone_token';
 const AUTH_SECRET = 'asdfg;lkjh';
 export function loggedIn(){
     const token = getToken();
+    console.log("authGuard ", !!token)
     // return !!token && !isTokenExpired();
     return !!token;
 }

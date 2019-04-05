@@ -13,11 +13,10 @@ import Button from 'react-bootstrap/Button';
 interface RouteConf {
     title: string;
     path: string;
-    // file?: string;
 }
 
 interface ChallengesProps{
-    location: any
+    location?: any
 }
 
 export class Challenges extends React.Component<ChallengesProps>{
