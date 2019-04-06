@@ -18,6 +18,8 @@ export async function createApp() {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-auth-token");
     next();
   });
+  // Add route for image folder
+  app.use('/uploads/images', express.static('uploads/images'));
   // Add client build path
   app.use(express.static('src/client/build'));
   // Add application router
