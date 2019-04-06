@@ -22,7 +22,6 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState>{
     private _handleListClick(key:number){
     }
     render(){
-        console.log(this.props.actualPath)
         return (
             <ul id="sider" className='nav flex-column py-5'>
             

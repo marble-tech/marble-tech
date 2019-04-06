@@ -2,7 +2,7 @@ import { User } from '../entities/User';
 import { Challenge } from './../entities/Challenge';
 import { UserChallenge } from '../entities/UserChallenge';
 import { createConnection, getConnectionManager } from "typeorm";
-
+console.log(process.env)
 export async function createDbConnection() {
 
   // Set database variables from environment

@@ -1,13 +1,12 @@
 import {ApiService} from '../helpers/api'
 import {getLoggedUser} from '../helpers/authGuard'
-import { BASE_URL } from '../environment/dev';
 
 const api  = new ApiService;
 
 export class UserService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || BASE_URL+'/api/v1/users'
+        this.domain = domain || process.env.REACT_APP_API + '/users'
     }
 
     public getAll(){
