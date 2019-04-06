@@ -1,7 +1,8 @@
 import { ChallengeController } from './../controllers/challengeController';
 import bodyParser = require('body-parser');
 import { testFileWritter } from '../handlers/testFileWriter';
-import { authMiddleware } from '../config/authMiddleware';
+import { authMiddleware } from '../middlewares/authMiddleware';
+import { hollow } from '../middlewares/hollowMiddleware';
 
 const challengeController = new ChallengeController();
 
@@ -9,7 +10,7 @@ const routes = [
   {
     method: 'get',
     path: '/',
-    middlewares: [],
+    middlewares: [hollow],
     description: 'get all challenges',
     action: challengeController.findAll,
     body: ['none']
@@ -17,7 +18,7 @@ const routes = [
   {
     method: 'get',
     path: '/:id',
-    middlewares: [],
+    middlewares: [hollow],
     description: 'get challenge by id',
     action: challengeController.findById,
     body: ['none']
