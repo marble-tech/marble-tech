@@ -15,7 +15,7 @@ class Layout extends React.Component {
                             routes.filter(item => item.displayInNavBar !== false)
                                 .map(item => {
                                     return {
-                                        href: item.path,
+                                        href: item.href,
                                         isIndex: item.isIndex,
                                         title: item.title,
                                         onlyGuest: item.onlyGuest || false
