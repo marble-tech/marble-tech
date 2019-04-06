@@ -1,13 +1,12 @@
 import * as authGuard from '../helpers/authGuard'
 import {ApiService} from '../helpers/api'
-import { BASE_URL } from '../environment/environment';
 
 const api = new ApiService;
 
 export class AuthService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || BASE_URL + '/auth/login'
+        this.domain = domain || process.env.REACT_APP_API + '/auth/login'
     }
 
     public login(username:any, password:any){
