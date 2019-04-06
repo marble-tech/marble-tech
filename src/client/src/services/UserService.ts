@@ -1,13 +1,13 @@
 import {ApiService} from '../helpers/api'
 import {getLoggedUser} from '../helpers/authGuard'
-import { BASE_URL } from '../environment/dev';
+import { BASE_URL } from '../environment/environment';
 
 const api  = new ApiService;
 
 export class UserService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || BASE_URL+'/api/v1/users'
+        this.domain = domain || BASE_URL + '/users'
     }
 
     public getAll(){
