@@ -139,7 +139,7 @@ export class UserController {
                 console.log('do not have image');
 
                 const image = new ProfileImage(
-                    `${process.env.REACT_APP_API}:${process.env.PORT}/${req.file.path}`,
+                    `${process.env.REACT_APP_API}:${process.env.PORT}/app/${req.file.path}`,
                     req.file.path
                 );
 
@@ -160,8 +160,6 @@ export class UserController {
             profileImage!.path = req.file.path;
             profileImage!.url = newImageUrl;
             const updatedImage = await profileImageService.save(profileImage!);
-            // user.profileImage = updatedImage;
-            // await userService.save(user);
 
             return res.status(200).json(updatedImage);
 
