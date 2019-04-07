@@ -21,20 +21,25 @@ export class UserService {
     }
 
     public create(newUser:any){
-        // Object.assign(newUser, {user: getLoggedUser()})
-        // console.log(newUser)
         return api.fetch(this.domain,{
             method:'POST',
             body: JSON.stringify(newUser)
         })
         .then((res:any) => {return res})
     }
-    // public delete(id:number){
-    //     return api.fetch(this.domain+'/'+id,{
-    //         method:'DELETE',
-    //     })
-    //     .then((res:any) => {return res})
-    // }
+    public update(id:number, attUpdate:any){
+        return api.fetch(this.domain+'/'+id,{
+            method:'PATCH',
+            body: JSON.stringify(attUpdate)
+        })
+        .then((res:any) => {return res})
+    }
+    public delete(id:number){
+        return api.fetch(this.domain+'/'+id,{
+            method:'DELETE',
+        })
+        .then((res:any) => {return res})
+    }
 
 
 }

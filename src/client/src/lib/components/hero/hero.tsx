@@ -13,7 +13,7 @@ export class Hero extends React.Component{
                 <div id="moon" className="bg-winter d-flex"></div>
                 <Container fluid={ window.innerWidth < 992 ? true : false}>
                     <Card style={{zIndex:1}}>
-                    <Row className="">
+                    <Row>
                         <Col><img className="m-auto d-block img-fluid" src="/images/marble.png" alt=""/></Col>
                         <Col>                           
                             {this.props.children}
