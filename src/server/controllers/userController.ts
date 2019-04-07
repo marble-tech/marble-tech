@@ -157,7 +157,7 @@ export class UserController {
             const profileImage = await profileImageService.findById(user.profileImage.id);
             profileImage!.url = dataUrl;
             const updatedImage = await profileImageService.save(profileImage!);
-            
+
             return res.status(200).json(updatedImage);
 
         } catch (error) {
