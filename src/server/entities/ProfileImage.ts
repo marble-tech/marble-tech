@@ -7,11 +7,8 @@ export class ProfileImage {
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column({nullable: false})
+  @Column({nullable: false, type: 'text'})
   public url!: string;
-
-  @Column({nullable: false})
-  public path!: string;
 
   @OneToOne(
     type => User, user => user.profileImage,
@@ -20,9 +17,8 @@ export class ProfileImage {
   @JoinColumn()
   public user!: User;
 
-  public constructor(url: string, path: string){
+  public constructor(url: string){
     this.url = url;
-    this.path = path;
   }
 
 }

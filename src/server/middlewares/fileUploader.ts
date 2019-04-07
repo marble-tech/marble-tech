@@ -2,10 +2,12 @@ import multer from 'multer';
 import { Request } from 'express';
 
 // Set the file destination folder and it's filename
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, './uploads/images'),
-  filename: (req, file, cb) => cb(null, new Date().toISOString() + file.originalname)
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => cb(null, './uploads/images'),
+//   filename: (req, file, cb) => cb(null, new Date().toISOString() + file.originalname)
+// });
+
+const storage = multer.memoryStorage();
 
 // Accepts only 'jpeg' and 'png' image formats
 const fileFilter = (req: Request, file: any, cb: any) => {

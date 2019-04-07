@@ -8,6 +8,7 @@ import { ProfileImageService } from '../services/profileImageService';
 import { testFileRemover } from '../handlers/testFileRemover';
 import * as fs from 'fs';
 import * as path from 'path'
+import { convertToDataUrl } from '../handlers/convertToDataUrl';
 
 
 const userService = new UserService();
@@ -125,44 +126,39 @@ export class UserController {
 
     public async addProfileImage(req: express.Request, res: express.Response) {
         try {
+            // Get logger user id
             const loggedUserId = (req as any).userId;
+            // Get user id to upload image
             const userId = req.params.id;
-            ;
+            // If logged is not owner return not allowed
             if (loggedUserId != userId) {
                 return res.status(403).json({ Error: 'Not allowed' });
             }
-
+            // Get logged user
             const user = await userService.findById(loggedUserId);
+            // If not found return 404 status
             if (!user) return res.status(404).json({ Error: `User id ${loggedUserId} not found` });
-
+            // If users does not have profile image create one
             if (!user.profileImage) {
-                console.log('do not have image');
-
-                const image = new ProfileImage(
-                    `${process.env.REACT_APP_API}:${process.env.PORT}/app/${req.file.path}`,
-                    req.file.path
-                );
-
+                // Create data url
+                const dataUrl = convertToDataUrl(req.file);
+                // Create new profile image
+                const image = new ProfileImage(dataUrl);
+                // Save profile image in database
                 const profileImage = await profileImageService.create(image, user);
-
                 return res.status(200).json(profileImage);
             }
+            
+            // If user has profile image, update it
 
-            console.log(user.profileImage.path);
-            const imagePath = path.join(__dirname, '..', '..', '..', user.profileImage.path);
-            await fs.unlink(imagePath, (err) => {
-                if(err) console.log(err)
-                else console.log(`deleted ${imagePath}`);
-            });
-
-            const newImageUrl = `${process.env.REACT_APP_API}:${process.env.PORT}/${req.file.path}`;
+            // Create data url
+            const dataUrl = convertToDataUrl(req.file);
+            // Update user profile in database
             const profileImage = await profileImageService.findById(user.profileImage.id);
-            profileImage!.path = req.file.path;
-            profileImage!.url = newImageUrl;
+            profileImage!.url = dataUrl;
             const updatedImage = await profileImageService.save(profileImage!);
-
+            
             return res.status(200).json(updatedImage);
-
 
         } catch (error) {
             console.log(error);
