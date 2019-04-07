@@ -5,12 +5,8 @@ const token_key = 'reddit_clone_token';
 const AUTH_SECRET = 'asdfg;lkjh';
 export function loggedIn(){
     const token = getToken();
-    // return !!token && !isTokenExpired();
     return !!token;
 }
-// export function isTokenExpired(){
-
-// }
 export function setToken(token:any){
     localStorage.setItem(token_key, token)
 }

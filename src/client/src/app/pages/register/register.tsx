@@ -10,7 +10,6 @@ import { Signup } from '../../../lib/components';
 
 export class Register extends React.Component{
     render(){
-        // console.log(this.props)
         const {history}:any = this.props
         return (
             <Container fluid className="bg-light px-0">

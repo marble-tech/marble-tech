@@ -8,9 +8,11 @@ import { Login } from '../../../lib/components';
 
 export class Home extends React.Component{
     render(){
+
+        const {history}:any = this.props;
         return (
             <Container fluid className="bg-light px-0">
-                <Hero><Login/></Hero>
+                <Hero><Login history={history}/></Hero>
                 <Container fluid >
                     <Section>
                         <Col>

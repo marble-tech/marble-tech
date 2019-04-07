@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './bootstrap.css';
-import Layout from './app/pages/layout'
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import Layout from './app/pages/layout';
 
 ReactDOM.render((
     <BrowserRouter>
-        <Layout/>
+        <Layout />
     </BrowserRouter>
     ), document.getElementById('root'));
 

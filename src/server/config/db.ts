@@ -1,6 +1,7 @@
 import { User } from '../entities/User';
 import { Challenge } from './../entities/Challenge';
 import { UserChallenge } from '../entities/UserChallenge';
+import { ProfileImage } from '../entities/ProfileImage';
 import { createConnection, getConnectionManager } from "typeorm";
 
 export async function createDbConnection() {
@@ -19,10 +20,15 @@ export async function createDbConnection() {
     username: DATABASE_USER,
     password: DATABASE_PASSWORD,
     database: DATABASE_DB,
-    entities: [Challenge, User, UserChallenge],
-    // extra: {
-    //   ssl: true
-    // },
+    entities: [
+      Challenge, 
+      User, 
+      UserChallenge,
+      ProfileImage
+    ],
+    extra: {
+      ssl: true
+    },
     synchronize: true
   });
 

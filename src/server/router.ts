@@ -30,5 +30,9 @@ router.get('/', (req, res) => {
   res.sendFile('/src/client/build/index.html');
 });
 
+router.get('*', (req, res) => {
+  res.redirect('/');
+});
+
 export default router;
 

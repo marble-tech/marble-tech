@@ -1,13 +1,12 @@
 import * as authGuard from '../helpers/authGuard'
 import {ApiService} from '../helpers/api'
 
-
 const api = new ApiService;
 
 export class AuthService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || 'https://ca-reddit-clone.herokuapp.com/api/v1/auth/login'
+        this.domain = domain || process.env.REACT_APP_API + '/auth/login'
     }
 
     public login(username:any, password:any){

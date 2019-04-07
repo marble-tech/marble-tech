@@ -6,7 +6,7 @@ const api  = new ApiService;
 export class UserService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || 'https://marble-tech-api.herokuapp.com/api/v1/users'
+        this.domain = domain || process.env.REACT_APP_API + '/users'
     }
 
     public getAll(){
