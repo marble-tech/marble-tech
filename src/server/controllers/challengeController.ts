@@ -171,7 +171,7 @@ export class ChallengeController {
       });
  
       console.log(cleanErrors);
-      res.status(500).json(cleanErrors);
+      res.status(500).json({Error: cleanErrors});
     }
   }
 
