@@ -20,10 +20,10 @@ export class Content extends React.Component<ContentProps, ContentState> {
     };
   }
   public render() {
-      return <Container className={(this.props.className ? this.props.className: "")}fluid>
+      return <Container className={(this.props.className ? this.props.className: "")} fluid>
 
         <Row className="px-4">
-        <Col>
+        <Col> 
         {this.props.children}
         </Col>
          

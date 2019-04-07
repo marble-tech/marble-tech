@@ -10,6 +10,7 @@ import { Route, Link } from 'react-router-dom';
 import { Sidebar } from '../../../lib/components/sidebar/sidebar';
 import Button from 'react-bootstrap/Button';
 import {ChallengeService} from "../../../services/ChallengeService"
+import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackModal';
 
 interface challengesRoute {
     title: string;
@@ -31,10 +32,14 @@ interface ChallengesState{
     location?: any
     challengeAns:string;
     error:string|null;
-    // challengeID: number | null;
     title: string|null;
     description: string|null;
     sampleAnswer: string;
+    fbModalShow:boolean
+    feedback: {
+            failures:number,
+            results:any[]
+        } | null
 
 }
 const challService:ChallengeService = new ChallengeService;
@@ -48,13 +53,20 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             description: null,
             sampleAnswer: "",
             challengesList: null,
+            fbModalShow:false,
+            feedback: {
+                failures:1,
+                results:[
+                    {title:"some text", state:"passed"},
+                    {title:"some text", state:"failed"}
+                ]
+            },
         };
         this._onChange = this._onChange.bind(this)
         this._handleSubmit = this._handleSubmit.bind(this)
     }
 
     private _onChange(e:any) {
-        console.log(this.state.challengeAns)
         this.setState({ ...this.state, [e.target.id]:e.target.value })
     }
     private _renderServerErrors() {
@@ -78,17 +90,23 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             return <div></div>;
         }
     }
+    private _renderFBModal() {
+        let modalClose = () => this.setState({fbModalShow:false})
+        const {feedback, fbModalShow, } = this.state
+        if (!!feedback) {
+            return (
+                <FeedbackModal show={fbModalShow} feedback={feedback} onHide={modalClose}/>
+            )
+        } else {
+            return <div></div>;
+        }
+    }
     private _handleSubmit(){
-        let t = `app.get(\"/\", (req, res) => {
-            res.send(\"This is the home page\!\");
-        });`;
         (async()=>{
-            
             const rest = await challService.test(this.props.match.params.id, this.state.challengeAns)
                 .then((res:any) => {
-                    this.setState({ error: null });
-                    console.log(res)
-                    // this.props.history.push("/challenges");
+                    // this.setState({ error: null });
+                    this.setState({feedback: res, fbModalShow:true})
                 })
                 .catch((err:any) => {
                     console.log(err)
@@ -114,7 +132,6 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                             path: `/challenges/${item.id}`
                         }
                     })
-                    console.log(list)
                     this.setState({challengesList: list})
                 })
                 .catch((e:any)=>{
@@ -124,6 +141,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     }
     render(){
         let {title, description, challengesList} = this.state;
+        
         if(!title || !challengesList){
             return (
                 <div>loading...</div>
@@ -148,7 +166,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                                 </Form.Group>
                             </Form>
                             <Button className="float-right" variant="primary" onClick={this._handleSubmit}><strong>POST</strong></Button>
+                            {/* <Button className="float-right" variant="primary" onClick={()=>this.setState({fbModalShow:true})}><strong>POST</strong></Button> */}
                             {this._renderServerErrors()}
+                            {this._renderFBModal()}
                         </Content>
                     </Col>
                     </Row>
@@ -156,6 +176,6 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             )
 
         }
-        
+
     }
 }
