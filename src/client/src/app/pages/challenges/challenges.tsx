@@ -3,10 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
-// import FormControl from 'react-bootstrap/FormControl';
 import { Content } from "../../../lib/components";
-import { postsRoutes } from "../../config/posts-routing";
-import { Route, Link } from 'react-router-dom';
 import { Sidebar } from '../../../lib/components/sidebar/sidebar';
 import Button from 'react-bootstrap/Button';
 import {ChallengeService} from "../../../services/ChallengeService"
@@ -161,7 +158,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                             </p>
                             <Form>
                                 <Form.Group controlId="challengeAns">
-                                <Form.Label>Example textarea</Form.Label>
+                                <Form.Label>Let's code:</Form.Label>
                                 <Form.Control as="textarea" rows={10} onChange={this._onChange} />
                                 </Form.Group>
                             </Form>
