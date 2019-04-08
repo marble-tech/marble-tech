@@ -30,6 +30,7 @@ interface ChallengesState{
     challengeAns:string;
     error:string|null;
     title: string|null;
+    level: string|null;
     description: string|null;
     sampleAnswer: string;
     fbModalShow:boolean
@@ -45,17 +46,18 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         super(props);
         this.state = {
             challengeAns:"",
-            error:null,
+            error: null,
             title: null,
+            level: null,
             description: null,
             sampleAnswer: "",
             challengesList: null,
-            fbModalShow:false,
+            fbModalShow: false,
             feedback: {
-                failures:1,
-                results:[
-                    {title:"some text", state:"passed"},
-                    {title:"some text", state:"failed"}
+                failures: 1,
+                results: [
+                    {title: "some text", state: "passed"},
+                    {title: "some text", state: "failed"}
                 ]
             },
         };
@@ -64,15 +66,14 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     }
 
     private _onChange(e:any) {
-        this.setState({ ...this.state, [e.target.id]:e.target.value })
+        this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
     }
     private _renderServerErrors() {
         if (!!this.state.error) {
-            return <div className="text-center" style={{
+            return <div className="text-center h4" style={{
                 width: "100%",
                 marginTop: "0.25rem",
-                fontSize: "80%",
-                color: "#dc3545"}}>{this.state.error}</div>;
+                color: "#dc3545"}}><strong>Error: </strong>{this.state.error}</div>;
         } else {
             return <div></div>;
         }
@@ -102,12 +103,13 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         (async()=>{
             const rest = await challService.test(this.props.match.params.id, this.state.challengeAns)
                 .then((res:any) => {
-                    // this.setState({ error: null });
-                    this.setState({feedback: res, fbModalShow:true})
+                    this.setState({ error: null });
+                    this.setState({feedback: res, fbModalShow:true});
                 })
                 .catch((err:any) => {
-                    console.log(err)
-                    this.setState({ error: err.message });
+                    let errSubStr = (err.message[0] as string).split(":");
+                    let errMsg = errSubStr[errSubStr.length-1];
+                    this.setState({ error: errMsg});
             })
         })();
     }
@@ -115,8 +117,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         (async () => {
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
-                    let {title, description, sampleAnswer} = res;
-                    this.setState({title, description, sampleAnswer})
+                    let {title, description, sampleAnswer, level } = res;
+                    this.setState({title, description, sampleAnswer, level })
                 })
                 .catch((e:any)=>{
                     console.log(e)
@@ -137,7 +139,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         })();
     }
     render(){
-        let {title, description, challengesList} = this.state;
+        let {title, description, challengesList, level} = this.state;
         
         if(!title || !challengesList){
             return (
@@ -152,10 +154,11 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                     </div>
                     <Col md={8} className="px-3">
                         <Content className="py-5">
-                            <h2>{title}</h2>
-                            <p className="lead">{description}</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </p>
+                            <h2>
+                                {title}
+                                <small className="text-muted"> - {level} level</small>
+                            </h2>
+                            <p>{description}</p>
                             <Form>
                                 <Form.Group controlId="challengeAns">
                                 <Form.Label>Let's code:</Form.Label>

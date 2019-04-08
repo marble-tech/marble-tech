@@ -26,14 +26,14 @@ export class FeedbackModal extends Component<FBModalProps,FBModalState>{
       if(this.props.feedback.failures > 0){
         return <div>
         <div style={{height:"200px"}} className={divClasses}>
-          <img src="/images/x.png" className={modalIconClasses} style={modalIconCSS}/>
+          <img src="/images/whoops.png" className={modalIconClasses} style={modalIconCSS}/>
         </div>
-        <h4>Whoops, something went wrong...</h4>
+        <h4>Whoops... Check your code again!!!</h4>
       </div>
       }
       return <div >
         <div style={{height:"200px"}} className={divClasses}>
-          <img src="/images/tick.png" className={modalIconClasses} style={modalIconCSS}/>
+          <img src="/images/happy.png" className={modalIconClasses} style={modalIconCSS}/>
         </div>
         <h4>Well done, keep up!!!</h4>
       </div>
@@ -62,7 +62,7 @@ export class FeedbackModal extends Component<FBModalProps,FBModalState>{
     }
     render(){
         return (
-            <Modal
+            <Modal 
         {...this.props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
