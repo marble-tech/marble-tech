@@ -1,3 +1,4 @@
+import { ProfileImage } from './../entities/ProfileImage';
 import { User } from '../entities/User';
 import { getUserRepository } from '../repositories/userRepository';
 
@@ -16,6 +17,10 @@ export class UserService {
     return getUserRepository().save(user);// save user to DB
   }
 
+  public save(user: User){
+    return getUserRepository().save(user);
+  }
+
   public findAll(){
     // add other relations
     return getUserRepository().find();
@@ -23,7 +28,7 @@ export class UserService {
 
   public findById(id: number){
     // add other relations
-    return getUserRepository().findOne(id);
+    return getUserRepository().findOne(id, {relations: ['profileImage']});
   }
 
   public update(user: User, values: any){

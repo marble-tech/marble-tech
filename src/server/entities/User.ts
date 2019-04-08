@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { ProfileImage } from './ProfileImage';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from "typeorm";
 import { UserChallenge } from './UserChallenge';
 
 @Entity('users')
@@ -21,6 +22,9 @@ export class User {
 
   @OneToMany(type => UserChallenge, UserChallenge => UserChallenge.user)
   public challenges!: UserChallenge[];
+
+  @OneToOne(type => ProfileImage, profileImage => profileImage.user)
+  public profileImage!: ProfileImage
 
   public constructor(
     f_name: string,
