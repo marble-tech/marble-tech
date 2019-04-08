@@ -3,7 +3,6 @@ export async function _checkStatus(response:any){
         return response;
     } else {
         let res = await response.json()
-        console.log(await response)
         let error = new Error(res['Error']);
         error.message = res['Error'];
         throw error;
