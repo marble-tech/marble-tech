@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as authGuard from '../../../helpers/authGuard';
 import { LoggedPanel } from '../loggedPanel/loggedPanel';
 import { Container } from 'react-bootstrap';
+import UserDropdown from '../user-dropdown/user-dropdown';
 
 interface NavbarItem {
     isIndex?: boolean;
@@ -54,7 +55,7 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
     }
     private _renderUserPanel(){
         if(authGuard.loggedIn()){
-            return <LoggedPanel/>
+            return <UserDropdown username="username" profileImage="image" />
         }
         return <div></div>
     }

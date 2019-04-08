@@ -1,0 +1,16 @@
+.user-drop{
+    min-width: 210px !important;
+    padding-left: 52px !important;
+    padding-right: 52px !important;
+  }
+  
+  .items{
+    min-width: 210px !important;
+    max-width: 210px !important;
+    color: rgb(236, 227, 227) !important;
+  }
+  
+  .items:hover{
+    color: rgb(94, 93, 93) !important;
+    background: rgb(214, 214, 214);
+  }

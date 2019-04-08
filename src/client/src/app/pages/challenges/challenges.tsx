@@ -8,6 +8,7 @@ import { Sidebar } from '../../../lib/components/sidebar/sidebar';
 import Button from 'react-bootstrap/Button';
 import {ChallengeService} from "../../../services/ChallengeService"
 import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackModal';
+import { Loading } from '../../../lib/components/loading/loading';
 
 interface challengesRoute {
     title: string;
@@ -31,14 +32,14 @@ interface ChallengesState{
     error:string|null;
     title: string|null;
     level: string|null;
-    description: string|null;
+    description: string;
     sampleAnswer: string;
     fbModalShow:boolean
     feedback: {
             failures:number,
             results:any[]
-        } | null
-
+        } | null;
+    pageLoading:boolean;
 }
 const challService:ChallengeService = new ChallengeService;
 export class Challenges extends React.Component<ChallengesProps,ChallengesState>{
@@ -49,7 +50,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             error: null,
             title: null,
             level: null,
-            description: null,
+            description: "",
             sampleAnswer: "",
             challengesList: null,
             fbModalShow: false,
@@ -60,6 +61,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                     {title: "some text", state: "failed"}
                 ]
             },
+            pageLoading: true
         };
         this._onChange = this._onChange.bind(this)
         this._handleSubmit = this._handleSubmit.bind(this)
@@ -70,7 +72,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     }
     private _renderServerErrors() {
         if (!!this.state.error) {
-            return <div className="text-center h4" style={{
+            return <div className="text-center h5" style={{
                 width: "100%",
                 marginTop: "0.25rem",
                 color: "#dc3545"}}><strong>Error: </strong>{this.state.error}</div>;
@@ -100,17 +102,22 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _handleSubmit(){
+        this.setState({pageLoading: true});
         (async()=>{
             const rest = await challService.test(this.props.match.params.id, this.state.challengeAns)
                 .then((res:any) => {
-                    this.setState({ error: null });
-                    this.setState({feedback: res, fbModalShow:true});
+                    this.setState({
+                        feedback: res, 
+                        fbModalShow: true, 
+                        error: null
+                    });
                 })
                 .catch((err:any) => {
                     let errSubStr = (err.message[0] as string).split(":");
                     let errMsg = errSubStr[errSubStr.length-1];
                     this.setState({ error: errMsg});
             })
+            this.setState({pageLoading: false});
         })();
     }
     public componentDidMount() {
@@ -125,7 +132,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                 });
             await challService.getAll()
                 .then((res:any)=> {
-                    let list = res.map((item:any, index:number)=>{
+                    let list = res.map((item:any)=>{
                         return {
                             title: item.title,
                             path: `/challenges/${item.id}`
@@ -136,46 +143,39 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                 .catch((e:any)=>{
                     console.log(e)
                 });
+            this.setState({pageLoading: false})
         })();
     }
     render(){
         let {title, description, challengesList, level} = this.state;
-        
-        if(!title || !challengesList){
-            return (
-                <div>loading...</div>
-            )
-        }else{
-            return (
-                <Container fluid>
-                    <Row>
-                    <div style={{width: '276px', }} className=" bg-light ">
-                        {this._renderSidebar()}
-                    </div>
-                    <Col md={8} className="px-3">
-                        <Content className="py-5">
-                            <h2>
-                                {title}
-                                <small className="text-muted"> - {level} level</small>
-                            </h2>
-                            <p>{description}</p>
-                            <Form>
-                                <Form.Group controlId="challengeAns">
-                                <Form.Label>Let's code:</Form.Label>
-                                <Form.Control as="textarea" rows={10} onChange={this._onChange} />
-                                </Form.Group>
-                            </Form>
-                            <Button className="float-right" variant="primary" onClick={this._handleSubmit}><strong>POST</strong></Button>
-                            {/* <Button className="float-right" variant="primary" onClick={()=>this.setState({fbModalShow:true})}><strong>POST</strong></Button> */}
-                            {this._renderServerErrors()}
-                            {this._renderFBModal()}
-                        </Content>
-                    </Col>
-                    </Row>
-                </Container>
-            )
-
-        }
-
+        return (
+            <Container fluid>
+                <Row>
+                <div style={{ width: '276px' }} className=" bg-light ">
+                    {this._renderSidebar()}
+                </div>
+                <Col md={8} className="px-3">
+                    <Content className="py-5">
+                        <h2>
+                            {title}
+                            <small className="text-muted"> - {level} level</small>
+                        </h2>
+                        <Row><Col dangerouslySetInnerHTML={{__html:description}}></Col></Row>
+                        <Form>
+                            <Form.Group controlId="challengeAns">
+                            <Form.Label>Let's code:</Form.Label>
+                            <Form.Control as="textarea" rows={10} onChange={this._onChange} />
+                            </Form.Group>
+                        </Form>
+                        <Button className="float-right" variant="primary" onClick={this._handleSubmit}><strong>POST</strong></Button>
+                        {/* <Button className="float-right" variant="primary" onClick={()=>this.setState({fbModalShow:true})}><strong>POST</strong></Button> */}
+                        {this._renderServerErrors()}
+                        {this._renderFBModal()}
+                    </Content>
+                </Col>
+                </Row>
+                <Loading show={this.state.pageLoading}/>
+            </Container>
+        )
     }
 }
