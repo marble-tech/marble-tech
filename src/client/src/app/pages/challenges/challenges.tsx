@@ -82,6 +82,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     private _renderChallengeDescription() {
         const { description } = this.state;
         if (!!description) {
+            console.log(description)
             let data = description.split('<CodeBlock>')
             return  data.map((item, index) =>{
                 if (index%2==1){
@@ -98,7 +99,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         const {challengesList} = this.state
         if (!!challengesList) {
             return (
-                <Sidebar listItems={challengesList} actualPath={this.props.location.pathname}/>
+                <Sidebar listItems={challengesList} withID actualPath={this.props.location.pathname}/>
             )
         } else {
             return <div></div>;
@@ -150,6 +151,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                     let list = res.sort((a: any,b: any) => a.id - b.id)
                         .map((item:any)=>{
                             return {
+                                id: item.id,
                                 title: item.title,
                                 path: `/challenges/${item.id}`
                             }
@@ -164,6 +166,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     }
     componentDidUpdate(nextProps:any, prevState:any) {
         if(this.props.match.params.id!==nextProps.match.params.id){
+            // clear previews state 
+            this.setState({description: ""})
             this._loadChallengeData();
         }
     }
