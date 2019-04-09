@@ -9,17 +9,12 @@ import Button from 'react-bootstrap/Button';
 import {ChallengeService} from "../../../services/ChallengeService"
 import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackModal';
 import { Loading } from '../../../lib/components/loading/loading';
+import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 
 interface challengesRoute {
     title: string;
     path: string;    
 }
-
-interface challengesE {
-    title: string;
-    path: string;    
-}
-
 interface ChallengesProps{
     location?: any;
     history?:any;
@@ -34,12 +29,14 @@ interface ChallengesState{
     level: string|null;
     description: string;
     sampleAnswer: string;
-    fbModalShow:boolean
+    fbModalShow:boolean;
+    challengeId: number | null;
     feedback: {
             failures:number,
             results:any[]
         } | null;
     pageLoading:boolean;
+    reload:boolean;
 }
 const challService:ChallengeService = new ChallengeService;
 export class Challenges extends React.Component<ChallengesProps,ChallengesState>{
@@ -61,7 +58,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                     {title: "some text", state: "failed"}
                 ]
             },
-            pageLoading: true
+            pageLoading: true,
+            challengeId: null,
+            reload:false
         };
         this._onChange = this._onChange.bind(this)
         this._handleSubmit = this._handleSubmit.bind(this)
@@ -76,6 +75,21 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                 width: "100%",
                 marginTop: "0.25rem",
                 color: "#dc3545"}}><strong>Error: </strong>{this.state.error}</div>;
+        } else {
+            return <div></div>;
+        }
+    }
+    private _renderChallengeDescription() {
+        const { description } = this.state;
+        if (!!description) {
+            let data = description.split('<CodeBlock>')
+            return  data.map((item, index) =>{
+                if (index%2==1){
+                    return <CodeBlock key={index}>{item}</CodeBlock>
+                }
+                return <div key={index} dangerouslySetInnerHTML={{__html:item}}></div>
+            })
+            
         } else {
             return <div></div>;
         }
@@ -120,12 +134,13 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             this.setState({pageLoading: false});
         })();
     }
-    public componentDidMount() {
+    private _loadChallengeData(){
+        this.setState({pageLoading: true});
         (async () => {
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
-                    let {title, description, sampleAnswer, level } = res;
-                    this.setState({title, description, sampleAnswer, level })
+                    let {title, description, sampleAnswer, level, id } = res;
+                    this.setState({title, description, sampleAnswer, level, challengeId: id  })
                 })
                 .catch((e:any)=>{
                     console.log(e)
@@ -147,8 +162,16 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             this.setState({pageLoading: false})
         })();
     }
+    componentDidUpdate(nextProps:any, prevState:any) {
+        if(this.props.match.params.id!==nextProps.match.params.id){
+            this._loadChallengeData();
+        }
+    }
+    public componentDidMount() {
+        this._loadChallengeData();
+    }
     render(){
-        let {title, description, challengesList, level} = this.state;
+        let { title, description, challengesList, level } = this.state;
         return (
             <Container fluid>
                 <Row>
@@ -161,7 +184,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                             {title}
                             <small className="text-muted"> - {level} level</small>
                         </h2>
-                        <Row><Col dangerouslySetInnerHTML={{__html:description}}></Col></Row>
+                        <Row><Col>{this._renderChallengeDescription()}</Col></Row>
                         <Form>
                             <Form.Group controlId="challengeAns">
                             <Form.Label>Let's code:</Form.Label>

@@ -12,7 +12,6 @@ export default class UserDropdown extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
-
   render() {
     return (
       <React.Fragment>
