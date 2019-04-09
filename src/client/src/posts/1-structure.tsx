@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CodeBlock } from '../lib/components/codeBlock/codeBlock';
 
+
 export function structure(props?:any) {
     return (
       <Col>
