@@ -31,7 +31,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('*', (req, res) => {
-  res.redirect(`/?q=${req.url}`);
+  console.log(req.url);
+  //res.redirect(`/?q=${req.url}`);
 });
 
 export default router;
