@@ -147,11 +147,12 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                 });
             await challService.getAll()
                 .then((res:any)=> {
-                    let list = res.map((item:any)=>{
-                        return {
-                            title: item.title,
-                            path: `/challenges/${item.id}`
-                        }
+                    let list = res.sort((a: any,b: any) => a.id - b.id)
+                        .map((item:any)=>{
+                            return {
+                                title: item.title,
+                                path: `/challenges/${item.id}`
+                            }
                     })
                     this.setState({challengesList: list})
                 })

@@ -18,7 +18,7 @@ export default class UserDropdown extends Component<Props> {
         <ul className="navbar-nav">
           <li className="nav-item dropdown">
             <button
-              className="dropdown-toggle btn btn-outline-primary user-drop"
+              className="dropdown-toggle btn btn-outline-secondary user-drop"
               id="navbarDropdown"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -26,13 +26,13 @@ export default class UserDropdown extends Component<Props> {
             >
               {this.props.username}
             </button>
-            <div className="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
               <Link className="dropdown-item items" to='/user/user_details'>
-                <i className="fas fa-lg fa-user-astronaut m-2 text-primary"></i>
+                <i className="far fa-lg fa-user m-2 text-secondary"></i>
                 <span className='m-2'>Profile</span>
               </Link>
               <Link className="dropdown-item items" to={'/'}>
-                <i className="fas fa-lg fa-sign-out-alt m-2 text-primary"></i>
+                <i className="fas fa-lg fa-sign-out-alt m-2 text-secondary"></i>
                 <span className='m-2'>Logout</span>
               </Link>
             </div>

@@ -19,7 +19,7 @@ export class ChallengeService {
   }
 
   public findAll(){
-    return getChallengeRepository().find();
+    return getChallengeRepository().find({order: {id:'ASC'}});
   }
 
   public findById(id: number){

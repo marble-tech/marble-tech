@@ -7,10 +7,15 @@
   .items{
     min-width: 210px !important;
     max-width: 210px !important;
-    color: rgb(236, 227, 227) !important;
+
   }
   
   .items:hover{
     color: rgb(94, 93, 93) !important;
     background: rgb(214, 214, 214);
+  }
+
+  #navbarDropdown{
+    border-color: rgb(75, 71, 71);
+    color: rgb(197, 187, 187) !important;
   }
