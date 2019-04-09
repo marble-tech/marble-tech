@@ -25,6 +25,9 @@ export class Challenge {
   @Column({nullable: false, type: "text"})
   public testFile!: string;
 
+  @Column({nullable: true, type: 'text'})
+  public startingCode!: string;
+
   @Column({nullable: false, type: "text"})
   public sampleAnswer!: string;
 
