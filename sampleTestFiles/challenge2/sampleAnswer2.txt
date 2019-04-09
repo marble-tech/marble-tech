@@ -1,9 +1,4 @@
-app.post('/users', (request, response) => {
-    const body = request.body;
-    const user = {
-        id: 1,
-        name: body.name,
-        email: body.email,
-    }
-    response.status(201).json(body);
+app.get("/:id", (req, res) => {
+    const id = req.params.id;
+    res.send(id);
 });

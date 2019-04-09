@@ -3,26 +3,34 @@ import request from 'supertest';
 import { expect } from "chai";
 import { it, describe } from "mocha";
 
-describe('Challenge 3', () => {
+describe('Challenge 2', () => {
     let testApp: any;
 
     before(async () => {
         testApp = await createApp();
     });
 
-    const user = {
-      "name": "user",
-      "email": "user@email.com"
-    }
+    it("User should be able to access the page on route '/id'.", (done) => {
+        (async () => {
+            request(testApp)
+              .get('/:id')
+              .expect(200)
+              .end((error, res) => {
+                console.log('status: ', res.status, ', message: ', res.text);
+                if (error)  done(error);
+                else done();
+              });
+        })();
+    });
 
-    it("User should be able to receive a user JSON with the property name: bla", (done) => {
+    it("User should be able to get a text response with the number input in the URL.", (done) => {
       (async () => {
+          
           request(testApp)
-            .post('/users')
-            .send(user)
-            .expect(201)
+            .get('/:54')
+            .expect(200)
             .end((error, res) => {
-              expect(res.body).eql({id: 1, name: 'user', email:'user@email.com'});
+              expect(res.body).eql('54’);
               console.log('status: ', res.status, ', message: ', res.text);
               if (error)  done(error);
               else done();
