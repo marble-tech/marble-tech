@@ -1,0 +1,9 @@
+app.post('/users', (request, response) => {
+    const body = request.body;
+    const user = {
+        id: 1,
+        name: body.name,
+        email: body.email,
+    }
+    response.status(201).json(body);
+});
