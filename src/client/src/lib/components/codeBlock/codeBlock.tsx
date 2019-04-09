@@ -26,7 +26,7 @@ export class CodeBlock extends React.PureComponent {
   render() {
     let { children } = this.props
     return (
-      <pre className="rounded-lg py-3 px-4 mx-n4 mb-4">
+      <pre className="rounded-lg py-3 px-4 mb-4">
         <code >
           {children}
         </code>

@@ -44,28 +44,28 @@ export class Home extends React.Component{
                     </Section>
                     <Section>
                         <Col className="text-center">
-                            <Image src="./images/profileImage.svg" roundedCircle className="mb-3"/>
+                            <Image src="./images/fer.jpeg" width={171} height={180} roundedCircle className="mb-3"/>
                             <h3>Fernando Marinho</h3>
                             <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </p>
                         </Col>
                         <Col className="text-center">
-                            <Image src="./images/profileImage.svg" roundedCircle className="mb-3" />
+                            <Image src="./images/gus.jpeg" width={171} height={180} roundedCircle className="mb-3" />
                             <h3>Gustavo Lessa</h3>
                             <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </p>
                         </Col>
                         <Col className="text-center">
-                            <Image src="./images/profileImage.svg" roundedCircle className="mb-3"/>
-                            <h3>Lucival</h3>
+                            <Image src="./images/luc.jpeg" width={171} height={180} roundedCircle className="mb-3"/>
+                            <h3>Lucival Nascimento</h3>
                             <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </p>
                         </Col>
                         <Col className="text-center">
-                            <Image src="./images/profileImage.svg" roundedCircle className="mb-3"/>
+                            <Image src="./images/rafa.jpeg" width={171} height={180} roundedCircle className="mb-3"/>
                             <h3>Rafael Barros</h3>
                             <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.

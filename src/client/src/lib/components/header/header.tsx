@@ -3,8 +3,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import * as authGuard from '../../../helpers/authGuard';
-import { LoggedPanel } from '../loggedPanel/loggedPanel';
-import { Container } from 'react-bootstrap';
 import UserDropdown from '../user-dropdown/user-dropdown';
 
 interface NavbarItem {
@@ -28,6 +26,11 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
         super(props);
             this.state = {isLogged:authGuard.loggedIn()}
         };
+    componentDidUpdate(nextProps:any, prevState:any) {
+        if((prevState.isLogged!==authGuard.loggedIn()) && (authGuard.loggedIn()==true)){
+            console.log("foi")
+        }
+    }
     private _renderNavItems(items:NavbarItem[]){
         if(authGuard.loggedIn()){
             return (
