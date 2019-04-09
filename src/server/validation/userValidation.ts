@@ -6,7 +6,8 @@ export function validateUser(user: User) {
     email: joi.string().email().required(),
     password: joi.string().required(),
     f_name: joi.string().required(),
-    l_name: joi.string().required()
+    l_name: joi.string().required(),
+    username: joi.string().required()
     // The strip unknown options removes unknown elements from 
     // objects and arrays, blocking their inclusion in the database 
   }).options({ stripUnknown: true });

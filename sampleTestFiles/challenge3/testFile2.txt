@@ -15,7 +15,7 @@ describe('Challenge 3', () => {
       "email": "user@email.com"
     }
 
-    it("User should be able to receive a user JSON with the property name: bla", (done) => {
+    it("User should be able to receive a JSON with the property name: user, email: user@email.com", (done) => {
       (async () => {
           request(testApp)
             .post('/users')

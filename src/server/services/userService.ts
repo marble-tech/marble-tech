@@ -12,7 +12,7 @@ export class UserService {
     // create User object from information provided
     const user = new User(
       newUser.f_name, newUser.l_name, 
-      newUser.email, newUser.password
+      newUser.email, newUser.password, newUser.username
       );
     return getUserRepository().save(user);// save user to DB
   }
