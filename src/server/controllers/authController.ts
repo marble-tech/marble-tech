@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import { getUserRepository } from "../repositories/userRepository";
 import jwt from "jsonwebtoken";
 import { validateLogin } from "../validation/userValidation"
+import { AuthService } from "../services/authService";
+
+const authService = new AuthService();
 
 export class AuthController {
 
@@ -30,6 +33,17 @@ export class AuthController {
 
         // return status 200 and the token
         return res.status(200).json({ 'Result': `User [ID = ${match.id}] logged successfully!`, token: token });
+    }
+
+    public async getAuthUser(req: Request, res: Response){
+        try{
+            const token = req.headers['x-auth-token'];
+            if(!token) return res.status(400).json({error: 'Token not provided'});
+            return res.status(200).json(await authService.getAuthUserByToken(token));
+        }catch(error){
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
     }
 
 }
