@@ -1,9 +1,7 @@
 import React from "react";
-import { Switch, withRouter } from "react-router-dom";
-import { Route } from "../../lib/components/route/route";
+import { withRouter } from "react-router-dom";
 import { Header, Footer } from "../../lib/components";
 import { routes } from "../config/routing";
-import * as authGuard from '../../helpers/authGuard';
 import { Main } from "../../lib/components/main/main";
 
 class Layout extends React.Component {

@@ -6,7 +6,7 @@ export class Main extends React.Component{
 
     render(){
         return (
-            <Switch>
+            <Switch >
             <React.Fragment>
                 <div className="" style={{minHeight: "800px", backgroundColor: 'var(--white)'}}>
                     {
@@ -16,7 +16,6 @@ export class Main extends React.Component{
                                 {...rest}
                                 key={key}
                             />
-
                     })
                     }
                 </div>
