@@ -3,6 +3,7 @@ import { Home } from "../pages/home/home";
 import { Tutorial } from "../pages/tutorial/tutorial";
 import { Challenges } from "../pages/challenges/challenges";
 import { Register } from "../pages/register/register";
+import { Dashboard } from '../pages/dashboard/dashboard';
 
 interface RouteConf {
     isIndex?: boolean;
@@ -22,6 +23,7 @@ export const PATHS = {
     challenges: "/challenges/:id",
     login: "/login",
     register: "/register",
+    dashboard: "/dashboard",
 }
 export const HREF = {
     home: "/",
@@ -29,6 +31,8 @@ export const HREF = {
     challenges: "/challenges/1",
     login: "/login",
     register: "/register",
+    dashboard: "/dashboard",
+    
 }
 
 export const routes: RouteConf[] = [
@@ -37,6 +41,7 @@ export const routes: RouteConf[] = [
     { href: HREF.challenges, isIndex: false, title: "Challenges", path: PATHS.challenges, component: <Challenges/>, exact:false, isProtected:true },
     { href: HREF.login, isIndex: false, title: "Login", path: PATHS.login, component: <Home/>, exact:true, onlyGuest:true },
     { href: HREF.register, isIndex: false, title: "Register", path: PATHS.register, component: <Register/>, exact:true, onlyGuest:true },
+    { href: HREF.dashboard, isIndex: false, title: "Dashboar", path: PATHS.dashboard, component: <Dashboard/>, exact:true, onlyGuest:false, isProtected:true, displayInNavBar:false  },
     
 ]
 
