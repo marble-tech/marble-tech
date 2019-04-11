@@ -41,8 +41,6 @@ export class UserService {
 
   public delete(id: number) {
     return getUserRepository().delete(id);
-
-    // list.sort((a, b) => (a.size > b.size) ? 1 : -1)
   }
 
 
@@ -65,7 +63,6 @@ export class UserService {
       .getRawMany() // get raw data instead of entities
 
     return rank;
-
   }
 
   /**
@@ -86,8 +83,8 @@ export class UserService {
       .orderBy('MAX("uc"."challengeId")', 'DESC') // order by highest challenge id
       .limit(limit)
       .getRawMany() // get raw data instead of entities
-    return rank;
 
+    return rank;
   }
 
 }
