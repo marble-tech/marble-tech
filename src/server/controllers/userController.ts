@@ -165,4 +165,21 @@ export class UserController {
             return res.status(500).json({ Error: 'Internal server error' });
         }
     }
+
+    public async getRank(req: express.Request, res: express.Response) {
+        try {
+            const limit = req.body.limit; // can be implemented to limit the data retrieved from DB
+            const rank = await userService.getRank(); // call service method
+            //console.log(rank);
+            if(!rank) return res.status(403).json({Error: "Couldn't retrieve rank."});
+
+            return res.status(200).json(rank);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                Error: "Exception caught!"
+            })
+        }
+    }
+
 }

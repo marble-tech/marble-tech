@@ -16,6 +16,14 @@ const routes = [
   },
   {
     method: 'get',
+    path: '/rank',
+    middlewares: [hollow],
+    description: 'get rank of users',
+    body: ['none'],
+    action: userController.getRank
+  },
+  {
+    method: 'get',
     path: '/:id',
     middlewares: [hollow],
     description: 'get user by id',

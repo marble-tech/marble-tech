@@ -23,7 +23,7 @@ export class UserService {
 
   public findAll(){
     // add other relations
-    return getUserRepository().find();
+    return getUserRepository().find({relations: ['profileImage']});
   }
 
   public findById(id: number){
@@ -41,7 +41,28 @@ export class UserService {
 
   public delete(id: number){
     return getUserRepository().delete(id);
+
+    // list.sort((a, b) => (a.size > b.size) ? 1 : -1)
   }
 
+  public getRank(){
+// users: User[], limit: number
+    const rank = getUserRepository()
+                  .createQueryBuilder('users') // relation users
+                  .select("users.id", 'id') // get id
+                  .addSelect("users.username", 'username') // get username
+                  .addSelect('MAX("uc"."challengeId")', 'challenges') // get the higher challenge number (where clause will get only passed ones)
+                  .addSelect('"p"."url"', 'pic') // get pics if existent 
+                  .innerJoin('users_challenges', 'uc', '"users"."id" = "uc"."userId"') // join with user challenges
+                  .leftJoin('profile_images', 'p', '"users"."id" = "p"."userId"') // joing with profile_images
+                  .where('"uc"."score" = 100') // WHERE challenge was solves (score 100)
+                  .groupBy('"users"."id","username","url"') // group by user
+                  .orderBy('MAX("uc"."challengeId")', 'DESC') // order by highest challenge id
+                  .getRawMany() // get raw data instead of entities
+
+                  console.log(rank);
+                  return rank;
+
+  }
 
 }
