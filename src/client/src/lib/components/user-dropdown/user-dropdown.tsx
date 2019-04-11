@@ -24,7 +24,7 @@ export default class UserDropdown extends Component<Props> {
           <li className="nav-item dropdown">
             <a
               //dropdown-toggle 
-              className="btn btn-outline-secondary nav-link"
+              className="nav-link py-0"
               id="navbarDropdown"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -35,7 +35,7 @@ export default class UserDropdown extends Component<Props> {
               <Image src="/images/profileImage.svg" className="mx-2" width={50} height={50} roundedCircle/>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-15px'}}>
-              <Link className="dropdown-item items" to='/user/user_details'>
+              <Link className="dropdown-item items" to='/dashboard'>
                 <i className="far fa-lg fa-user m-2 text-secondary"></i>
                 <span className='m-2'>Profile</span>
               </Link>

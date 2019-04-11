@@ -82,7 +82,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
             await auth.login(this.state.email, this.state.password)
                 .then((res:any) => {
                     this.setState({ error: null });
-                    this.props.history.push("/challenges/1");
+                    this.props.history.push("/dasboard");
                 })
                 .catch((err:any) => {
                     console.log(err)
