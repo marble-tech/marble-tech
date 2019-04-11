@@ -2,6 +2,7 @@ import { ProfileImage } from './ProfileImage';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from "typeorm";
 import { UserChallenge } from './UserChallenge';
 
+
 @Entity('users')
 export class User {
 
@@ -43,4 +44,12 @@ export class User {
     this.username = username;
   }
 
+}
+
+export interface RankEntry{
+  id: number,
+  username: string,
+  challenges: number,
+  pic: string,
+  authUser?: boolean
 }

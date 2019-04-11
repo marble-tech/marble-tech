@@ -1,7 +1,7 @@
 import { uploader } from './../middlewares/fileUploader';
 import { ProfileImage } from './../entities/ProfileImage';
 import * as express from "express";
-import { User } from "../entities/User";
+import { User, RankEntry } from "../entities/User";
 import { UserService } from "../services/userService";
 import { validateUser } from "../validation/userValidation";
 import { ProfileImageService } from '../services/profileImageService';
@@ -168,12 +168,25 @@ export class UserController {
 
     public async getRank(req: express.Request, res: express.Response) {
         try {
-            const limit = req.body.limit; // can be implemented to limit the data retrieved from DB
-            const rank = await userService.getRank(); // call service method
-            //console.log(rank);
+            const loggedId = (req as any).userId; // get logged user id
+
+            // two options: with or without limit
+            //with
+            const limit = req.body.limit;
+            const rank: RankEntry[] = await userService.getRank(limit); // get TOP N rank
+            //without
+            // const rank: RankEntry[] = await userService.getRank(limit); // get whole rank
+
+            // if rank is null, return error
             if(!rank) return res.status(403).json({Error: "Couldn't retrieve rank."});
 
-            return res.status(200).json(rank);
+            // add authUser flag (true when it's the logged user)
+            const flaggedRank = rank.map((user)=>{
+                (user.id == loggedId) ? user.authUser = true : user.authUser = false;
+                return user;
+            })
+
+            return res.status(200).json(flaggedRank);
         } catch (error) {
             console.log(error);
             return res.status(500).json({
