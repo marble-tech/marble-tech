@@ -27,6 +27,14 @@ export class UserService {
         })
         .then((res:any) => {return res})
     }
+    public uploadImage(id:number, image:File){
+        return api.fetch(this.domain+'/'+id+'/profileImage',{
+            "Content-Type": "image/jpeg;image/png",
+            method:'POST',
+            body: image
+        })
+        .then((res:any) => {return res})
+    }
     public update(id:number, attUpdate:any){
         return api.fetch(this.domain+'/'+id,{
             method:'PATCH',
