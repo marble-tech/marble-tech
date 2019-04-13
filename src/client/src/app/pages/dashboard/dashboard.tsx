@@ -20,6 +20,7 @@ interface DashboardState{
     pageLoading: boolean;
     userId: number;
     userDetails: any | null;
+    rank: any[];
 }
 
 const userService:UserService = new UserService;
@@ -31,6 +32,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
             pageLoading:false,
             userId: 1,
             userDetails: null,
+            rank : [],
         };
         
     }
@@ -47,7 +49,10 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
                 .then((res:any)=>{
                     this.setState({userDetails:res})
                 })
-
+            await userService.getRank()
+                .then((res:any)=>{
+                    this.setState({rank:res})
+                })
             this.setState({pageLoading: false})
         })();
     }
@@ -55,6 +60,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         this._loadData();
     }
     render(){
+        const { rank } = this.state;
         return (
             <Container>
                 <Row>
@@ -62,7 +68,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
                     { this._renderUserProfile() }
                 </Col>
                 <Col md={3} >
-                    <Ranking rankList={md.rank} />
+                    <Ranking rankList={rank} />
                 </Col>
                 </Row>
                 <Row>

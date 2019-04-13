@@ -14,6 +14,11 @@ export class UserService {
             method:'GET'})
             .then((res:any) => {return res})
     }
+    public getRank(){
+        return api.fetch(this.domain+'/rank',{
+            method:'POST'})
+            .then((res:any) => {return res})
+    }
     public get(id:number){
         return api.fetch(this.domain+'/'+id,{
             method:'GET'})

@@ -30,7 +30,7 @@ export class Ranking extends Component<Props, State>{
                         <Row className='align-items-center'>
                             <Col sm={1}>{(k+1)+'.'}</Col>
                             <Col sm={3} className='text-center'><Image src={i.pic} className='shadow-sm' width={30} height={30} roundedCircle/></Col>
-                            <Col>{i.username}</Col>
+                            <Col sm={5}>{i.username}</Col>
                             <Col sm={2} className='text-center'>{i.challenges}</Col>
                         </Row>
                     </div>
