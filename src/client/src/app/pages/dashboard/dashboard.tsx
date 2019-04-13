@@ -8,6 +8,7 @@ import { Ranking } from '../../../lib/components/ranking/ranking';
 import { ChallengesUser } from '../../../lib/components/challengesUser/challengesUser';
 import { UserService } from '../../../services/UserService';
 import { UserProfile } from '../../../lib/components/userProfile/userProfile';
+import { withRouter } from 'react-router';
 
 interface DashboardProps{
     location?: any;
@@ -35,7 +36,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
     }
     private _renderUserProfile(){
         if(!!this.state.userDetails){
-            return <UserProfile user={ this.state.userDetails }/>
+        return <UserProfile user={ this.state.userDetails } {...this.props}/>
         }
         return <div></div>
     }
