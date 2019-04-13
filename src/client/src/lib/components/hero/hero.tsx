@@ -19,7 +19,7 @@ export class Hero extends React.Component{
         };
         return(
             <Container fluid className="pb-5 px-0 position-relative">
-                <div id="moon" className="bg-winter d-flex"></div>
+                {/* <div id="moon" className="bg-winter d-flex"></div> */}
                 <Container fluid={ window.innerWidth < 992 ? true : false}>
                     <Card style={{zIndex:1}}>
                     <Row>

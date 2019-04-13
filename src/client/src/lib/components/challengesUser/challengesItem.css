@@ -1,0 +1,10 @@
+.item{
+    border-left: 4px solid var(--primary);
+}
+.bg-gray{
+    background-color: #f5f5f5
+}
+
+.nav-item:hover{
+    background-color: rgba(0, 188, 212, 0.2)
+}

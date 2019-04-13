@@ -65,13 +65,12 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
     render(){
         return (
 
-            <Navbar bg="dark" variant="dark" className="sticky-top bg-winter">
-                <Link className="" to="/" ><img
+            <Navbar bg="white" variant="light" className="sticky-top shadow-sm">
+                <Link className="mx-3" to="/" ><img
                     src="/images/logo2.png"
                     width="125"
                     height="50"
-                    className="d-inline-block align-top"
-                    alt="React Bootstrap logo"/>
+                    className="d-inline-block align-top"/>
                 </Link>
                 <Nav className="ml-auto">
                     {this._renderNavItems(this.props.items)}
