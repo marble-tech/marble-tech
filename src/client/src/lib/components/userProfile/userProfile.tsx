@@ -18,6 +18,7 @@ interface UserDetails{
 
 interface Props{
     user:UserDetails;
+    history?:any;
 }
 interface State{
     isEditing: boolean;
@@ -53,6 +54,8 @@ export class UserProfile extends Component<Props, State>{
     }
     private _handleEditingState(){
         let { isEditing } = this.state;
+        if(!isEditing) { this.props.history.push('/dashboard')}
+
         this.setState({isEditing: !isEditing})
     }
     private _handleShowUpdatePic() {
