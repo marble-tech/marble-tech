@@ -6,9 +6,11 @@ import { Main } from "../../lib/components/main/main";
 
 class Layout extends React.Component {
     public render() {
-        const HeaderM = withRouter(({ history }) =>
+        const HeaderM = withRouter(({ history, location, match }) =>
                     <Header
                         history={history}
+                        location={location}
+                        match={match}
                         items={
                             routes.filter(item => item.displayInNavBar !== false)
                                 .map(item => {

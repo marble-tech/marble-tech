@@ -25,7 +25,7 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState>{
     render(){
         const { withID } = this.props
         return (
-            <ul id="sider" className='nav flex-column py-5'>
+            <ul id="sider" className='nav flex-column py-5 bg-light border-right shadow h-100'>
                 {
                     this.props.listItems.map((item:any, key:any) => 
                         <li className={'nav-item h6 px-3 ' + (this.props.actualPath === item.path ? ' active':'')} key={key} onClick={()=>this._handleListClick(key)}>
