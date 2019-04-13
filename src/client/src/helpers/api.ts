@@ -15,7 +15,6 @@ export class ApiService {
         if(authGuard.loggedIn()){
             headers['x-auth-token'] = authGuard.getToken();
         }
-        console.log(options)
         return fetch(url,{
             ...options,
             headers

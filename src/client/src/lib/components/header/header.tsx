@@ -42,7 +42,6 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
             return (
                 items.filter((i:NavbarItem) => i.onlyGuest !== true).map((item, key) => {
                     let prefix = item.href.split("/");
-                    console.log(p, prefix)
                     return (
                         <div key={key} className={"row no-gutters align-items-center"+(p[1] === prefix[1]? ' navActive':'')} style={{height:"70px"}}>
                             <Link className="nav-link align-items-center" to={item.href}  >
