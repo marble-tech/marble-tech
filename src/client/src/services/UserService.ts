@@ -29,7 +29,7 @@ export class UserService {
     }
     public uploadImage(id:number, image:File){
         return api.fetch(this.domain+'/'+id+'/profileImage',{
-            "Content-Type": "image/jpeg;image/png",
+            "Content-Type": "multipart/form-data",
             method:'POST',
             body: image
         })
