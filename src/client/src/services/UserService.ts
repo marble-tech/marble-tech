@@ -31,7 +31,7 @@ export class UserService {
         return api.fetch(this.domain+'/'+id+'/profileImage',{
             "Content-Type": "multipart/form-data",
             method:'POST',
-            body: image
+            file: image
         })
         .then((res:any) => {return res})
     }
