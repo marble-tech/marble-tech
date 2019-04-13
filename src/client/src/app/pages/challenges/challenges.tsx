@@ -82,7 +82,6 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     private _renderChallengeDescription() {
         const { description } = this.state;
         if (!!description) {
-            console.log(description)
             let data = description.split('<CodeBlock>')
             return  data.map((item, index) =>{
                 if (index%2==1){
