@@ -15,6 +15,14 @@ const routes = [
     action: userController.findAll
   },
   {
+    method: 'post',
+    path: '/rank',
+    middlewares: [authMiddleware],
+    description: 'get users rank',
+    body: ['none'],
+    action: userController.getRank
+  },
+  {
     method: 'get',
     path: '/:id',
     middlewares: [hollow],

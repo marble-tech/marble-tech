@@ -158,7 +158,6 @@ export class ChallengeController {
       res.status(500).json({Error: errors});
     }
   }
-
 }
 
 // retrieve and clean error messages:
