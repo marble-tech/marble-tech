@@ -69,7 +69,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
         if (!!this.state.error) {
             return <div className="text-center" style={{
                 width: "100%",
-                marginTop: "0.25rem",
+                marginBottom: "0.25rem",
                 fontSize: "80%",
                 color: "#dc3545"}}>{this.state.error}</div>;
         } else {
@@ -82,7 +82,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
             await auth.login(this.state.email, this.state.password)
                 .then((res:any) => {
                     this.setState({ error: null });
-                    this.props.history.push("/dasboard");
+                    this.props.history.push("/dashboard");
                 })
                 .catch((err:any) => {
                     console.log(err)

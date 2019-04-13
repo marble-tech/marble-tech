@@ -1,6 +1,8 @@
 import React, { Component, CSSProperties } from 'react';
 import { Collapse, Row, Col, Container } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { EditUserProfile } from '../editUserProfile/editUserProfile';
 
 interface UserDetails{
     email: string;
@@ -16,44 +18,48 @@ interface Props{
     user:UserDetails;
 }
 interface State{
+    isEditing: boolean;
 }
+
 export class UserProfile extends Component<Props, State>{
     constructor(props:Props){
         super(props);
         this.state = {
+            isEditing: false
         }
     }
     private _renderImage(){
         const { profileImage } = this.props.user
         if(!!profileImage){
-            console.log("foto")
             return <Image src={profileImage.url} width={205} height={215} roundedCircle className="mb-3"/>
         }
         return <Image src="" width={205} height={215} roundedCircle className="mb-3"/>
         
     }
-    render(){
+    private _renderEditUserProfile(){
         const detailCSS:CSSProperties = {
             color:"dimgray"
         }
-        const {
-            email,
-            f_name,
-            l_name,
-            username,
-        } = this.props.user
+        let { isEditing } = this.state;
+        const { user } = this.props;
+        if (isEditing){
+            return <EditUserProfile user={user}/>
+        } 
+        return <div>
+            <h5 className='pb-1 pl-4'>Username: <span style={detailCSS}>{user.username}</span></h5>
+            <h5 className='pb-1 pl-4'>Email: <span style={detailCSS}>{user.email}</span></h5>
+            <h5 className='pb-1 pl-4'>First Name: <span style={detailCSS}>{user.f_name}</span></h5>
+            <h5 className='pb-1 pl-4'>Last Name: <span style={detailCSS}>{user.l_name}</span></h5>
+            <Button className="float-right mx-3" onClick={() => this.setState({isEditing: !isEditing})}>Edit</Button>
+        </div>
+    }
+    render(){
         return (
             <Container className='bg-white shadow-sm my-5 py-3' style={{borderBottom: "4px solid var(--primary)"}}>
                 <h2 className='pb-2 pl-3'>User Profile</h2>
                 <Row className='align-items-center'>
-                    
                     <Col>
-                        <h5 className='pb-1 pl-4'>Username: <span style={detailCSS}>{username}</span></h5>
-                        <h5 className='pb-1 pl-4'>Email: <span style={detailCSS}>{email}</span></h5>
-                        <h5 className='pb-1 pl-4'>First Name: <span style={detailCSS}>{f_name}</span></h5>
-                        <h5 className='pb-1 pl-4'>Last Name: <span style={detailCSS}>{l_name}</span></h5>
-                        <h5 className='pb-1 pl-4'>Email: <span style={detailCSS}>{email}</span></h5>
-                        {/* profileImage, */}
+                        {this._renderEditUserProfile()}
                     </Col>
                     <Col className='text-center border-left'>
                         {this._renderImage()}

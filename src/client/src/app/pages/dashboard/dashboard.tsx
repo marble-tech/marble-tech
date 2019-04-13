@@ -54,7 +54,6 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         (async () => {
             await userService.get(this.state.userId)
                 .then((res:any)=>{
-                    console.log(res)
                     this.setState({userDetails:res})
                 })
 

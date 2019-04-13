@@ -90,7 +90,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
         if(!!this.state.err_form ){
             return <div className="text-center" style={{
                 width: "100%",
-                marginTop: "0.25rem",
+                marginBottom: "0.25rem",
                 fontSize: "80%",
                 color: "#dc3545"}}>{this.state.err_form}</div>;
         } else {
@@ -122,7 +122,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
             return(<Row className="h-100 pr-4 align-items-center">
                 <Col className="text-center">
                 <h2>Thank you!!!</h2>
-                <h5>Know you are all set! <Link to="/login">Login</Link> and start your first challenge now!</h5>
+                <h5>You are all set! <Link to="/login">Login</Link> and start your first challenge now!</h5>
                 
                 </Col>
             </Row>)
