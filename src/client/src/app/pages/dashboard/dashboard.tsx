@@ -33,16 +33,6 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         };
         
     }
-    private _renderServerErrors() {
-        if (!!this.state.error) {
-            return <div className="text-center h5" style={{
-                width: "100%",
-                marginTop: "0.25rem",
-                color: "#dc3545"}}><strong>Error: </strong>{this.state.error}</div>;
-        } else {
-            return <div></div>;
-        }
-    }
     private _renderUserProfile(){
         if(!!this.state.userDetails){
             return <UserProfile user={ this.state.userDetails }/>
