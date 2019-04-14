@@ -159,26 +159,3 @@ export class ChallengeController {
     }
   }
 }
-
-// retrieve and clean error messages:
-
-      // // 1 - retrieve error text
-      // const errorText = error.diagnosticText;
-      // // 2 - remove color characters
-      // const cleanText = (errorText as string).replace((/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g), '');
-      // // 3 - remove line breaks
-      // const cleanestText = cleanText.replace((/\r?\n|\r/g), '');
-      // // 4 - split by dash symbol
-      // const errors = cleanestText.split(' - ');
-      // // 5 - get only strings that contains 'error'
-      // const onlyErrors = errors.filter((error)=>{
-      //   if (error.includes('error')) return error;
-      // });
-      // // 6 - split by dot and retrieve only first substring
-      // // const cleanErrors = onlyErrors.map((error, i)=> {
-      // //   return error.split('tempChallenges/')[i].concat('.');
-      // // });
-
-      // const last = onlyErrors.map((e, i) => {
-      //   return e;
-      // });

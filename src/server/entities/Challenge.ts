@@ -7,6 +7,12 @@ export enum ChallengeLevel {
   ADVANCED = "advanced"
 }
 
+export enum ChallengeStatus {
+  TODO = "todo",
+  ATTEMPTED = "attempted",
+  PASSED = "passed"
+}
+
 @Entity('challenges')
 export class Challenge {
 

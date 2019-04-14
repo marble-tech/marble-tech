@@ -23,6 +23,14 @@ const routes = [
     action: userController.getRank
   },
   {
+    method: 'post',
+    path: '/challenges',
+    middlewares: [authMiddleware],
+    description: 'get all challenges with user status',
+    body: ['none'],
+    action: userController.getUserChallenges
+  },
+  {
     method: 'get',
     path: '/:id',
     middlewares: [hollow],

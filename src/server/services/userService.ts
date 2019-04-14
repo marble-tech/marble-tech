@@ -1,6 +1,11 @@
 import { ProfileImage } from './../entities/ProfileImage';
 import { User } from '../entities/User';
 import { getUserRepository } from '../repositories/userRepository';
+import { UserChallenge } from '../entities/UserChallenge';
+import { getRepository, Repository} from 'typeorm';
+import { Challenge } from '../entities/Challenge';
+import { getChallengeRepository } from '../repositories/challengeRepository';
+import { getUserChallengeRepository } from '../repositories/userChallengeRepository';
 
 // ask remo!
 
@@ -75,10 +80,10 @@ export class UserService {
       .select("users.id", 'id') // get id
       .addSelect("users.username", 'username') // get username
       .addSelect('MAX("uc"."challengeId")', 'challenges') // get the higher challenge number (where clause will get only passed ones)
-      .addSelect('"p"."url"', 'pic') // get pics if existent 
+      .addSelect('"p"."url"', 'pic') // get pic if existent 
       .innerJoin('users_challenges', 'uc', '"users"."id" = "uc"."userId"') // join with user challenges
       .leftJoin('profile_images', 'p', '"users"."id" = "p"."userId"') // joing with profile_images
-      .where('"uc"."score" = 100') // WHERE challenge was solves (score 100)
+      .where('"uc"."score" = 100') // WHERE challenge was solved (score 100)
       .groupBy('"users"."id","username","url"') // group by user
       .orderBy('MAX("uc"."challengeId")', 'DESC') // order by highest challenge id
       .limit(limit)
@@ -87,4 +92,11 @@ export class UserService {
     return rank;
   }
 
+  public getChallengesWithScore(userId: number){
+
+    // I couldn't make it work using regular TypeORM functions. So I've implemented manual query.
+    // Other problem is it uses ChallengeRepository. So, it might be better to move it to that file later.
+    const challenges = getChallengeRepository().query("SELECT DISTINCT \"c\".\"id\", \"c\".\"title\", \"c\".\"description\", \"c\".\"level\", \r\n(SELECT  MAX(\"score\") FROM \"users_challenges\" WHERE (\"userId\" = "+userId+" AND \"challengeId\" = \"c\".\"id\")) as \"maxScore\" FROM \"challenges\" \"c\"\r\n\tLEFT JOIN \"users_challenges\" \"uc\" ON \"uc\".\"challengeId\" = \"c\".\"id\"\r\n\tORDER BY \"c\".\"id\";");
+    return challenges;
+  }
 }

@@ -9,6 +9,8 @@ import { testFileRemover } from '../handlers/testFileRemover';
 import * as fs from 'fs';
 import * as path from 'path'
 import { convertToDataUrl } from '../handlers/convertToDataUrl';
+import { ChallengeStatus } from '../entities/Challenge';
+import { UserDashboardChallengeEntry } from '../entities/UserChallenge';
 
 
 const userService = new UserService();
@@ -148,7 +150,7 @@ export class UserController {
                 const profileImage = await profileImageService.create(image, user);
                 return res.status(200).json(profileImage);
             }
-            
+
             // If user has profile image, update it
 
             // Create data url
@@ -178,10 +180,10 @@ export class UserController {
             // const rank: RankEntry[] = await userService.getRank(limit); // get whole rank
 
             // if rank is null, return error
-            if(!rank) return res.status(403).json({Error: "Couldn't retrieve rank."});
+            if (!rank) return res.status(403).json({ Error: "Couldn't retrieve rank." });
 
             // add authUser flag (true when it's the logged user)
-            const flaggedRank = rank.map((user)=>{
+            const flaggedRank = rank.map((user) => {
                 (user.id == loggedId) ? user.authUser = true : user.authUser = false;
                 return user;
             })
@@ -193,6 +195,62 @@ export class UserController {
                 Error: "Exception caught!"
             })
         }
+    }
+
+    // This function might be moved to other file
+    public async getUserChallenges(req: express.Request, res: express.Response) {
+        try {
+            // get all challenges including the current user's score
+            const allChallengesWithScore: UserDashboardChallengeEntry[] = await userService.getChallengesWithScore((req as any).userId);
+            // return error if couldn't retrieve information
+            if (!allChallengesWithScore) return res.status(400).json({ Error: "Bad request" });
+
+            // Convert score to status
+            
+            // Galera. Aqui tentei usar map com uma funcão acessória e não rolou, pq n consegue acessar o this de dentro do map
+
+            // const allChallengesWithStatus: UserDashboardChallengeEntry[] = allChallengesWithScore.map(
+            //         (challenge => this._convertScoreToStatus(challenge)), this
+            //         );
+            
+            // iterate through array, check score, add status and remove score.
+
+            for (var _x = 0; _x < allChallengesWithScore.length; _x++) {
+                // tentei abstrair essa parte e criar uma funcão, mas dá erro
+                // allChallengesWithScore[_x] = this._convertScoreToStatus(allChallengesWithScore[_x]);
+                if (allChallengesWithScore[_x].maxScore == null) {
+                    allChallengesWithScore[_x].status = ChallengeStatus.TODO;
+                } else if (allChallengesWithScore[_x].maxScore == 100) {
+                    allChallengesWithScore[_x].status = ChallengeStatus.PASSED;
+                } else {
+                    allChallengesWithScore[_x].status = ChallengeStatus.ATTEMPTED;
+                }
+                delete allChallengesWithScore[_x].maxScore;
+            }
+
+            // return result
+            return res.status(200).json(allChallengesWithScore);
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                Error: "Exception caught!"
+            })
+        }
+    }
+
+    // Galera, não consegui usar esse método dentro do for loop acima. Alguém sabe pq?
+    // diz que não consegue ler a propriedade _convertScoreToStatus de undefined 
+    private _convertScoreToStatus(challenge: UserDashboardChallengeEntry) {
+        if (challenge.maxScore == null) {
+            challenge.status = ChallengeStatus.TODO;
+        } else if (challenge.maxScore == 100) {
+            challenge.status = ChallengeStatus.PASSED;
+        } else {
+            challenge.status = ChallengeStatus.ATTEMPTED;
+        }
+        delete challenge.maxScore;
+        return challenge;
     }
 
 }

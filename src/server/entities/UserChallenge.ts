@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, PrimaryColumn, ManyToOne, JoinColumn, Unique } from "typeorm";
-import { Challenge } from "./Challenge";
+import { Challenge, ChallengeLevel, ChallengeStatus } from "./Challenge";
 import { User } from "./User";
+import { number } from "joi";
 
 
 @Entity('users_challenges')
@@ -36,4 +37,13 @@ export class UserChallenge {
     this.user_attempt = user_attempt;
   }
 
+}
+
+export interface UserDashboardChallengeEntry{
+  id: number,
+  title: string,
+  description: string,
+  level: ChallengeLevel,
+  maxScore?: number,
+  status?: ChallengeStatus
 }
