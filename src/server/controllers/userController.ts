@@ -136,6 +136,8 @@ export class UserController {
             if (loggedUserId != userId) {
                 return res.status(403).json({ Error: 'Not allowed' });
             }
+            
+            console.log(req);
             // Get logged user
             const user = await userService.findById(loggedUserId);
             // If not found return 404 status
