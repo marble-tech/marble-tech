@@ -138,6 +138,7 @@ export class UserController {
             }
             
             console.log(req.file);
+            console.log(req.body);
             // Get logged user
             const user = await userService.findById(loggedUserId);
             // If not found return 404 status
