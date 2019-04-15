@@ -33,11 +33,11 @@ export class UserService {
         .then((res:any) => {return res})
     }
     public uploadImage(id:number, image:File){
-        let file = new FormData()
-        file.append("profileImage", image)
+        let data = new FormData()
+        data.append("file", image)
         return api.fetch(this.domain+'/'+id+'/profileImage',{
             method:'POST',
-            body: file
+            body: data
         })
         .then((res:any) => {return res})
     }
