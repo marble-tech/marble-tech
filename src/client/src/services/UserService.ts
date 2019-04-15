@@ -34,10 +34,10 @@ export class UserService {
     }
     public uploadImage(id:number, image:File){
         let data = new FormData()
-        data.append("file", image)
+        data.append("profileImage", image)
         return api.fetch(this.domain+'/'+id+'/profileImage',{
             method:'POST',
-            body: data
+            file: data
         })
         .then((res:any) => {return res})
     }
