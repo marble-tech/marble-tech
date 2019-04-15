@@ -6,7 +6,7 @@ interface Props{
     challengesUser:any[];
 }
 interface State{}
-export class ChallengesUser extends Component<Props, State>{
+export class  ChallengesUser extends Component<Props, State>{
     constructor(props:Props){
         super(props);
     }

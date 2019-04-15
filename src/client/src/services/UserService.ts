@@ -34,7 +34,7 @@ export class UserService {
     }
     public uploadImage(id:number, image:File){
         let data = new FormData()
-        data.append("file", image)
+        data.append("profileImage", image)
         return api.fetch(this.domain+'/'+id+'/profileImage',{
             method:'POST',
             body: data
@@ -54,6 +54,12 @@ export class UserService {
         })
         .then((res:any) => {return res})
     }
+    public getChallenges(id:number){
+        return api.fetch(this.domain+'/challenges',{
+            method:'POST'})
+            .then((res:any) => {return res})
+    }
+
 
 
 }

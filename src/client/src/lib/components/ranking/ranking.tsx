@@ -40,7 +40,7 @@ export class Ranking extends Component<Props, State>{
     render(){
         return (
             <div className='py-4'>
-                <h5 className='px-2'>Rank</h5>
+                <h5 className='px-2'>Challenges completed Rank</h5>
                 {this._renderRankList()}
             </div>
         )

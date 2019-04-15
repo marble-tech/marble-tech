@@ -2,7 +2,7 @@ import React, { Component, CSSProperties } from 'react';
 import { Collapse, Row, Col, Container } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { validateUser } from "../../../validation/userValidation";
+import { validateUserEdit } from "../../../validation/userValidation";
 import { UserService } from '../../../services/UserService';
 import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -75,7 +75,7 @@ export class EditUserProfile extends Component<Props, State>{
             password: null,
             confirmPassword: null
         }
-        let validated = validateUser(data)
+        let validated = validateUserEdit(data)
         if (!!validated.error){
             
             let detail = validated.error.details[0]

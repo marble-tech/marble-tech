@@ -3,12 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Loading } from '../../../lib/components/loading/loading';
-import * as md from './mockData';
 import { Ranking } from '../../../lib/components/ranking/ranking';
 import { ChallengesUser } from '../../../lib/components/challengesUser/challengesUser';
 import { UserService } from '../../../services/UserService';
 import { UserProfile } from '../../../lib/components/userProfile/userProfile';
-import { withRouter } from 'react-router';
 
 interface DashboardProps{
     location?: any;
@@ -21,6 +19,7 @@ interface DashboardState{
     userId: number;
     userDetails: any | null;
     rank: any[];
+    userChallenges: any[];
 }
 
 const userService:UserService = new UserService;
@@ -33,12 +32,13 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
             userId: 1,
             userDetails: null,
             rank : [],
+            userChallenges : [],
         };
         
     }
     private _renderUserProfile(){
         if(!!this.state.userDetails){
-        return <UserProfile user={ this.state.userDetails } {...this.props}/>
+        return <UserProfile user={ this.state.userDetails } {...this.props} onUpdate={this._loadData.bind(this)}/>
         }
         return <div></div>
     }
@@ -53,6 +53,10 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
                 .then((res:any)=>{
                     this.setState({rank:res})
                 })
+            await userService.getChallenges(this.state.userId)
+                .then((res:any)=>{
+                    this.setState({userChallenges:res})
+                })
             this.setState({pageLoading: false})
         })();
     }
@@ -60,7 +64,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         this._loadData();
     }
     render(){
-        const { rank } = this.state;
+        const { rank, userChallenges } = this.state;
         return (
             <Container>
                 <Row>
@@ -73,9 +77,9 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
                 </Row>
                 <Row>
                     <Col>
-                        <ChallengesUser challengesUser={md.challenges}/>
+                        <ChallengesUser challengesUser={userChallenges}/>
                     </Col>
-                </Row>
+                </Row>    
 
                 
                 <Loading show={this.state.pageLoading}/>
