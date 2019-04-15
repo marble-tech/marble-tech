@@ -6,7 +6,7 @@ export class ApiService {
     fetch (url:string, options:any):any {
         let headers:any= {};
         // if content type is not defined
-        if(!options['Content-Type'] && !options['data']){
+        if(!options['Content-Type'] && !(options['body'] instanceof FormData) ){
             headers = {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -15,7 +15,6 @@ export class ApiService {
         if(authGuard.loggedIn()){
             headers['x-auth-token'] = authGuard.getToken();
         }
-        console.log(options)
         return fetch(url,{
             ...options,
             headers

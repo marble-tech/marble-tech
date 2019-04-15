@@ -29,11 +29,6 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
         super(props);
             this.state = {isLogged:authGuard.loggedIn()}
         };
-    // componentDidUpdate(nextProps:any, prevState:any) {
-    //     if((prevState.isLogged!==authGuard.loggedIn()) && (authGuard.loggedIn()==true)){
-    //         console.log("foi")
-    //     }
-    // }
     private _renderNavItems(items:NavbarItem[]){
         const { location } = this.props;
         let p = location.pathname.split("/")

@@ -19,6 +19,7 @@ interface UserDetails{
 interface Props{
     user:UserDetails;
     history?:any;
+    onUpdate: () => void;
 }
 interface State{
     isEditing: boolean;
@@ -54,9 +55,8 @@ export class UserProfile extends Component<Props, State>{
     }
     private _handleEditingState(){
         let { isEditing } = this.state;
-        if(!isEditing) { this.props.history.push('/dashboard')}
-
         this.setState({isEditing: !isEditing})
+        if(isEditing ){ this.props.onUpdate() }
     }
     private _handleShowUpdatePic() {
         this.setState({ isUploadingPic: true });
@@ -90,8 +90,10 @@ export class UserProfile extends Component<Props, State>{
                     .catch((err:any) => {
                         this.setState({errUploadImage: err.message})
                     });
+                    
                     this.setState({ isLoading: false, isUploadingPic: false })
             })()
+            this.props.onUpdate();
         }
     }
     private _renderPicUpload(){
@@ -119,6 +121,7 @@ export class UserProfile extends Component<Props, State>{
           </Modal>
         )
     }
+
     private _renderEditUserProfile(){
         const detailCSS:CSSProperties = {
             color:"dimgray"
@@ -136,6 +139,11 @@ export class UserProfile extends Component<Props, State>{
             <Button className="float-right mx-3" onClick={this._handleEditingState.bind(this)}>Edit</Button>
         </div>
     }
+    // componentDidUpdate(nextProps:any, prevState:any) {
+    //     if((prevState.isLogged!==authGuard.loggedIn()) && (authGuard.loggedIn()==true)){
+    //         console.log("foi")
+    //     }
+    // }
     render(){
         return (
             <Container className='bg-white shadow-sm my-5 py-3' style={{borderBottom: "4px solid var(--primary)"}}>

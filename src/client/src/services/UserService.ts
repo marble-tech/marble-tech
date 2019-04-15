@@ -54,6 +54,12 @@ export class UserService {
         })
         .then((res:any) => {return res})
     }
+    public getChallenges(id:number){
+        return api.fetch(this.domain+'/challenges',{
+            method:'POST'})
+            .then((res:any) => {return res})
+    }
+
 
 
 }

@@ -8,7 +8,7 @@ interface Challenge{
     id: number;
     description: string;
     level: string;
-    status: 'Done' | 'In Progress' | 'To Do';
+    status: 'passed' | 'attempted' | 'todo';
 }
 interface Props{
     challenge: Challenge;
@@ -28,11 +28,11 @@ export class ChallengesItem extends Component<Props, State>{
     }
     private _renderIcon(){
         const { status } = this.props.challenge;
-        if(status === 'Done'){
+        if(status === 'passed'){
             return  <i className="far fa-check-circle fa-2x" style={{color:'#00C851'}}></i>
-        } else if (status === 'In Progress'){
+        } else if (status === 'attempted'){
             return  <i className="far fa-pause-circle fa-2x" style={{color:'#fdd835'}}></i>
-        } else if (status === 'To Do'){
+        } else if (status === 'todo'){
             return  <i className="far fa-times-circle fa-2x" style={{color:'#CC0000'}}></i>
         }
         return <div></div>  
