@@ -56,7 +56,10 @@ export class UserProfile extends Component<Props, State>{
     private _handleEditingState(){
         let { isEditing } = this.state;
         this.setState({isEditing: !isEditing})
-        if(isEditing ){ this.props.onUpdate() }
+        if(isEditing ){
+            this.props.onUpdate()
+            window.location.reload()
+        }
     }
     private _handleShowUpdatePic() {
         this.setState({ isUploadingPic: true });
@@ -84,16 +87,15 @@ export class UserProfile extends Component<Props, State>{
         if(upProfileImage){
             (async()=>{
                 await userService.uploadImage(user.id, upProfileImage)
-                    .then((res:any) => {
-                        // should update image
-                    })
                     .catch((err:any) => {
                         this.setState({errUploadImage: err.message})
                     });
                     
                     this.setState({ isLoading: false, isUploadingPic: false })
+                await this.props.onUpdate();
+                window.location.reload()
             })()
-            this.props.onUpdate();
+            
         }
     }
     private _renderPicUpload(){

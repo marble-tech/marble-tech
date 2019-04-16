@@ -37,7 +37,7 @@ export class UserService {
         data.append("profileImage", image)
         return api.fetch(this.domain+'/'+id+'/profileImage',{
             method:'POST',
-            file: data
+            body: data
         })
         .then((res:any) => {return res})
     }

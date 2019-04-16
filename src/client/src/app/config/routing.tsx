@@ -41,7 +41,7 @@ export const routes: RouteConf[] = [
     { href: HREF.challenges, isIndex: false, title: "Challenges", path: PATHS.challenges, component: <Challenges/>, exact:false, isProtected:true },
     { href: HREF.login, isIndex: false, title: "Login", path: PATHS.login, component: <Home/>, exact:true, onlyGuest:true },
     { href: HREF.register, isIndex: false, title: "Register", path: PATHS.register, component: <Register/>, exact:true, onlyGuest:true },
-    { href: HREF.dashboard, isIndex: false, title: "Dashboar", path: PATHS.dashboard, component: <Dashboard/>, exact:true, onlyGuest:false, isProtected:true, displayInNavBar:false  },
+    { href: HREF.dashboard, isIndex: false, title: "Dashboard", path: PATHS.dashboard, component: <Dashboard/>, exact:true, onlyGuest:false, isProtected:true, displayInNavBar:false  },
     
 ]
 
