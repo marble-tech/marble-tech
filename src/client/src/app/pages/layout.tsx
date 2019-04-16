@@ -18,7 +18,8 @@ class Layout extends React.Component {
                                         href: item.href,
                                         isIndex: item.isIndex,
                                         title: item.title,
-                                        onlyGuest: item.onlyGuest || false
+                                        onlyGuest: item.onlyGuest || false,
+                                        isProtected: item.isProtected || false
                                     };
                                 })
                         }

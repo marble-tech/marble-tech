@@ -32,7 +32,7 @@ export default class UserDropdown extends Component<Props> {
             >
               <i className="fas fa-caret-down m-2"></i>
               { this.props.username }
-              <Image src="/images/profileImage.svg" className="mx-2" width={50} height={50} roundedCircle/>
+              <Image src={ this.props.profileImage } className="mx-2" width={50} height={50} roundedCircle/>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-15px'}}>
               <Link className="dropdown-item items" to='/dashboard'>
