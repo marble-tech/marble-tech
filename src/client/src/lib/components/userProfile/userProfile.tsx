@@ -134,10 +134,10 @@ export class UserProfile extends Component<Props, State>{
             return <EditUserProfile user={user} isEditing={this._handleEditingState.bind(this)}/>
         } 
         return <div>
-            <h5 className='pb-1 pl-4'>Username: <span style={detailCSS}>{user.username}</span></h5>
-            <h5 className='pb-1 pl-4'>Email: <span style={detailCSS}>{user.email}</span></h5>
             <h5 className='pb-1 pl-4'>First Name: <span style={detailCSS}>{user.f_name}</span></h5>
             <h5 className='pb-1 pl-4'>Last Name: <span style={detailCSS}>{user.l_name}</span></h5>
+            <h5 className='pb-1 pl-4'>Username: <span style={detailCSS}>{user.username}</span></h5>
+            <h5 className='pb-1 pl-4'>Email: <span style={detailCSS}>{user.email}</span></h5>
             <Button className="float-right mx-3" onClick={this._handleEditingState.bind(this)}>Edit</Button>
         </div>
     }
