@@ -1,21 +1,43 @@
 import React, { Component } from 'react'
 
-export default class TermsOfService extends Component {
+interface State {
+  script: any
+}
+
+interface Props {
+
+}
+
+export default class TermsOfService extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      script: null
+    };
+  }
 
   componentDidMount() {
-    const script = document.createElement("script");
-    script.src = "https://consent.cookiebot.com/906a8086-e323-4d1d-bc6b-f5502aa4e320/cd.js";
-    script.id = "CookieDeclaration";
-    script.async = true;
-    const footer = document.getElementById('app-footer');
+    this.setState({ script: this._renderScript() })
+  }
 
-    document.body.insertBefore(script, footer);
+  private _renderScript() {
+    return (
+      <div>
+        <script
+          id="CookieDeclaration"
+          src="https://consent.cookiebot.com/906a8086-e323-4d1d-bc6b-f5502aa4e320/cd.js"
+          type="text/javascript"
+          async
+        ></script>
+      </div>
+    )
   }
 
   render() {
     return (
       <React.Fragment>
-
+        {this.state.script}
       </React.Fragment>
     )
   }
