@@ -8,6 +8,8 @@ import { ChallengesUser } from '../../../lib/components/challengesUser/challenge
 import { UserService } from '../../../services/UserService';
 import { UserProfile } from '../../../lib/components/userProfile/userProfile';
 import { AuthService } from '../../../services/AuthService';
+import { setAuthToken } from '../../../lib/components/withAuth/withAuth';
+import { getToken } from '../../../helpers/authGuard';
 
 interface DashboardProps{
     location?: any;
@@ -50,7 +52,6 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         (async () => {
 
             const loggedUser = await authService.authUser();
-            console.log(loggedUser);
             this.setState({userDetails: loggedUser});
 
             await userService.getRank()
@@ -62,6 +63,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
                     this.setState({userChallenges:res})
                 })
             this.setState({pageLoading: false})
+            await setAuthToken(getToken());
         })();
     }
     componentDidMount() {

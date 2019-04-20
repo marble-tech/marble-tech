@@ -15,9 +15,11 @@ export default class UserDropdown extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
+
   private _logout(){
     auth.logout();
   }
+  
   render() {
     return (
       <React.Fragment>

@@ -7,103 +7,70 @@ import UserDropdown from '../user-dropdown/user-dropdown';
 import './header.css';
 import { AuthService } from '../../../services/AuthService';
 import { Loading } from '../loading/loading';
+import { withAuth } from '../withAuth/withAuth';
+import { routes } from '../../../app/config/routing';
 
 interface NavbarItem {
     isIndex?: boolean;
     title: string;
     href: string;
     onlyGuest: boolean;
-    isProtected:boolean;
+    isProtected: boolean;
 }
 
-interface HeaderProps{
-    items:NavbarItem []
-    history?:any
-    location?:any
-    match?:any
+interface HeaderProps {
+    items: NavbarItem[]
+    token: string | null;
 }
 
-interface HeaderState{
-    isLogged:boolean;
+interface HeaderState {
+    isLogged: boolean;
     isLoading: boolean;
-    user:{
-        userId:number,
-        username:string,
-        profileImage:any,
+    user: {
+        userId: number,
+        username: string,
+        profileImage: any,
     } | null;
 }
-const auth:AuthService = new AuthService;
-export class Header extends React.Component<HeaderProps, HeaderState>{
+const auth: AuthService = new AuthService;
+
+export class _Header extends React.Component<HeaderProps, HeaderState>{
     public constructor(props: HeaderProps) {
         super(props);
-            this.state = {
-                isLoading:false,
-                isLogged:authGuard.loggedIn(),
-                user: null
-            }
-        };
-    private _renderNavItems(items:NavbarItem[]){
-        const { location } = this.props;
-        let p = location.pathname.split("/")
-        
-        if(authGuard.loggedIn()){
-            return (
-                items.filter((i:NavbarItem) => i.onlyGuest !== true).map((item, key) => {
-                    let prefix = item.href.split("/");
-                    return (
-                        <div key={key} className={"row no-gutters align-items-center"+(p[1] === prefix[1]? ' navActive':'')} style={{height:"70px"}}>
-                            <Link className="nav-link align-items-center" to={item.href}  >
-                                {item.title}
-                            </Link>
-                        </div>
-                    );
-                })
-            )
-        }else{
-            return (
-                items.filter((i:NavbarItem) => i.isProtected !== true).map((item, key) => {
-                    let prefix = item.href.split("/");
-                    return (
-                        <div key={key} className={"row no-gutters align-items-center"+(p[1] === prefix[1]? ' navActive':'')} style={{height:"70px"}}>
-                            <Link className="nav-link" to={item.href} key={key}>
-                                {item.title}
-                            </Link>
-                        </div>
-                        
-                    );
-                })
-            )
-        }        
-    }
-    private _renderUserPanel(){
-        if(authGuard.loggedIn() && !!this.state.user){
-            let {username, profileImage} = this.state.user!;
-            return <UserDropdown username={username} profileImage={profileImage.url} />
+        this.state = {
+            isLoading: false,
+            isLogged: authGuard.loggedIn(),
+            user: null
         }
-        return <div></div>
+    };
+
+    async componentDidMount(){
+        if(this.props.token){
+            await this._loadData();
+        }
     }
-    private _loadData(){
-        this.setState({isLoading: true});
-        (async()=>{
-            await auth.authUser()
-                .then((res:any)=>{
-                    let user = {
-                        userId: res.id,
-                        username: res.username,
-                        profileImage: res.profileImage,
-                    } 
-                    
-                    this.setState({user: user});
-                }).catch((e:any)=>{
-                    console.log(e)
-                })
-                this.setState({isLoading: false});
-        })()
+
+    async componentDidUpdate() {
+        if(!this.state.user && this.props.token){
+            await this._loadData()
+        }
     }
-    componentDidMount(){
-        this._loadData()
+
+    private async _loadData() {
+        try {
+            const loggedUser = await auth.authUser();
+            this.setState({user: {
+                userId: loggedUser.id,
+                username: loggedUser.username,
+                profileImage: loggedUser.profileImage
+            }});
+            
+        }catch(error) {
+            console.log(error);
+        }
     }
-    render(){
+
+    render() {
         return (
 
             <Navbar bg="white" variant="light" className="sticky-top shadow-sm border-bottom border-primary py-0">
@@ -111,16 +78,67 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
                     src="/images/logo2.png"
                     width="125"
                     height="50"
-                    className="d-inline-block align-top"/>
+                    className="d-inline-block align-top" />
                 </Link>
                 <Nav className="ml-auto align-items-center">
                     {this._renderNavItems(this.props.items)}
                     {this._renderUserPanel()}
                 </Nav>
-                <Loading show={this.state.isLoading}/>
+                <Loading show={this.state.isLoading} />
             </Navbar>
         )
-        
+
+    }
+
+    private _renderNavItems(items: NavbarItem[]) {
+
+        if (authGuard.loggedIn()) {
+            return (
+                items.filter((i: NavbarItem) => i.onlyGuest !== true).map((item, key) => {
+                    return (
+                        <div key={key} className={"row no-gutters align-items-center" } style={{ height: "70px" }}>
+                            <Link className="nav-link align-items-center" to={item.href}  >
+                                {item.title}
+                            </Link>
+                        </div>
+                    );
+                })
+            )
+        } else {
+            return (
+                items.filter((i: NavbarItem) => i.isProtected !== true).map((item, key) => {
+                    return (
+                        <div key={key} className={"row no-gutters align-items-center"} style={{ height: "70px" }}>
+                            <Link className="nav-link" to={item.href} key={key}>
+                                {item.title}
+                            </Link>
+                        </div>
+
+                    );
+                })
+            )
+        }
+    }
+
+    private _renderUserPanel() {
+        if (authGuard.loggedIn() && !!this.state.user) {
+            let { username, profileImage } = this.state.user!;
+            return <UserDropdown username={username} profileImage={profileImage.url} />
+        }
+        return <div></div>
     }
 
 }
+
+export const Header = withAuth(props => <_Header token={props.authToken} items={
+    routes.filter(item => item.displayInNavBar !== false)
+        .map(item => {
+            return {
+                href: item.href,
+                isIndex: item.isIndex,
+                title: item.title,
+                onlyGuest: item.onlyGuest || false,
+                isProtected: item.isProtected || false
+            };
+        })
+}/>);
