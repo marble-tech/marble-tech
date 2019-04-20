@@ -6,7 +6,7 @@ import './footer.css';
 export class Footer extends React.Component{
     render(){
         return (
-            <Container fluid className="bg-secondary" style={{minHeight:"200px"}}>
+            <Container id='app-footer' fluid className="bg-secondary" style={{minHeight:"200px"}}>
                 <Link to={'/termsOfService'}><h6 className='tos'>Terms of Service</h6></Link>
             </Container>
         )
