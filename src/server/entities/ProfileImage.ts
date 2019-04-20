@@ -1,6 +1,9 @@
 import { User } from './User';
 import { Column, PrimaryGeneratedColumn, OneToOne, Entity, JoinColumn } from 'typeorm';
 
+/**
+ * ProfileImage class
+ */
 @Entity('profile_images')
 export class ProfileImage {
 

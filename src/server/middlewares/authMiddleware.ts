@@ -1,7 +1,12 @@
 import * as express from "express";
 import jwt from "jsonwebtoken";
 
-// Middleware function used to log request URLs
+/**
+ * Middleware function used to log request URLs
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export function loggerMiddleware(
     req: express.Request,
     res: express.Response,
@@ -11,7 +16,12 @@ export function loggerMiddleware(
     next();
 }
 
-// Middleware function used for JWT token validation
+/**
+ * Middleware function used for JWT token validation
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export function authMiddleware(
     req: express.Request,
     res: express.Response,

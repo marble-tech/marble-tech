@@ -5,6 +5,7 @@ import { hollow } from '../middlewares/hollowMiddleware';
 
 const userController = new UserController();
 
+// Store all user routes in an array
 const routes = [
   {
     method: 'get',
