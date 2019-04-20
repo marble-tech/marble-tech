@@ -1,18 +1,27 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { UserChallenge } from "./UserChallenge";
 
+/**
+ * ChallengeLevel enum
+ */
 export enum ChallengeLevel {
   BASIC = "basic",
   INTERMEDIATE = "intermediate",
   ADVANCED = "advanced"
 }
 
+/**
+ * ChallengeStatus enum
+ */
 export enum ChallengeStatus {
   TODO = "todo",
   ATTEMPTED = "attempted",
   PASSED = "passed"
 }
 
+/**
+ * Challenge entity class
+ */
 @Entity('challenges')
 export class Challenge {
 

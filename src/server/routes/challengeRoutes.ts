@@ -6,6 +6,7 @@ import { hollow } from '../middlewares/hollowMiddleware';
 
 const challengeController = new ChallengeController();
 
+// Store all challenge routes in an array
 const routes = [
   {
     method: 'get',

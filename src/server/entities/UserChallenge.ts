@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, PrimaryColumn, ManyToOne, JoinColumn, Unique } from "typeorm";
 import { Challenge, ChallengeLevel, ChallengeStatus } from "./Challenge";
 import { User } from "./User";
-import { number } from "joi";
 
-
+/**
+ * User Challenge class
+ */
 @Entity('users_challenges')
 @Unique(['user', 'challenge', 'date'])
 export class UserChallenge {

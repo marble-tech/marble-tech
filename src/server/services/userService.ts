@@ -1,49 +1,73 @@
-import { ProfileImage } from './../entities/ProfileImage';
 import { User } from '../entities/User';
 import { getUserRepository } from '../repositories/userRepository';
-import { UserChallenge } from '../entities/UserChallenge';
-import { getRepository, Repository} from 'typeorm';
-import { Challenge } from '../entities/Challenge';
 import { getChallengeRepository } from '../repositories/challengeRepository';
-import { getUserChallengeRepository } from '../repositories/userChallengeRepository';
 
-// ask remo!
-
+/**
+ * UserService class
+ */
 export class UserService {
 
+  /**
+   * Default constructor
+   */
   public constructor() { }
 
+  /**
+   * Create a new user
+   * @param newUser 
+   */
   public create(newUser: any) {
     // create User object from information provided
     const user = new User(
       newUser.f_name, newUser.l_name,
       newUser.email, newUser.password, newUser.username
     );
-    return getUserRepository().save(user);// save user to DB
+    return getUserRepository().save(user);
   }
 
+  /**
+   * Save a user to database
+   */
   public save(user: User) {
     return getUserRepository().save(user);
   }
 
+  /**
+   * Fetch all users from database with
+   * its profile image
+   */
   public findAll() {
-    // add other relations
     return getUserRepository().find({ relations: ['profileImage'] });
   }
 
+  /**
+   * Fetch a user by its id from database. 
+   * Returns its profile image
+   * @param id 
+   */
   public findById(id: number) {
-    // add other relations
     return getUserRepository().findOne(id, { relations: ['profileImage'] });
   }
 
+  /**
+   * Updates a user in database
+   * @param user 
+   * @param values 
+   */
   public update(user: User, values: any) {
-    const properties = Object.keys(values); // determine the keys (properties, fields) available
-    properties.forEach(property => { // for each property 
-      (user as any)[property] = values[property]; // update User information
+    // determine the keys (properties, fields) available
+    const properties = Object.keys(values); 
+    // for each property update the value
+    properties.forEach(property => { 
+      (user as any)[property] = values[property];
     });
-    return getUserRepository().save(user); // save updated user
+    return getUserRepository().save(user);
   }
 
+  /**
+   * Delete a user by its id in database
+   * @param id 
+   */
   public delete(id: number) {
     return getUserRepository().delete(id);
   }
@@ -92,11 +116,16 @@ export class UserService {
     return rank;
   }
 
+  /**
+   * Fetch all challenges of a user with its scores
+   * @param userId 
+   */
   public getChallengesWithScore(userId: number){
 
     // I couldn't make it work using regular TypeORM functions. So I've implemented manual query.
     // Other problem is it uses ChallengeRepository. So, it might be better to move it to that file later.
-    const challenges = getChallengeRepository().query("SELECT DISTINCT \"c\".\"id\", \"c\".\"title\", \"c\".\"description\", \"c\".\"level\", \r\n(SELECT  MAX(\"score\") FROM \"users_challenges\" WHERE (\"userId\" = "+userId+" AND \"challengeId\" = \"c\".\"id\")) as \"maxScore\" FROM \"challenges\" \"c\"\r\n\tLEFT JOIN \"users_challenges\" \"uc\" ON \"uc\".\"challengeId\" = \"c\".\"id\"\r\n\tORDER BY \"c\".\"id\";");
+    const challenges = getChallengeRepository().query(
+      "SELECT DISTINCT \"c\".\"id\", \"c\".\"title\", \"c\".\"description\", \"c\".\"level\", \r\n(SELECT  MAX(\"score\") FROM \"users_challenges\" WHERE (\"userId\" = "+userId+" AND \"challengeId\" = \"c\".\"id\")) as \"maxScore\" FROM \"challenges\" \"c\"\r\n\tLEFT JOIN \"users_challenges\" \"uc\" ON \"uc\".\"challengeId\" = \"c\".\"id\"\r\n\tORDER BY \"c\".\"id\";");
     return challenges;
   }
 }

@@ -30,6 +30,7 @@ router.get('/', (req, res) => {
   res.sendFile('/src/client/build/index.html');
 });
 
+// Deal with not registered endpoints
 router.get('*', (req, res) => {
   console.log(req.url);
   res.redirect(`/?q=${req.url}`);
