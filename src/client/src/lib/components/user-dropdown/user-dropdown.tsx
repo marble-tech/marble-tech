@@ -9,6 +9,7 @@ interface Props {
   profileImage: string;
 }
 const auth:AuthService = new AuthService;
+
 export default class UserDropdown extends Component<Props> {
 
   constructor(props: Props) {
@@ -20,6 +21,7 @@ export default class UserDropdown extends Component<Props> {
   render() {
     return (
       <React.Fragment>
+        <div className='user-drop border'>
         <ul className="navbar-nav mx-3">
           <li className="nav-item dropdown">
             <a
@@ -32,9 +34,9 @@ export default class UserDropdown extends Component<Props> {
             >
               <i className="fas fa-caret-down m-2"></i>
               { this.props.username }
-              <Image src={ this.props.profileImage } className="mx-2" width={50} height={50} roundedCircle/>
+              <Image src={ this.props.profileImage } className="mx-2" width={35} height={35} roundedCircle/>
             </a>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-15px'}}>
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-20px'}}>
               <Link className="dropdown-item items" to='/dashboard'>
                 <i className="far fa-lg fa-user m-2 text-secondary"></i>
                 <span className='m-2'>Profile</span>
@@ -46,6 +48,8 @@ export default class UserDropdown extends Component<Props> {
             </div>
           </li>
         </ul>
+        </div>
+        
       </React.Fragment>
     )
   }

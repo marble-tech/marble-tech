@@ -1,21 +1,30 @@
 .user-drop{
-    min-width: 210px !important;
-    padding-left: 52px !important;
-    padding-right: 52px !important;
-  }
-  
-  .items{
-    min-width: 210px !important;
-    max-width: 210px !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  width: 210px !important;
+  text-align: center !important;
+}
 
-  }
-  
-  .items:hover{
-    color: rgb(94, 93, 93) !important;
-    background: rgb(214, 214, 214);
-  }
+.items{
+  width: 210px !important;
+  padding: 2px !important;
+}
 
-  #navbarDropdown{
-    border-color: rgb(75, 71, 71);
-    color: rgb(197, 187, 187) !important;
-  }
+.items:hover{
+  color: rgb(94, 93, 93) !important;
+  background: rgb(214, 214, 214);
+}
+
+#navbarDropdown{
+  color: rgb(197, 187, 187) !important;
+}
+
+#navbarDropdown:hover{
+  background: white !important;
+}
+
+.dropdown-border{
+  border-color: rgb(75, 71, 71) !important;
+}
