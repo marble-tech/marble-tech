@@ -54,6 +54,20 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         if(!this.state.user && this.props.token){
             await this._loadData()
         }
+        if(this.props.token && this.state.user){
+            const newUser = await auth.authUser();
+            if(
+                this.state.user.username !== newUser.username ||
+                this.state.user.profileImage !== newUser.profileImage
+            ){
+                this.setState({user: {
+                    userId: newUser.id,
+                    username: newUser.username,
+                    profileImage: newUser.profileImage
+                }});
+            }
+        }
+        
     }
 
     private async _loadData() {

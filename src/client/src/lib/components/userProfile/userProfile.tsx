@@ -60,6 +60,9 @@ export class UserProfile extends Component<Props, State>{
         this.setState({ isEditing: !isEditing })
         if (isEditing) {
             this.props.onUpdate();
+            (async () => {
+                setAuthToken(getToken());
+            })();
         }
     }
     private _handleShowUpdatePic() {
@@ -95,7 +98,10 @@ export class UserProfile extends Component<Props, State>{
 
                 this.setState({ isLoading: false, isUploadingPic: false })
                 await this.props.onUpdate();
-                window.location.reload();
+                //window.location.reload();
+                (async () => {
+                    setAuthToken(getToken());
+                })();
 
             })()
 
