@@ -24,9 +24,6 @@ export class Hero extends React.Component{
                     <Card style={{zIndex:1}}>
                     <Row>
                         <Col className="align-self-center">
-                            <div className="rounded-sm mx-4 p-3 blockquote text-white lead" style={quote}>
-                                <strong>Whether you want to uncover the secrets of the universe, or you just want to pursue a career in the 21st century, basic computer programming is an essential skill to learn.”</strong>
-                                - Stephen Hawking</div>
                             <img className="m-auto d-block img-fluid" src="/images/marble.png" alt=""/></Col>
                         <Col>                           
                             {this.props.children}
