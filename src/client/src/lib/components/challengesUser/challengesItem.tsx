@@ -47,7 +47,7 @@ export class ChallengesItem extends Component<Props, State>{
         } = this.props.challenge
         const { open } = this.state;
         return (
-            <div className='bg-white shadow-sm mb-3'>
+            <div className='bg-white shadow-sm mb-3 pointer'>
                 <div className={'item nav-item' + (open ? ' active':'')}>
                 <Row onClick={() => this.setState({ open: !open })}
                     aria-controls="example-collapse-text"

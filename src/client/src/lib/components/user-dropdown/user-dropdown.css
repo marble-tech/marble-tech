@@ -19,6 +19,7 @@
 
 #navbarDropdown{
   color: rgb(197, 187, 187) !important;
+  cursor: pointer;
 }
 
 #navbarDropdown:hover{
