@@ -1,3 +1,8 @@
-.tos{
-  color: white !important;
+.tos-link{
+  text-decoration: none !important;
+  color: white;
+}
+
+.tos-link:hover{
+  color: rgb(59, 56, 56);
 }
