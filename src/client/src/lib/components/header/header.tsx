@@ -76,10 +76,10 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
         }        
     }
     private _renderUserPanel(){
-        if(authGuard.loggedIn() && !!this.state.user){
-            let {username, profileImage} = this.state.user;
-            return <UserDropdown username={username} profileImage={profileImage.url} />
-        }
+        // if(authGuard.loggedIn() && !!this.state.user){
+        //     let {username, profileImage} = this.state.user!;
+        //     return <UserDropdown username={username} profileImage={profileImage.url} />
+        // }
         return <div></div>
     }
     private _loadData(){
