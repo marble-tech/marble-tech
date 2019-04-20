@@ -15,6 +15,7 @@ export default class TermsOfService extends Component {
     return (
       <React.Fragment>
         <div id='TOS' className='container'>
+          <br/>
           <h4>Terms of Service</h4>
         </div>
       </React.Fragment>
