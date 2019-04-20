@@ -7,6 +7,7 @@ import { Ranking } from '../../../lib/components/ranking/ranking';
 import { ChallengesUser } from '../../../lib/components/challengesUser/challengesUser';
 import { UserService } from '../../../services/UserService';
 import { UserProfile } from '../../../lib/components/userProfile/userProfile';
+import { AuthService } from '../../../services/AuthService';
 
 interface DashboardProps{
     location?: any;
@@ -23,6 +24,8 @@ interface DashboardState{
 }
 
 const userService:UserService = new UserService;
+const authService: AuthService = new AuthService;
+
 export class Dashboard extends Component<DashboardProps,DashboardState>{
     public constructor(props: DashboardProps) {
         super(props);
@@ -45,10 +48,11 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
     private _loadData(){
         this.setState({pageLoading: true});
         (async () => {
-            await userService.get(this.state.userId)
-                .then((res:any)=>{
-                    this.setState({userDetails:res})
-                })
+
+            const loggedUser = await authService.authUser();
+            console.log(loggedUser);
+            this.setState({userDetails: loggedUser});
+
             await userService.getRank()
                 .then((res:any)=>{
                     this.setState({rank:res})
