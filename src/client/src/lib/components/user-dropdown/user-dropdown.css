@@ -29,3 +29,7 @@
 .dropdown-border{
   border-color: rgb(75, 71, 71) !important;
 }
+
+.nav-link{
+  background: white !important;
+}
