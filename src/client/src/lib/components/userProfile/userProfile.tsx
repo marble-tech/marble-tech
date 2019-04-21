@@ -27,6 +27,7 @@ interface State {
     isEditing: boolean;
     isUploadingPic: boolean;
     upProfileImage: File | null;
+    profileImagePreview: File | null;
     isLoading: boolean;
     errUploadImage: string | null;
 }
@@ -41,6 +42,7 @@ export class UserProfile extends Component<Props, State>{
             upProfileImage: null,
             isLoading: false,
             errUploadImage: null,
+            profileImagePreview: null
         }
     }
     private _renderImage() {
@@ -54,6 +56,7 @@ export class UserProfile extends Component<Props, State>{
     private _handleChange(e: any) {
         let state: any = this.state;
         state[e.target.id] = e.target.files[0];
+        this.setState({profileImagePreview: e.target.files[0]});
     }
     private _handleEditingState() {
         let { isEditing } = this.state;
@@ -69,6 +72,7 @@ export class UserProfile extends Component<Props, State>{
         this.setState({ isUploadingPic: true });
     }
     private _handleCloseUpdatePic() {
+        this.setState({profileImagePreview: null});
         this.setState({ isUploadingPic: false });
     }
     private _renderUploadImageError() {
@@ -86,6 +90,7 @@ export class UserProfile extends Component<Props, State>{
     }
     private _handleSubmit() {
         this.setState({ isLoading: true });
+        this.setState({profileImagePreview: null});
         const { upProfileImage } = this.state;
         const { user } = this.props;
         console.log(upProfileImage)
@@ -98,7 +103,6 @@ export class UserProfile extends Component<Props, State>{
 
                 this.setState({ isLoading: false, isUploadingPic: false })
                 await this.props.onUpdate();
-                //window.location.reload();
                 (async () => {
                     setAuthToken(getToken());
                 })();
@@ -111,13 +115,27 @@ export class UserProfile extends Component<Props, State>{
         return (
             <Modal show={this.state.isUploadingPic} onHide={this._handleCloseUpdatePic.bind(this)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Upload Profile Image</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form>
                         <div className="form-group">
-                            <label>Upload profile image</label>
-                            <input type="file" className="form-control-file" id="upProfileImage" onChange={this._handleChange.bind(this)}></input>
+                            <br/>
+                            <label className='btn btn-primary' htmlFor='upProfileImage'>Choose image</label>
+                            <input hidden type="file" className="form-control-file" id="upProfileImage" onChange={this._handleChange.bind(this)}></input>
+                            {this.state.profileImagePreview ? 
+                                (<div>
+                                    <h5>Preview:</h5>
+                                    <img 
+                                        className='w-50 rounded-circle' 
+                                        src={URL.createObjectURL(this.state.profileImagePreview)} 
+                                        id='previewImage' 
+                                    /> 
+                                </div>)
+                                
+                                : 
+                                <div></div> 
+                            }
                         </div>
                     </form>
                 </Modal.Body>
