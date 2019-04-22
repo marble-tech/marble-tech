@@ -1,6 +1,7 @@
 import * as React from "react";
 import { fromEvent } from "rxjs";
 import { getToken } from "../../../helpers/authGuard";
+import { AuthService } from "../../../services/AuthService";
 
 const key = "__token";
 const win = (window as any);
@@ -49,8 +50,18 @@ export function withAuth(cb: (props: any) => JSX.Element) {
 }
 
 export const setAuthToken = async (token: string | null) => {
-    if(token) localStorage.setItem('marble', token);
-    
-    const authTokenChangeEvent = new CustomEvent("authTokenChange", { detail: token });
-    document.dispatchEvent(authTokenChangeEvent);
+        const authService = new AuthService();
+
+        if(token) {
+            localStorage.setItem('marble', token);
+            
+            const loggedUser = await authService.authUser();
+            
+            localStorage.setItem('marbleLoggedUser', JSON.stringify(loggedUser)); 
+        }
+
+        
+        const authTokenChangeEvent = new CustomEvent("authTokenChange", { detail: token });
+        document.dispatchEvent(authTokenChangeEvent);
+
 };

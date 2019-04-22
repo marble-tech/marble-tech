@@ -50,21 +50,27 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         }
     }
 
+    
+
     async componentDidUpdate() {
         if(!this.state.user && this.props.token){
             await this._loadData()
         }
+
         if(this.props.token && this.state.user){
-            const newUser = await auth.authUser();
-            if(
-                this.state.user.username !== newUser.username ||
-                this.state.user.profileImage !== newUser.profileImage
-            ){
-                this.setState({user: {
-                    userId: newUser.id,
-                    username: newUser.username,
-                    profileImage: newUser.profileImage
-                }});
+            if(localStorage.getItem('marbleLoggedUser')){
+                const newUser = JSON.parse(localStorage.getItem('marbleLoggedUser')!);
+
+                if(
+                    this.state.user.username !== newUser.username ||
+                    this.state.user.profileImage.url !== newUser.profileImage.url
+                ){
+                    this.setState({user: {
+                        userId: newUser.id,
+                        username: newUser.username,
+                        profileImage: newUser.profileImage
+                    }});
+                }
             }
         }
         
