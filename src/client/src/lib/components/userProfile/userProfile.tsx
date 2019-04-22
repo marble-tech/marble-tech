@@ -57,6 +57,7 @@ export class UserProfile extends Component<Props, State>{
         let state: any = this.state;
         state[e.target.id] = e.target.files[0];
         this.setState({profileImagePreview: e.target.files[0]});
+        
     }
     private _handleEditingState() {
         let { isEditing } = this.state;
@@ -101,11 +102,12 @@ export class UserProfile extends Component<Props, State>{
                         this.setState({ errUploadImage: err.message })
                     });
 
-                this.setState({ isLoading: false, isUploadingPic: false })
+                this.setState({ isLoading: false, isUploadingPic: false });
+
+                await setAuthToken(getToken());
+
                 await this.props.onUpdate();
-                (async () => {
-                    setAuthToken(getToken());
-                })();
+                
 
             })()
 

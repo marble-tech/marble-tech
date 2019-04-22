@@ -30,11 +30,11 @@ export class AuthService {
             })
             .then((response:any) => {
                 return response})  
-        
-        
+    
     }
     public logout(){
         authGuard.removeToken();
+        localStorage.removeItem('marbleLoggedUser');
         (async () => {
             await setAuthToken(null);
         })();

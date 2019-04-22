@@ -42,7 +42,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         
     }
     private _renderUserProfile(){
-        if(!!this.state.userDetails){
+        if(this.state.userDetails){
         return <UserProfile user={ this.state.userDetails } {...this.props} onUpdate={this._loadData.bind(this)}/>
         }
         return <div></div>
