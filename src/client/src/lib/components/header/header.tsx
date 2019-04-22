@@ -60,10 +60,7 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         if(this.props.token && this.state.user){
             if(localStorage.getItem('marbleLoggedUser')){
                 const newUser = JSON.parse(localStorage.getItem('marbleLoggedUser')!);
-                console.log(newUser);
-                console.log(this.state.user);
-                console.log('Profile: ', this.state.user.profileImage.url === newUser.profileImage.url);
-                console.log('Username: ', this.state.user.username === newUser.username);
+
                 if(
                     this.state.user.username !== newUser.username ||
                     this.state.user.profileImage.url !== newUser.profileImage.url
