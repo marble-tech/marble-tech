@@ -7,7 +7,7 @@ const userController = new UserController();
 
 // Store all user routes in an array
 const routes = [
-  {
+  { // get all users
     method: 'get',
     path: '/',
     middlewares: [hollow],
@@ -15,7 +15,7 @@ const routes = [
     body: ['none'],
     action: userController.findAll
   },
-  {
+  { // get rank
     method: 'post',
     path: '/rank',
     middlewares: [authMiddleware],
@@ -23,7 +23,7 @@ const routes = [
     body: ['none'],
     action: userController.getRank
   },
-  {
+  { // get all challenges including user's info
     method: 'post',
     path: '/challenges',
     middlewares: [authMiddleware],
@@ -31,7 +31,7 @@ const routes = [
     body: ['none'],
     action: userController.getUserChallenges
   },
-  {
+  { // get user by ID
     method: 'get',
     path: '/:id',
     middlewares: [hollow],
@@ -39,7 +39,7 @@ const routes = [
     body: ['none'],
     action: userController.findById
   },
-  {
+  { // create new user
     method: 'post',
     path: '/',
     middlewares: [hollow],
@@ -47,7 +47,7 @@ const routes = [
     body: ['f_name: string', 'l_name: string', 'email: string', 'password: string'],
     action: userController.create
   },
-  {
+  { // update user given user ID
     method: 'patch',
     path: '/:id',
     middlewares: [authMiddleware],
@@ -55,7 +55,7 @@ const routes = [
     body: ['f_name: string (optional)', 'l_name: string (optional)', 'email: string (optional)', 'password: string (optional)'],
     action: userController.updateUser
   },
-  {
+  { // delete user given user ID
     method: 'delete',
     path: '/:id',
     middlewares: [authMiddleware],
@@ -63,7 +63,7 @@ const routes = [
     body: ['none'],
     action: userController.deleteUser
   },
-  {
+  { // add profile image to user
     method: 'post',
     path: '/:id/profileImage',
     middlewares: [authMiddleware, uploader.single('profileImage')],

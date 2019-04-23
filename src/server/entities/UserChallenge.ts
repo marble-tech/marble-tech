@@ -40,6 +40,9 @@ export class UserChallenge {
 
 }
 
+/**
+ * Interface for user dashboard entries.
+ */
 export interface UserDashboardChallengeEntry{
   id: number,
   title: string,

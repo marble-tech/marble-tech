@@ -12,11 +12,19 @@ const challengeService = new ChallengeService();
 const userService = new UserService();
 const userChallengeService = new UserChallengeService();
 
+/**
+ * Challenge controller class
+ */
 export class ChallengeController {
 
   public constructor() {
   }
 
+  /**
+   * Create new challenge from body. If successful, returns saved challenge.
+   * @param req containing challenge info.
+   * @param res saved challenge
+   */
   public async create(req: Request, res: Response) {
       try {
         //Validate against the schema
@@ -43,6 +51,11 @@ export class ChallengeController {
       }
   }
 
+  /**
+   * Update challenge. If successful, returns updated challenge.
+   * @param req challenge id and information to update
+   * @param res updated challenge
+   */
   public async update(req: Request, res: Response) {
       try {
         const id = req.params.id;
@@ -73,6 +86,11 @@ export class ChallengeController {
       }
   }
 
+  /**
+   * Retrieve all challenges.
+   * @param req 
+   * @param res 
+   */
   public async findAll(req: Request, res: Response) {
       try {
         const challengesRetrieved = await challengeService.findAll(); // get challenges from DB
@@ -90,6 +108,11 @@ export class ChallengeController {
       }
   }
 
+  /**
+   * Retrieves challenge information using challenge ID.
+   * @param req params containing id.
+   * @param res challenge information
+   */
   public async findById(req: Request, res: Response) {
       try {
         const id = req.params.id; // get challenge id by URL
@@ -108,6 +131,11 @@ export class ChallengeController {
       }
   }
 
+  /**
+   * Delete a challenge using challenge ID.
+   * @param req params containing id.
+   * @param res deletion result
+   */
   public async delete(req: Request, res: Response) {
     try {
       // Get id from request parameters
@@ -128,33 +156,47 @@ export class ChallengeController {
     }
   }
   
-
+  /**
+   * Run test using user's input, saving the result to the database. Returns test result.
+   * @param req containing appfilepath and testfilepath information.
+   * @param res test results
+   */
   public async test(req: Request, res: Response) {
     try {
-      const appFilePath = (req as any).appFilePath; // get app file path from request
+      // get app file path from request
+      const appFilePath = (req as any).appFilePath; 
+      // get test file path from request
       const testFilePath = (req as any).testFilePath; 
+      // run test and retrieve the results
       const testResult = await testRunner(appFilePath, testFilePath);
 
-      const loggedUser = await userService.findById((req as any).userId); // get user from DB
+      // get logged user, to save to DB.
+      const loggedUser = await userService.findById((req as any).userId);
       if (!loggedUser) return res.status(404).json({ Error: "User not found." }) // return error if not found
 
+      // get challenge info, to save to DB
       const challenge = await challengeService.findById(req.params.id); // get challenge from DB
       if (!challenge) return res.status(404).json({ Error: "Challenge not found." }) // return error if not found
 
+      // create new instance of the UserChallenge entity, using the information provided
       const userChallenge = new UserChallenge(loggedUser, challenge, new Date(), testResult.score, req.body);
-
-      const savedInfo = await userChallengeService.create(userChallenge); // try to save UserChallenge
-
+      
+      // save this instance to the database.
+      const savedInfo = await userChallengeService.create(userChallenge);
       if(!savedInfo) return res.status(400).json({ Error: "UserChallenge couldn't be saved."}) // return error if unsuccessful
 
-      return res.status(200).json(testResult).send(); // return status 200 and the test results.
+      // return status 200 and the test results.
+      return res.status(200).json(testResult).send();
 
     } catch (error) {
+      // remove test files
       testFileRemover([(req as any).appFilePath, (req as any).testFilePath]);
 
+      // retrieve error info as string[] and filter result to clear error messages.
       let errors = error.diagnosticText.split('\n') as Array<string>;
       errors = errors.filter(e => e !== '');
       
+      // return error information
       res.status(500).json({Error: errors});
     }
   }

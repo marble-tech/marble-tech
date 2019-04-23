@@ -12,14 +12,21 @@ import { convertToDataUrl } from '../handlers/convertToDataUrl';
 import { ChallengeStatus } from '../entities/Challenge';
 import { UserDashboardChallengeEntry } from '../entities/UserChallenge';
 
+const userService = new UserService(); // service related to user information
+const profileImageService = new ProfileImageService(); // service related to profile image
 
-const userService = new UserService();
-const profileImageService = new ProfileImageService();
-
+/**
+ * User controller class.
+ */
 export class UserController {
 
     public constructor() { }
 
+    /**
+     * Create new user, returning saved user info if successful.
+     * @param req body contaning new user's info.
+     * @param res saved user
+     */
     public async create(req: express.Request, res: express.Response) {
         try {
             const newUser = req.body; // get information from body
@@ -28,11 +35,11 @@ export class UserController {
             // check if validation returned error, returning 400 and displaying message if so.
             if (result.error) return res.status(400).json({ Error: "User details invalid. Please check your fields." }); // ir invalid, return 400 with message
 
-            // save user
+            // save user to the DB
             const user = await userService.create(newUser)
-                .catch(error => {
+                .catch(error => { //catch any error
                     res.status(409).json({ Error: error.detail });
-                }); // save to the DB
+                });
 
             // return added user and status 200
             res.status(201).json({
@@ -47,6 +54,11 @@ export class UserController {
         }
     }
 
+    /**
+     * Retrieve user information using user ID.
+     * @param req user ID in params.
+     * @param res retrieved user info.
+     */
     public async findById(req: express.Request, res: express.Response) {
         try {
             const id = req.params.id; // get user id by URL
@@ -54,7 +66,7 @@ export class UserController {
 
             if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
 
-            res.status(200).json(user);
+            res.status(200).json(user); // return user info
         } catch (error) { // catch any exception
             console.log(error);
             res.status(500).json({
@@ -63,6 +75,11 @@ export class UserController {
         }
     }
 
+    /**
+     * Retrieve all users' information.
+     * @param req 
+     * @param res 
+     */
     public async findAll(req: express.Request, res: express.Response) {
         try {
             const users = await userService.findAll(); // get all users
@@ -77,29 +94,40 @@ export class UserController {
         }
     };
 
-
+    /**
+     * Delete user by ID.
+     * @param req params containing user ID.
+     * @param res deletion result.
+     */
     public async deleteUser(req: express.Request, res: express.Response) {
         try {
             const id = req.params.id; // get user ID from URL
-            const user = await userService.findById(id); // get user from DB
             const loggedId = (req as any).userId; // get logged user ID
 
-            if (loggedId != id) return res.status(403).json({ Error: "You are not allowed to delete this user!" });
-
+            // get user from DB
+            const user = await userService.findById(id);          
             if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
+
+            // check if user can perform this operation, by comparing the retrieved IDs.
+            if (loggedId != id) return res.status(403).json({ Error: "You are not allowed to delete this user!" });
 
             const deletedUser = await userService.delete(user.id); // delete user using service
 
-            return res.status(200).json(deletedUser); // return status 200 and the deleted user
+            return res.status(200).json(deletedUser); // return status 200 and the deletion result
 
         } catch (error) { // catch any exception
             console.log(error);
             return res.status(500).json({
-                Error: "Exception caught!"
+                Error: "User could not be deleted!"
             });
         }
     };
 
+    /**
+     * Update user info using body information.
+     * @param req body containing updated information
+     * @param res saved user info
+     */
     public async updateUser(req: express.Request, res: express.Response) {
         try {
             // add validation
@@ -126,6 +154,11 @@ export class UserController {
         }
     }
 
+    /**
+     * Add profile image to user.
+     * @param req 
+     * @param res 
+     */
     public async addProfileImage(req: express.Request, res: express.Response) {
         try {
             // Get logger user id
@@ -168,6 +201,11 @@ export class UserController {
         }
     }
 
+    /**
+     * Retrieve ranking of users by score.
+     * @param req may include the number of users to return
+     * @param res ranking showing current user's position if present
+     */
     public async getRank(req: express.Request, res: express.Response) {
         try {
             const loggedId = (req as any).userId; // get logged user id
@@ -177,7 +215,7 @@ export class UserController {
             const limit = req.body.limit;
             const rank: RankEntry[] = await userService.getRank(limit); // get TOP N rank
             //without
-            // const rank: RankEntry[] = await userService.getRank(limit); // get whole rank
+            // const rank: RankEntry[] = await userService.getRank(); // get whole rank
 
             // if rank is null, return error
             if (!rank) return res.status(403).json({ Error: "Couldn't retrieve rank." });
@@ -188,6 +226,7 @@ export class UserController {
                 return user;
             })
 
+            // return rank
             return res.status(200).json(flaggedRank);
         } catch (error) {
             console.log(error);
@@ -198,6 +237,11 @@ export class UserController {
     }
 
     // This function might be moved to other file
+    /**
+     * Return challenges information including current user's status of challenges attempts.
+     * @param req 
+     * @param res 
+     */
     public async getUserChallenges(req: express.Request, res: express.Response) {
         try {
             // get all challenges including the current user's score
@@ -205,16 +249,14 @@ export class UserController {
             // return error if couldn't retrieve information
             if (!allChallengesWithScore) return res.status(400).json({ Error: "Bad request" });
 
-            // Convert score to status
-            
             // Galera. Aqui tentei usar map com uma funcão acessória e não rolou, pq n consegue acessar o this de dentro do map
 
             // const allChallengesWithStatus: UserDashboardChallengeEntry[] = allChallengesWithScore.map(
             //         (challenge => this._convertScoreToStatus(challenge)), this
             //         );
             
-            // iterate through array, check score, add status and remove score.
-
+            //Convert score to status
+            // iterate through array, check score, add related status and remove score info.
             for (var _x = 0; _x < allChallengesWithScore.length; _x++) {
                 // tentei abstrair essa parte e criar uma funcão, mas dá erro
                 // allChallengesWithScore[_x] = this._convertScoreToStatus(allChallengesWithScore[_x]);
@@ -241,6 +283,10 @@ export class UserController {
 
     // Galera, não consegui usar esse método dentro do for loop acima. Alguém sabe pq?
     // diz que não consegue ler a propriedade _convertScoreToStatus de undefined 
+    /**
+     * Convert score information to status.
+     * @param challenge 
+     */
     private _convertScoreToStatus(challenge: UserDashboardChallengeEntry) {
         if (challenge.maxScore == null) {
             challenge.status = ChallengeStatus.TODO;
