@@ -4,6 +4,12 @@ import * as fs from 'fs';
 
 const challengeService = new ChallengeService();
 
+/**
+ * Write a test file to file system
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export async function testFileWritter(req: Request, res: Response, next: NextFunction) {
   // Get challenge id from request
   const challengeId = +req.params.id;

@@ -1,4 +1,8 @@
 
+/**
+ * Converts a file to DataUrl
+ * @param file 
+ */
 export function convertToDataUrl(file: Express.Multer.File){
   // Convert buffer to string base 64
   const base64 = file.buffer.toString('base64');

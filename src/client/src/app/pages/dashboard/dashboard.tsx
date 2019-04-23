@@ -7,6 +7,9 @@ import { Ranking } from '../../../lib/components/ranking/ranking';
 import { ChallengesUser } from '../../../lib/components/challengesUser/challengesUser';
 import { UserService } from '../../../services/UserService';
 import { UserProfile } from '../../../lib/components/userProfile/userProfile';
+import { AuthService } from '../../../services/AuthService';
+import { setAuthToken } from '../../../lib/components/withAuth/withAuth';
+import { getToken } from '../../../helpers/authGuard';
 
 interface DashboardProps{
     location?: any;
@@ -23,6 +26,8 @@ interface DashboardState{
 }
 
 const userService:UserService = new UserService;
+const authService: AuthService = new AuthService;
+
 export class Dashboard extends Component<DashboardProps,DashboardState>{
     public constructor(props: DashboardProps) {
         super(props);
@@ -37,7 +42,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
         
     }
     private _renderUserProfile(){
-        if(!!this.state.userDetails){
+        if(this.state.userDetails){
         return <UserProfile user={ this.state.userDetails } {...this.props} onUpdate={this._loadData.bind(this)}/>
         }
         return <div></div>
@@ -45,10 +50,10 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
     private _loadData(){
         this.setState({pageLoading: true});
         (async () => {
-            await userService.get(this.state.userId)
-                .then((res:any)=>{
-                    this.setState({userDetails:res})
-                })
+
+            const loggedUser = await authService.authUser();
+            this.setState({userDetails: loggedUser});
+
             await userService.getRank()
                 .then((res:any)=>{
                     this.setState({rank:res})
@@ -58,6 +63,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
                     this.setState({userChallenges:res})
                 })
             this.setState({pageLoading: false})
+            await setAuthToken(getToken());
         })();
     }
     componentDidMount() {

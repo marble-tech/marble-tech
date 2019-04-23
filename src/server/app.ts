@@ -3,8 +3,12 @@ import { createDbConnection } from './config/db';
 import router from './router';
 import bodyParser = require('body-parser');
 
+/**
+ * Creates the express app
+ */
 export async function createApp() {
 
+  // Create database connection
   await createDbConnection();
 
   // Create express application

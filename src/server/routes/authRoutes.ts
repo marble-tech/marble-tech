@@ -3,6 +3,7 @@ import { authMiddleware } from '../middlewares/authMiddleware';
 
 const authController = new AuthController();
 
+// Stores all authentication routes in an array
 const routes = [
   {
     method: 'post',

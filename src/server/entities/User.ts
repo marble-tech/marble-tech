@@ -2,7 +2,9 @@ import { ProfileImage } from './ProfileImage';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from "typeorm";
 import { UserChallenge } from './UserChallenge';
 
-
+/**
+ * User entity class
+ */
 @Entity('users')
 export class User {
 

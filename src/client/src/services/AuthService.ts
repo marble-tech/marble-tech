@@ -1,5 +1,6 @@
 import * as authGuard from '../helpers/authGuard'
 import {ApiService} from '../helpers/api'
+import { setAuthToken } from '../lib/components/withAuth/withAuth';
 
 const api = new ApiService;
 
@@ -18,7 +19,7 @@ export class AuthService {
                 })
             })
             .then((response:any) => {
-                authGuard.setToken(response.token)
+                setAuthToken(response.token);
                 return response;})  
         
         
@@ -29,11 +30,14 @@ export class AuthService {
             })
             .then((response:any) => {
                 return response})  
-        
-        
+    
     }
     public logout(){
         authGuard.removeToken();
+        localStorage.removeItem('marbleLoggedUser');
+        (async () => {
+            await setAuthToken(null);
+        })();
     }
 
 

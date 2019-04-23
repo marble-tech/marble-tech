@@ -81,7 +81,6 @@ export class Login extends React.Component<LoginProps,LoginState> {
         (async () => {
             await auth.login(this.state.email, this.state.password)
                 .then((res:any) => {
-                    console.log(res)
                     this.setState({ error: null });
                     this.props.history.push("/dashboard");
                 })
