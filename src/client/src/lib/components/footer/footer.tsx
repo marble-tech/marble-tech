@@ -2,6 +2,8 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 import './footer.css';
+import { Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
 export class Footer extends React.Component {
     render() {
@@ -9,23 +11,24 @@ export class Footer extends React.Component {
             <Container
                 id='app-footer'
                 fluid
-                className="bg-secondary"
-                style={{ minHeight: "200px" }}
+                className="row no-gutters p-0"
+                style={{ minHeight: "200px", backgroundColor:"#757575" }}
             >
-                <div className="row p-5">
+                <Container style={{}}>
+                    <div className="row py-5">
 
-                    <div className="offset-1 col-sm-3 col-md-3">
-                        <h6 className='center'><u>Product</u></h6>
+                    <Col sm={3} className='mx-auto'>
+                        <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Product</strong></h5>
                         <Link className='tos-link' to='/'>
                             <h6 className='tos'>Features (not implemented)</h6>
                         </Link>
                         <Link className='tos-link' to={'/termsOfService'}>
                             <h6 className='tos'>Terms of Service</h6>
                         </Link>
-                    </div>
+                    </Col>
 
-                    <div className="offset-1 col-sm-3 col-md-3">
-                        <h6><u>Resources</u></h6>
+                    <Col sm={3} className='mx-auto'>
+                    <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Resources</strong></h5>
                         <a className='tos-link' href='https://nodejs.org' target="_blank">
                             <h6 className='tos'>NodeJs</h6>
                         </a>
@@ -35,10 +38,10 @@ export class Footer extends React.Component {
                         <a className='tos-link' href='https://www.typescriptlang.org/' target="_blank">
                             <h6 className='tos'>TypeScript</h6>
                         </a>
-                    </div>
+                    </Col>
 
-                    <div className="offset-1 col-sm-3 col-md-3">
-                        <h6><u>Support</u></h6>
+                    <Col sm={3} className='mx-auto'>
+                        <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Support</strong></h5>
                         <Link className='tos-link' to={'/'}>
                             <h6 className='tos'>Help (not implemented)</h6>
                         </Link>
@@ -48,10 +51,24 @@ export class Footer extends React.Component {
                         <Link className='tos-link' to={'/'}>
                             <h6 className='tos'>Contact Us (not implemented)</h6>
                         </Link>
+                    </Col>
+
                     </div>
-
-                </div>
-
+                </Container>
+                <Container fluid 
+                 className='py-2'
+                 style={{backgroundColor:"#424242", color:"white" }}>
+                    <Container>
+                        <Row className='align-items-center'>
+                            <Col sm={3} className='m-auto text-center'>
+                                <p className='m-0'>© Copyright 2019 Marble Tech</p>
+                            </Col>
+                            <Col sm={3} className='m-auto text-center'>
+                                <a className="text-white" href="https://github.com/marble-tech/marble-tech"><i className="fab fa-github fa-2x tos-link"></i></a>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Container>
             </Container>
         )
     }
