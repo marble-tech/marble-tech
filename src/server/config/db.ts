@@ -4,6 +4,9 @@ import { UserChallenge } from '../entities/UserChallenge';
 import { ProfileImage } from '../entities/ProfileImage';
 import { createConnection, getConnectionManager } from "typeorm";
 
+/**
+ * Create a database connection
+ */
 export async function createDbConnection() {
 
   // Set database variables from environment

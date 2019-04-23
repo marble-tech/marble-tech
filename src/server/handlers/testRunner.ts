@@ -2,7 +2,11 @@ import { testFileRemover } from "./testFileRemover";
 require('ts-mocha');
 import Mocha from 'mocha';
 
-// Helper function for running tests
+/**
+ * Helper function for running tests
+ * @param appFilePath 
+ * @param testFilePath 
+ */
 export async function testRunner(appFilePath: string, testFilePath: string){
   const test = new Mocha();
   test.useColors(false);

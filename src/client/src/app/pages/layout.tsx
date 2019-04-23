@@ -1,33 +1,15 @@
 import React from "react";
-import { Switch, withRouter } from "react-router-dom";
-import { Route } from "../../lib/components/route/route";
 import { Header, Footer } from "../../lib/components";
-import { routes } from "../config/routing";
-import * as authGuard from '../../helpers/authGuard';
 import { Main } from "../../lib/components/main/main";
+import { withRouter } from "react-router";
 
 class Layout extends React.Component {
     public render() {
-        const HeaderM = withRouter(({ history }) =>
-                    <Header
-                        history={history}
-                        items={
-                            routes.filter(item => item.displayInNavBar !== false)
-                                .map(item => {
-                                    return {
-                                        href: item.path,
-                                        isIndex: item.isIndex,
-                                        title: item.title,
-                                        onlyGuest: item.onlyGuest || false
-                                    };
-                                })
-                        }
-                    />
-                    
-                    )
+        // const HeaderM = withRouter(({ history }) =>
+        // <Header history={history} />);
         return (
             <React.Fragment>
-                <HeaderM/>
+                <Header/>
                 <Main/>
                 <Footer />
             </React.Fragment>

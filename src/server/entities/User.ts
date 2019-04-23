@@ -2,6 +2,9 @@ import { ProfileImage } from './ProfileImage';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from "typeorm";
 import { UserChallenge } from './UserChallenge';
 
+/**
+ * User entity class
+ */
 @Entity('users')
 export class User {
 
@@ -17,6 +20,9 @@ export class User {
   @Column({nullable: false, unique: true, readonly: true})
   public email!: string;
 
+  @Column({nullable: false, unique: true})
+  public username!: string;
+
   @Column({nullable: false})
   public password!: string;
 
@@ -30,12 +36,22 @@ export class User {
     f_name: string,
     l_name: string,
     email: string,
-    password: string
+    password: string,
+    username: string
   ){
     this.f_name = f_name;
     this.l_name = l_name;
     this.email = email;
     this.password = password;
+    this.username = username;
   }
 
+}
+
+export interface RankEntry{
+  id: number,
+  username: string,
+  challenges: number,
+  pic: string,
+  authUser?: boolean
 }

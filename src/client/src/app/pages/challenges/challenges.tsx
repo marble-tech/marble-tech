@@ -3,77 +3,205 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
-// import FormControl from 'react-bootstrap/FormControl';
 import { Content } from "../../../lib/components";
-import { postsRoutes } from "../../config/posts-routing";
-import { Route, Link } from 'react-router-dom';
 import { Sidebar } from '../../../lib/components/sidebar/sidebar';
 import Button from 'react-bootstrap/Button';
+import {ChallengeService} from "../../../services/ChallengeService"
+import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackModal';
+import { Loading } from '../../../lib/components/loading/loading';
+import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 
-interface RouteConf {
+interface challengesRoute {
     title: string;
-    path: string;
+    path: string;    
 }
-
 interface ChallengesProps{
-    location?: any
+    location?: any;
+    history?:any;
+    match?:any;
 }
+interface ChallengesState{
+    challengesList: challengesRoute[] | null;
+    location?: any
+    challengeAns:string;
+    error:string|null;
+    title: string|null;
+    level: string|null;
+    description: string;
+    sampleAnswer: string;
+    fbModalShow:boolean;
+    challengeId: number | null;
+    feedback: {
+            failures:number,
+            results:any[]
+        } | null;
+    pageLoading:boolean;
+    reload:boolean;
+}
+const challService:ChallengeService = new ChallengeService;
+export class Challenges extends React.Component<ChallengesProps,ChallengesState>{
+    public constructor(props: ChallengesProps) {
+        super(props);
+        this.state = {
+            challengeAns:"",
+            error: null,
+            title: null,
+            level: null,
+            description: "",
+            sampleAnswer: "",
+            challengesList: null,
+            fbModalShow: false,
+            feedback: {
+                failures: 1,
+                results: [
+                    {title: "some text", state: "passed"},
+                    {title: "some text", state: "failed"}
+                ]
+            },
+            pageLoading: true,
+            challengeId: null,
+            reload:false
+        };
+        this._onChange = this._onChange.bind(this)
+        this._handleSubmit = this._handleSubmit.bind(this)
+    }
 
-export class Challenges extends React.Component<ChallengesProps>{
-
-    private _handleChange(event:any){
-        event.preventDefault()
-        const target = event.target;
-        const value = (target.type === 'checkbox' ? target.checked : target.value) as string;
-        const name = target.name as string;
-        this.setState({[name]: value});
-       
+    private _onChange(e:any) {
+        this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
+    }
+    private _renderServerErrors() {
+        if (!!this.state.error) {
+            return <div className="text-center h5" style={{
+                width: "100%",
+                marginTop: "0.25rem",
+                color: "#dc3545"}}><strong>Error: </strong>{this.state.error}</div>;
+        } else {
+            return <div></div>;
+        }
+    }
+    private _renderChallengeDescription() {
+        const { description } = this.state;
+        if (!!description) {
+            let data = description.split('<CodeBlock>')
+            return  data.map((item, index) =>{
+                if (index%2==1){
+                    return <CodeBlock key={index}>{item}</CodeBlock>
+                }
+                return <div key={index} dangerouslySetInnerHTML={{__html:item}}></div>
+            })
+            
+        } else {
+            return <div></div>;
+        }
+    }
+    private _renderSidebar() {
+        const {challengesList} = this.state
+        if (!!challengesList) {
+            return (
+                <Sidebar listItems={challengesList} withID actualPath={this.props.location.pathname}/>
+            )
+        } else {
+            return <div></div>;
+        }
+    }
+    private _renderFBModal() {
+        let modalClose = () => this.setState({fbModalShow:false})
+        const {feedback, fbModalShow, } = this.state
+        if (!!feedback) {
+            return (
+                <FeedbackModal show={fbModalShow} feedback={feedback} onHide={modalClose}/>
+            )
+        } else {
+            return <div></div>;
+        }
     }
     private _handleSubmit(){
-        let t = `app.get(\"/\", (req, res) => {
-            res.send(\"This is the home page\!\");
-        });`;
-        // let t = `texto`;
-        // let res;
-        let responseJ;
+        this.setState({pageLoading: true});
         (async()=>{
-            let res = await (async()=>{
-                await fetch("http://localhost:3000/chal",{
-                    method:'POST',
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    body:JSON.stringify({t:t})
-                }).then((response:any) => { return response.json()})
-            })()
-            console.log(res);
-        })()        
+            const rest = await challService.test(this.props.match.params.id, this.state.challengeAns)
+                .then((res:any) => {
+                    this.setState({
+                        feedback: res, 
+                        fbModalShow: true, 
+                        error: null
+                    });
+                })
+                .catch((err:any) => {
+                    let errSubStr = (err.message[0] as string).split(":");
+                    let errMsg = errSubStr[errSubStr.length-1];
+                    this.setState({ error: errMsg});
+            })
+            this.setState({pageLoading: false});
+        })();
+    }
+    private _loadChallengeData(){
+        this.setState({pageLoading: true});
+        (async () => {
+            await challService.get(this.props.match.params.id)
+                .then((res:any)=> {
+                    let {title, description, sampleAnswer, level, id } = res;
+                    this.setState({title, description, sampleAnswer, level, challengeId: id  })
+                })
+                .catch((e:any)=>{
+                    console.log(e)
+                });
+            await challService.getAll()
+                .then((res:any)=> {
+                    let list = res.sort((a: any,b: any) => a.id - b.id)
+                        .map((item:any)=>{
+                            return {
+                                id: item.id,
+                                title: item.title,
+                                path: `/challenges/${item.id}`
+                            }
+                    })
+                    this.setState({challengesList: list})
+                })
+                .catch((e:any)=>{
+                    console.log(e)
+                });
+            this.setState({pageLoading: false})
+        })();
+    }
+    componentDidUpdate(nextProps:any, prevState:any) {
+        if(this.props.match.params.id!==nextProps.match.params.id){
+            // clear previews state 
+            this.setState({description: ""})
+            this._loadChallengeData();
+        }
+    }
+    public componentDidMount() {
+        this._loadChallengeData();
     }
     render(){
+        let { title, description, challengesList, level } = this.state;
         return (
             <Container fluid>
                 <Row>
-                <div style={{width: '276px', }} className=" bg-light ">
-                    <Sidebar listItems={[{title: 'Challenge one', path: '/challenges'}] as RouteConf[]} actualPath={this.props.location.pathname}/>
+                <div style={{ width: '276px' }} className=" bg-light ">
+                    {this._renderSidebar()}
                 </div>
                 <Col md={8} className="px-3">
                     <Content className="py-5">
-                        <h2>Challenge One</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        </p>
-                        <Container fluid>
+                        <h2>
+                            {title}
+                            <small className="text-muted"> - {level} level</small>
+                        </h2>
+                        <Row><Col>{this._renderChallengeDescription()}</Col></Row>
                         <Form>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Example textarea</Form.Label>
-                            <Form.Control as="textarea" rows={10} />
+                            <Form.Group controlId="challengeAns">
+                            <Form.Label>Let's code:</Form.Label>
+                            <Form.Control as="textarea" rows={10} onChange={this._onChange} />
                             </Form.Group>
                         </Form>
                         <Button className="float-right" variant="primary" onClick={this._handleSubmit}><strong>POST</strong></Button>
-                        </Container>
+                        {/* <Button className="float-right" variant="primary" onClick={()=>this.setState({fbModalShow:true})}><strong>POST</strong></Button> */}
+                        {this._renderServerErrors()}
+                        {this._renderFBModal()}
                     </Content>
                 </Col>
                 </Row>
+                <Loading show={this.state.pageLoading}/>
             </Container>
         )
     }

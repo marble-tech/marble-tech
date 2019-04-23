@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import { Link } from 'react-router-dom';
 import { validateLogin } from "../../../validation/userValidation";
 import { AuthService } from "../../../services/AuthService";
+import { Loading } from "../loading/loading";
 interface LoginProps {
     history: any;
 }
@@ -18,6 +19,7 @@ interface LoginState {
         email: boolean,
         password: boolean
       }
+    isLoading: boolean;
 }
 const auth:AuthService = new AuthService;
 export class Login extends React.Component<LoginProps,LoginState> {
@@ -30,7 +32,8 @@ export class Login extends React.Component<LoginProps,LoginState> {
             touched: {
                 email: false,
                 password: false
-              }
+              },
+            isLoading: false
         };
         this._onChange = this._onChange.bind(this)
         this._handleSubmit = this._handleSubmit.bind(this)
@@ -66,7 +69,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
         if (!!this.state.error) {
             return <div className="text-center" style={{
                 width: "100%",
-                marginTop: "0.25rem",
+                marginBottom: "0.25rem",
                 fontSize: "80%",
                 color: "#dc3545"}}>{this.state.error}</div>;
         } else {
@@ -74,57 +77,57 @@ export class Login extends React.Component<LoginProps,LoginState> {
         }
     }
     private _handleSubmit(){
-
+        this.setState({ isLoading: true });
         (async () => {
-    
-            const rest = auth.login(this.state.email, this.state.password)
+            await auth.login(this.state.email, this.state.password)
                 .then((res:any) => {
                     this.setState({ error: null });
-                    this.props.history.push("/challenges");
+                    this.props.history.push("/dashboard");
                 })
                 .catch((err:any) => {
                     console.log(err)
                     this.setState({ error: err.message });
                 })
+            this.setState({ isLoading: false })
         })();
     }
     public render() {
+        const { isLoading } = this.state;
         return (
             <Row className="align-items-center h-100 pr-4">
-                <Col><h1>Sign in</h1>
-                <Form className="my-3">
-                    <Form.Group>
-                        <Form.Control
-                            onBlur={()=>this._handleBlur('email')}
-                            type="email"
-                            id="email"
-                            placeholder="name@example.com" 
-                            value={this.state.email} 
-                            onChange={this._onChange}
-                        />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Control 
-                            onBlur={()=>this._handleBlur('email')}
-                            type="PASSWORD" 
-                            id="password"
-                            value={this.state.password} 
-                            onChange={this._onChange}
-                        />
-                    </Form.Group>
-                    {this._renderServerErrors()}
-                    {this._renderValidationErrors()}
-                    <Button style={{width:'155px'}}
-                        type="button" 
-                        onClick={this._handleSubmit}
-                    >SING IN</Button>
-                    <h6 className="mt-5 text-center">Don't have an account? <Link to="/register">Register here</Link></h6>
-    
-                </Form>
+                <Col>
+                    <h1>Sign in</h1>
+                    <Form className="my-3">
+                        <Form.Group>
+                            <Form.Control
+                                onBlur={()=>this._handleBlur('email')}
+                                type="email"
+                                id="email"
+                                placeholder="name@example.com" 
+                                value={this.state.email} 
+                                onChange={this._onChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Control 
+                                onBlur={()=>this._handleBlur('email')}
+                                type="PASSWORD" 
+                                id="password"
+                                value={this.state.password} 
+                                onChange={this._onChange}
+                            />
+                        </Form.Group>
+                        {this._renderServerErrors()}
+                        {this._renderValidationErrors()}
+                        <Button style={{width:'155px'}}
+                            type="button" 
+                            onClick={this._handleSubmit}
+                        >LOGIN</Button>
+                        <h6 className="mt-5 text-center">Don't have an account? <Link to="/register">Register here</Link></h6>
 
+                    </Form>
+                    <Loading show={isLoading}/>
                 </Col>
-                
-                
             </Row>
         );
     }

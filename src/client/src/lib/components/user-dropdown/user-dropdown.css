@@ -1,0 +1,27 @@
+.user-drop{
+
+  text-align: center !important;
+}
+
+.items{
+  /* width: 210px !important; */
+  padding: 2px !important;
+}
+
+.items:hover{
+  color: rgb(94, 93, 93) !important;
+  background: rgb(214, 214, 214);
+}
+
+#navbarDropdown{
+  /* color: rgb(197, 187, 187) !important; */
+  cursor: pointer;
+}
+
+#navbarDropdown:hover{
+  background: white !important;
+}
+
+.dropdown-border{
+  border-color: rgb(75, 71, 71) !important;
+}

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const token_key = 'reddit_clone_token';
+const token_key = 'marble';
 
 const AUTH_SECRET = 'asdfg;lkjh';
 export function loggedIn(){
@@ -36,4 +36,3 @@ export function getLoggedUser(){
     } 
     return null;
 }
-

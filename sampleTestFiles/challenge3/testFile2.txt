@@ -1,0 +1,32 @@
+import {createApp} from './testFilename';
+import request from 'supertest';
+import { expect } from "chai";
+import { it, describe } from "mocha";
+
+describe('Challenge 3', () => {
+    let testApp: any;
+
+    before(async () => {
+        testApp = await createApp();
+    });
+
+    const user = {
+      "name": "user",
+      "email": "user@email.com"
+    }
+
+    it("User should be able to receive a JSON with the property name: user, email: user@email.com", (done) => {
+      (async () => {
+          request(testApp)
+            .post('/users')
+            .send(user)
+            .expect(201)
+            .end((error, res) => {
+              expect(res.body).eql({id: 1, name: 'user', email:'user@email.com'});
+              console.log('status: ', res.status, ', message: ', res.text);
+              if (error)  done(error);
+              else done();
+            });
+      })();
+  });
+});

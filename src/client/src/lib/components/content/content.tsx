@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter, RouteProps } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { Col } from "react-bootstrap";
 
 
 interface ContentProps  {
@@ -19,10 +20,13 @@ export class Content extends React.Component<ContentProps, ContentState> {
     };
   }
   public render() {
-      return <Container className={(this.props.className ? this.props.className: "")}fluid>
+      return <Container className={(this.props.className ? this.props.className: "")} fluid>
 
         <Row className="px-4">
-          {this.props.children}
+        <Col> 
+        {this.props.children}
+        </Col>
+         
         </Row>
         
       </Container>;
