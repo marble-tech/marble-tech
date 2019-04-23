@@ -6,7 +6,7 @@ import { Image } from 'react-bootstrap';
 
 interface Props {
   username: string;
-  profileImage: string;
+  profileImage: string | null;
 }
 const auth:AuthService = new AuthService;
 
@@ -36,7 +36,7 @@ export default class UserDropdown extends Component<Props> {
             >
               <i className="fas fa-caret-down m-2"></i>
               { this.props.username }
-              <Image src={ this.props.profileImage } className="mx-2" width={35} height={35} roundedCircle/>
+              <Image src={ this.props.profileImage ? this.props.profileImage : './images/profileImage.svg' } className="mx-2" width={35} height={35} roundedCircle/>
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-20px'}}>
               <Link className="dropdown-item items" to='/dashboard'>

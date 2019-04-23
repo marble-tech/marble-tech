@@ -50,8 +50,6 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         }
     }
 
-    
-
     async componentDidUpdate() {
         if(!this.state.user && this.props.token){
             await this._loadData()
@@ -62,15 +60,33 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
                 const newUser = JSON.parse(localStorage.getItem('marbleLoggedUser')!);
 
                 if(
-                    this.state.user.username !== newUser.username ||
+                    this.state.user.username !== newUser.username
+                ) {
+                    let user = this.state.user;
+                    user.username = newUser.username;
+                    this.setState({user});
+
+                }
+
+                if(
+                    this.state.user.profileImage && 
                     this.state.user.profileImage.url !== newUser.profileImage.url
                 ){
-                    this.setState({user: {
-                        userId: newUser.id,
-                        username: newUser.username,
-                        profileImage: newUser.profileImage
-                    }});
+                    let user = this.state.user;
+                    user.profileImage = newUser.profileImage;
+                    this.setState({user});
                 }
+
+                // if(
+                //     this.state.user.username !== newUser.username ||
+                //     this.state.user.profileImage.url !== newUser.profileImage.url
+                // ){
+                //     this.setState({user: {
+                //         userId: newUser.id,
+                //         username: newUser.username,
+                //         profileImage: newUser.profileImage
+                //     }});
+                // }
             }
         }
         
@@ -143,7 +159,7 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
     private _renderUserPanel() {
         if (authGuard.loggedIn() && !!this.state.user) {
             let { username, profileImage } = this.state.user!;
-            return <UserDropdown username={username} profileImage={profileImage.url} />
+            return <UserDropdown username={username} profileImage={profileImage ? profileImage.url : null } />
         }
         return <div></div>
     }
