@@ -131,13 +131,16 @@ export class UserController {
     public async updateUser(req: express.Request, res: express.Response) {
         try {
             // add validation
-            const values = req.body; // retrieve information from body
+            const values = req.body; // retrieve information to update from body
+
             const id = req.params.id; // retrieve user ID from params
             const loggedId = (req as any).userId; // retrieve logged user ID from token
 
+            // check if user can perform this operation, by comparing the retrieved IDs.
             if (loggedId != id) return res.status(403).json({ Error: "You are not allowed to update this user!" });
 
             const user = await userService.findById(id); // retrieve user using the ID
+            if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
 
             const savedUser = await userService.update(user as User, values); // call service function to update user
 
