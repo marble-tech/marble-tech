@@ -7,10 +7,18 @@ import { UserService } from "../services/userService";
 const authService = new AuthService();
 const userService = new UserService();
 
+/**
+ * Authentication controller class
+ */
 export class AuthController {
 
     constructor() { }
 
+    /**
+     * Login function. Accepts user details in body and, if successful, returns JWT token.
+     * @param req 
+     * @param res 
+     */
     public async login(req: Request, res: Response) {
         const AUTH_SECRET = process.env.AUTH_SECRET; // get salt from environment
         const userDetails = req.body; // get user details from body
@@ -35,6 +43,11 @@ export class AuthController {
         return res.status(200).json({ 'Result': `User [ID = ${match.id}] logged successfully!`, token: token, user: match });
     }
 
+    /**
+     * Function to retrieve the current user info using the token included in the request.
+     * @param req 
+     * @param res 
+     */
     public async getAuthUser(req: Request, res: Response){
         try{
             const token = req.headers['x-auth-token'];
