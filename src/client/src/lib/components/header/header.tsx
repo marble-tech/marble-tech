@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import * as authGuard from '../../../helpers/authGuard';
 import UserDropdown from '../user-dropdown/user-dropdown';
 import './header.css';
@@ -20,7 +20,9 @@ interface NavbarItem {
 
 interface HeaderProps {
     items: NavbarItem[]
-    token: string | null;
+    authToken?: string | null;
+    location?: any;
+    actualPath?: any;
 }
 
 interface HeaderState {
@@ -40,22 +42,25 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         this.state = {
             isLoading: false,
             isLogged: authGuard.loggedIn(),
-            user: null
+            user: null,
         }
     };
 
     async componentDidMount(){
-        if(this.props.token){
+        if(this.props.authToken){
             await this._loadData();
         }
     }
+    // shouldComponentUpdate(nextProps){
+    //     if(this.props.)
 
+    // }
     async componentDidUpdate() {
-        if(!this.state.user && this.props.token){
+        if(!this.state.user && this.props.authToken){
             await this._loadData()
         }
 
-        if(this.props.token && this.state.user){
+        if(this.props.authToken && this.state.user){
             if(localStorage.getItem('marbleLoggedUser')){
                 const newUser = JSON.parse(localStorage.getItem('marbleLoggedUser')!);
 
@@ -76,17 +81,6 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
                     user.profileImage = newUser.profileImage;
                     this.setState({user});
                 }
-
-                // if(
-                //     this.state.user.username !== newUser.username ||
-                //     this.state.user.profileImage.url !== newUser.profileImage.url
-                // ){
-                //     this.setState({user: {
-                //         userId: newUser.id,
-                //         username: newUser.username,
-                //         profileImage: newUser.profileImage
-                //     }});
-                // }
             }
         }
         
@@ -107,6 +101,7 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
     }
 
     render() {
+        console.log("render")
         return (
 
             <Navbar bg="white" variant="light" className="sticky-top shadow-sm border-bottom border-primary py-0">
@@ -127,12 +122,15 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
     }
 
     private _renderNavItems(items: NavbarItem[]) {
-
+        const { location } = this.props;
+        let p = location.pathname.split("/")
         if (authGuard.loggedIn()) {
             return (
                 items.filter((i: NavbarItem) => i.onlyGuest !== true).map((item, key) => {
+                    let prefix = item.href.split("/");
+                    console.log(p[1], prefix[1])
                     return (
-                        <div key={key} className={"row no-gutters align-items-center" } style={{ height: "70px" }}>
+                        <div key={key} className={"row no-gutters align-items-center"+(p[1] === prefix[1]? ' navActive':'') } style={{ height: "70px" }}>
                             <Link className="nav-link align-items-center" to={item.href}  >
                                 {item.title}
                             </Link>
@@ -143,8 +141,10 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         } else {
             return (
                 items.filter((i: NavbarItem) => i.isProtected !== true).map((item, key) => {
+                    let prefix = item.href.split("/");
+                    console.log(p[1], prefix[1])
                     return (
-                        <div key={key} className={"row no-gutters align-items-center"} style={{ height: "70px" }}>
+                        <div key={key} className={"row no-gutters align-items-center"+(p[1] === prefix[1]? ' navActive':'')} style={{ height: "70px" }}>
                             <Link className="nav-link" to={item.href} key={key}>
                                 {item.title}
                             </Link>
@@ -165,8 +165,7 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
     }
 
 }
-
-export const Header = withAuth(props => <_Header token={props.authToken} items={
+const H = withRouter((props)=> <_Header {...props} items={
     routes.filter(item => item.displayInNavBar !== false)
         .map(item => {
             return {
@@ -177,4 +176,7 @@ export const Header = withAuth(props => <_Header token={props.authToken} items={
                 isProtected: item.isProtected || false
             };
         })
-}/>);
+}/>)
+
+export const Header = withAuth((props) => <H {...props}/>)
+

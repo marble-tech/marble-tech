@@ -1,14 +1,10 @@
 .user-drop{
-  padding-left: 2px !important;
-  padding-right: 2px !important;
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  width: 210px !important;
+
   text-align: center !important;
 }
 
 .items{
-  width: 210px !important;
+  /* width: 210px !important; */
   padding: 2px !important;
 }
 
@@ -18,7 +14,7 @@
 }
 
 #navbarDropdown{
-  color: rgb(197, 187, 187) !important;
+  /* color: rgb(197, 187, 187) !important; */
   cursor: pointer;
 }
 
