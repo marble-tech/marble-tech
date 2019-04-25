@@ -18,21 +18,25 @@ const onAuthTokenChange = (cb: (authToken: string | null) => void) => {
 
 interface WithAuthProps {
     cb: (props: AuthProps) => JSX.Element
+    location?:any;
 }
 
 interface WithAuthState {
     authToken: string | null;
+    location:any;
 }
 
 class WithAuth extends React.Component<WithAuthProps, WithAuthState> {
     public constructor(props: WithAuthProps) {
         super(props);
         this.state = {
-            authToken: getToken()
+            authToken: getToken(),
+            location: this.props.location,
         };
         onAuthTokenChange(value => this.setState({ authToken: value }));
     }
     public render() {
+        console.log("teste")
         return (
             <React.Fragment>
                 {this.props.cb({ authToken: this.state.authToken })}
@@ -46,7 +50,7 @@ export interface AuthProps {
 }
 
 export function withAuth(cb: (props: any) => JSX.Element) {
-    return () => <WithAuth cb={cb} />;
+    return () => <WithAuth cb={cb} location={location}/>;
 }
 
 export const setAuthToken = async (token: string | null) => {

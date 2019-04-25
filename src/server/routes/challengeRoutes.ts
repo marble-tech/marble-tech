@@ -4,11 +4,11 @@ import { testFileWritter } from '../handlers/testFileWriter';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { hollow } from '../middlewares/hollowMiddleware';
 
-const challengeController = new ChallengeController();
+const challengeController = new ChallengeController(); // challenge controller instance
 
 // Store all challenge routes in an array
 const routes = [
-  {
+  { // get all challenges
     method: 'get',
     path: '/',
     middlewares: [hollow],
@@ -16,7 +16,7 @@ const routes = [
     action: challengeController.findAll,
     body: ['none']
   },
-  {
+  { // get a challenge by its ID
     method: 'get',
     path: '/:id',
     middlewares: [hollow],
@@ -24,7 +24,7 @@ const routes = [
     action: challengeController.findById,
     body: ['none']
   },
-  {
+  { // run a test given challenge ID
     method: 'post',
     path: '/:id/test',
     middlewares: [

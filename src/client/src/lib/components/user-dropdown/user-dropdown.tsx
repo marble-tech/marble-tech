@@ -6,7 +6,7 @@ import { Image } from 'react-bootstrap';
 
 interface Props {
   username: string;
-  profileImage: string;
+  profileImage: string | null;
 }
 const auth:AuthService = new AuthService;
 
@@ -23,12 +23,11 @@ export default class UserDropdown extends Component<Props> {
   render() {
     return (
       <React.Fragment>
-        <div className='user-drop border'>
-        <ul className="navbar-nav mx-3">
-          <li className="nav-item dropdown">
+        <div className='user-drop'>
+        <ul className="navbar-nav">
+          <li className="dropdown">
             <a
-              //dropdown-toggle 
-              className="nav-link py-0"
+              className="py-0 nav-link"
               id="navbarDropdown"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -36,9 +35,9 @@ export default class UserDropdown extends Component<Props> {
             >
               <i className="fas fa-caret-down m-2"></i>
               { this.props.username }
-              <Image src={ this.props.profileImage } className="mx-2" width={35} height={35} roundedCircle/>
+              <Image src={ this.props.profileImage ? this.props.profileImage : './images/profileImage.svg' } className="mx-2" width={35} height={35} roundedCircle/>
             </a>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-20px'}}>
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{left:'-35px'}}>
               <Link className="dropdown-item items" to='/dashboard'>
                 <i className="far fa-lg fa-user m-2 text-secondary"></i>
                 <span className='m-2'>Profile</span>
