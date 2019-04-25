@@ -126,7 +126,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
                         <h6 className="mt-5 text-center">Don't have an account? <Link to="/register">Register here</Link></h6>
 
                     </Form>
-                    <Loading show={isLoading}/>
+                    {/* <Loading show={isLoading}/> */}
                 </Col>
             </Row>
         );

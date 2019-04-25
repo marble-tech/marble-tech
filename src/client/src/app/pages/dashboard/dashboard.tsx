@@ -72,7 +72,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
     render(){
         const { rank, userChallenges } = this.state;
         return (
-            <Container>
+            <Container className="pb-5">
                 <Row>
                 <Col md={9}>
                     { this._renderUserProfile() }

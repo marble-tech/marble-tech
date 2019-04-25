@@ -51,10 +51,6 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
             await this._loadData();
         }
     }
-    // shouldComponentUpdate(nextProps){
-    //     if(this.props.)
-
-    // }
     async componentDidUpdate() {
         if(!this.state.user && this.props.authToken){
             await this._loadData()
@@ -63,24 +59,23 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
         if(this.props.authToken && this.state.user){
             if(localStorage.getItem('marbleLoggedUser')){
                 const newUser = JSON.parse(localStorage.getItem('marbleLoggedUser')!);
-
                 if(
                     this.state.user.username !== newUser.username
                 ) {
                     let user = this.state.user;
-                    user.username = newUser.username;
+                    user=newUser;
                     this.setState({user});
-
                 }
-
                 if(
                     this.state.user.profileImage && 
-                    this.state.user.profileImage.url !== newUser.profileImage.url
+                    (this.state.user.profileImage.url !== newUser.profileImage.url)
                 ){
                     let user = this.state.user;
                     user.profileImage = newUser.profileImage;
                     this.setState({user});
                 }
+                
+                
             }
         }
         
@@ -89,6 +84,7 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
     private async _loadData() {
         try {
             const loggedUser = await auth.authUser();
+            console.log(loggedUser);
             this.setState({user: {
                 userId: loggedUser.id,
                 username: loggedUser.username,
@@ -101,7 +97,6 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
     }
 
     render() {
-        console.log("render")
         return (
 
             <Navbar bg="white" variant="light" className="sticky-top shadow-sm border-bottom border-primary py-0">
@@ -142,7 +137,6 @@ export class _Header extends React.Component<HeaderProps, HeaderState>{
             return (
                 items.filter((i: NavbarItem) => i.isProtected !== true).map((item, key) => {
                     let prefix = item.href.split("/");
-                    console.log(p[1], prefix[1])
                     return (
                         <div key={key} className={"row no-gutters align-items-center"+(p[1] === prefix[1]? ' navActive':'')} style={{ height: "70px" }}>
                             <Link className="nav-link" to={item.href} key={key}>
