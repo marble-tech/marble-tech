@@ -36,7 +36,6 @@ class WithAuth extends React.Component<WithAuthProps, WithAuthState> {
         onAuthTokenChange(value => this.setState({ authToken: value }));
     }
     public render() {
-        console.log("teste")
         return (
             <React.Fragment>
                 {this.props.cb({ authToken: this.state.authToken })}
