@@ -134,9 +134,9 @@ export class Signup extends React.Component<SignupProps,SignupState> {
             </Row>)
         }
         return (
-            <Row className="h-100 pr-4">
-                <Col className="py-4"><h1>Sign Up</h1>
-                <Form className="my-3" >
+            <Row>
+                <Col ><h1>Sign Up</h1>
+                <Form>
                     <Form.Group>
                     <Form.Control
                             type="text"

@@ -22,6 +22,7 @@ interface LoginState {
     isLoading: boolean;
 }
 const auth:AuthService = new AuthService;
+
 export class Login extends React.Component<LoginProps,LoginState> {
     public constructor(props: LoginProps) {
         super(props);
@@ -38,7 +39,10 @@ export class Login extends React.Component<LoginProps,LoginState> {
         this._onChange = this._onChange.bind(this)
         this._handleSubmit = this._handleSubmit.bind(this)
     }
-
+    /**
+     * 
+     * @param e 
+     */
     private _onChange(e:any) {
         this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
     }
@@ -94,7 +98,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
     public render() {
         const { isLoading } = this.state;
         return (
-            <Row className="align-items-center h-100 pr-4">
+            <Row className="align-items-center h-100">
                 <Col>
                     <h1>Sign in</h1>
                     <Form className="my-3">

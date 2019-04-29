@@ -6,32 +6,27 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-export class Hero extends React.Component{
+interface Props{
+    fluid?: boolean;
+}
+interface State{}
+
+export class Hero extends React.Component<Props, State>{
     render(){
-        const quote:CSSProperties = {
-            position: "absolute",
-            top:"50%",
-            marginTop: "",
-            backgroundColor: "rgba(0,0,0,.40)",
-            transform: "translate(0, -50%)"
-            
-    
-        };
         return(
-            <Container fluid className="pb-5 px-0 position-relative">
-                {/* <div id="moon" className="bg-winter d-flex"></div> */}
-                <Container fluid={ window.innerWidth < 992 ? true : false}>
-                    <Card style={{zIndex:1}}>
-                    <Row>
-                        <Col className="align-self-center">
-                            <img className="m-auto d-block img-fluid" src="/images/marble.png" alt=""/></Col>
-                        <Col>                           
+            <Container fluid className="pb-5 px-0 position-relative " style={{zIndex:0, overflow: "hidden", height: "700px"}}>
+                <Container fluid={this.props.fluid} className="h-100"> 
+                    <Row className="h-100">
+                            <div>
+                                <video className="videoBg" autoPlay muted loop>
+                                    <source src="./hero.webm"></source>
+                                </video>
+                            </div>
+                            <Container className="align-items-center h-100" style={{zIndex:1}}>
                             {this.props.children}
-                        </Col>                    
+                            </Container>
                     </Row>
-                    </Card>
                 </Container>
-                
             </Container>  
             
         )
