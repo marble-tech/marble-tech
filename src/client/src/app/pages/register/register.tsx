@@ -7,13 +7,22 @@ import { withRouter } from "react-router-dom";
 import Col from 'react-bootstrap/Col';
 import { Hero } from '../../../lib/components/hero/hero';
 import { Signup } from '../../../lib/components';
+import { Row, Card } from 'react-bootstrap';
 
 export class Register extends React.Component{
     render(){
         const {history}:any = this.props
         return (
             <Container fluid className="bg-light px-0">
-                <Hero><Signup history={history}/></Hero>
+                <Hero fluid>
+                    <Row className="align-items-center h-100">
+                    <Col sm={5} className="m-auto">
+                       <Card className="pt-5 pb-3 px-4" style={{background: "rgba(255,255,255,0.5)"}}>
+                            <Signup history={history}/>
+                       </Card> 
+                    </Col>
+                    </Row>
+                </Hero>
                 <Container fluid >
                     <Section>
                         <Col className="text-center">

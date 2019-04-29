@@ -4,8 +4,8 @@ import Image from 'react-bootstrap/Image';
 import { Hero } from '../../../lib/components/hero/hero';
 import { Section } from '../../../lib/components/section/section';
 import Col from 'react-bootstrap/Col';
-import { Login } from '../../../lib/components';
 import './home.css';
+import { Row } from 'react-bootstrap';
 
 export class Home extends React.Component {
     render() {
@@ -13,8 +13,23 @@ export class Home extends React.Component {
         const { history }: any = this.props;
         return (
             <Container fluid className="bg-light px-0">
-                <Hero><Login history={history} /></Hero>
-                <Container fluid >
+                <Hero fluid>
+                    <Row className="">
+                    <Col sm={5}>
+                        <div className="bg-primary pt-5 px-4">
+                            <blockquote className="blockquote m-0">
+                                <strong><p className="mb-0 h5 text-white">"Whether you want to uncover the secrets of the universe, or you just want to pursue a
+                                        career in the 21st century, basic computer programming is an essential skill to learn.”</p></strong>
+                                <footer className="blockquote-footer text-white">Stephen Hawking<cite title="Source Title">Source Title</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div className="grad">
+                        </div>
+                        
+                    </Col>
+                    </Row>
+                </Hero>
+                <Container fluid className="bg-light">
                     <Section>
                         <Col>
                             <h3 >Stephen Hawking</h3>

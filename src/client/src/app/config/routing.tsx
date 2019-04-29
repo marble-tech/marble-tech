@@ -5,6 +5,7 @@ import { Challenges } from "../pages/challenges/challenges";
 import { Register } from "../pages/register/register";
 import { Dashboard } from '../pages/dashboard/dashboard';
 import TermsOfService, {} from '../pages/termsOfService/termsOfService';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
 
 interface RouteConf {
     isIndex?: boolean;
@@ -42,7 +43,7 @@ export const routes: RouteConf[] = [
     { href: HREF.home, isIndex: true, title: "Home", path: PATHS.home, component: <Home/> , exact:true, displayInNavBar:false },
     { href: HREF.tutorial, isIndex: false, title: "Tutorial", path: PATHS.tutorial, component: <Tutorial/>, exact:false },
     { href: HREF.challenges, isIndex: false, title: "Challenges", path: PATHS.challenges, component: <Challenges/>, exact:false, isProtected:true },
-    { href: HREF.login, isIndex: false, title: "Login", path: PATHS.login, component: <Home/>, exact:true, onlyGuest:true },
+    { href: HREF.login, isIndex: false, title: "Login", path: PATHS.login, component: <LoginPage/>, exact:true, onlyGuest:true },
     { href: HREF.register, isIndex: false, title: "Register", path: PATHS.register, component: <Register/>, exact:true, onlyGuest:true },
     { href: HREF.dashboard, isIndex: false, title: "Dashboard", path: PATHS.dashboard, component: <Dashboard/>, exact:true, onlyGuest:false, isProtected:true, displayInNavBar:false  },
     { href: HREF.termsOfService, isIndex: false, title: "Terms of Service", path: PATHS.termsOfService, component: <TermsOfService/>, exact:true, onlyGuest:false, isProtected:false, displayInNavBar:false  }
