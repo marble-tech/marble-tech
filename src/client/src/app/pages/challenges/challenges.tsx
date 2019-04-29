@@ -28,6 +28,7 @@ interface ChallengesState{
     title: string|null;
     level: string|null;
     description: string;
+    content: string;
     sampleAnswer: string;
     fbModalShow:boolean;
     challengeId: number | null;
@@ -48,6 +49,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             title: null,
             level: null,
             description: "",
+            content: "",
             sampleAnswer: "",
             challengesList: null,
             fbModalShow: false,
@@ -80,9 +82,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _renderChallengeDescription() {
-        const { description } = this.state;
-        if (!!description) {
-            let data = description.split('<CodeBlock>')
+        const { content } = this.state;
+        if (!!content) {
+            let data = content.split('<CodeBlock>')
             return  data.map((item, index) =>{
                 if (index%2==1){
                     return <CodeBlock key={index}>{item}</CodeBlock>
@@ -139,8 +141,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         (async () => {
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
-                    let {title, description, sampleAnswer, level, id } = res;
-                    this.setState({title, description, sampleAnswer, level, challengeId: id  })
+                    console.log(res);
+                    let {title, description, content, sampleAnswer, level, id } = res;
+                    this.setState({title, description, content, sampleAnswer, level, challengeId: id  })
                 })
                 .catch((e:any)=>{
                     console.log(e)
@@ -166,15 +169,16 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     componentDidUpdate(nextProps:any, prevState:any) {
         if(this.props.match.params.id!==nextProps.match.params.id){
             // clear previews state 
-            this.setState({description: ""})
+            this.setState({content: ""})
             this._loadChallengeData();
+            console.log(this.state.content, 'bla');
         }
     }
     public componentDidMount() {
         this._loadChallengeData();
     }
     render(){
-        let { title, description, challengesList, level } = this.state;
+        let { title, content, challengesList, level } = this.state;
         return (
             <Container fluid>
                 <Row>

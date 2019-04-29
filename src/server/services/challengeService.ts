@@ -23,8 +23,9 @@ export class ChallengeService {
     const appFile = challengeInfo.appFile;
     const testFile = challengeInfo.testFile;
     const startingCode = challengeInfo.startingCode;
+    const content = challengeInfo.content;
 
-    const challengeToSave = new Challenge(title, description, sampleAnswer, level, appFile, testFile);
+    const challengeToSave = new Challenge(title, description, content, sampleAnswer, level, appFile, testFile);
     
     return getChallengeRepository().save(challengeToSave);
   }
