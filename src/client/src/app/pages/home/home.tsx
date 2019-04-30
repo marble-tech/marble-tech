@@ -16,7 +16,7 @@ export class Home extends React.Component {
                 <Hero fluid>
                     <Row className="">
                     <Col sm={5}>
-                        <div className="bg-primary pt-5 px-4">
+                        <div className="pt-5 px-4" style={{background:"rgb(117, 117, 117)"}}>
                             <blockquote className="blockquote m-0">
                                 <strong><p className="mb-0 h5 text-white">"Whether you want to uncover the secrets of the universe, or you just want to pursue a
                                         career in the 21st century, basic computer programming is an essential skill to learn.”</p></strong>
@@ -29,33 +29,35 @@ export class Home extends React.Component {
                     </Col>
                     </Row>
                 </Hero>
-                <Container fluid className="bg-light">
+                <Container fluid className="bg-light pt-3">
                     <Section>
                         <Col>
-                            <h3 >Stephen Hawking</h3>
-                            <p>
-                              "Whether you want to uncover the secrets of the universe, or you just want to pursue a
-                              career in the 21st century, basic computer programming is an essential skill to learn.”
+                            <h4 className="text-center">Challenging</h4>
+                            <p className="lead text-center pt-2">
+                                Exercise through activities with the right level of complexity and make your progress consistent 
                             </p>
                         </Col>
-                        <Col>
-                            <h3 >Steve Jobs</h3>
-                            <p>
-                              “Everybody should learn to program a computer, because it teaches you how to think.”
+                        <Col className="pr-2">
+                            <h4 className="text-center" >Learns as you go!</h4>
+                            <p className="lead text-center pt-2">
+                              Practice API concepts on your own time with many challenges designed to help you develop your skillset
                             </p>
                         </Col>
-                        <Col>
-                            <h3 >Benjamin Franklin</h3>
-                            <p>
-                              “Tell me and I forget, teach me and I may remember, involve me and I learn.”
-                        </p>
+                        <Col className="pr-2">
+                            <h4 className="text-center">Top trending technolgies</h4>
+                            <p className="lead text-center pt-2">
+                              Learn more about top backend technologies like, NodeJS, ExpressJS and Typescript.
+                            </p>
                         </Col>
                     </Section>
                     <Section noGutters>
                         <Col className="text-center">
-                            <h2 >Lorem Ipsum</h2>
-                            <p>
-                              Lorem Ipsum
+                            <h2 >About us</h2>
+                            <p className="lead text-center pt-2">
+                                Marble Tech is a project create by students for students to help, support and promote 
+                                the learning of server side technology such as NodeJS, ExpressJS and others all using Typescript. Marble is composed 
+                                of two main features: a tutorial of how to build a server and a sequence of practical 
+                                challenges for learners that are willing to improve their knowledge about the subject.
                             </p>
                         </Col>
                     </Section>
@@ -64,7 +66,8 @@ export class Home extends React.Component {
                             <Image src="./images/fer.jpeg" width={171} height={180} roundedCircle className="mb-3" />
                             <h3>Fernando Marinho</h3>
                             <p>
-                              IT undergraduate at CCT College Dublin.
+                              IT undergraduate at CCT College Dublin. I am passionated about helping others students 
+                              on the path of developing their IT skills. 
                             </p>
                         </Col>
                         <Col className="text-center">
