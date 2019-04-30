@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
 // Deal with not registered endpoints
 router.get('*', (req, res) => {
   console.log(req.url);
-  res.redirect(`/?q=${req.url}`);
+  res.redirect(`${process.env.DATABASE_HOST}/?q=${req.url}`);
 });
 
 export default router;
