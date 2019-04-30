@@ -19,7 +19,7 @@ export class Hero extends React.Component<Props, State>{
                     <Row className="h-100">
                             <div>
                                 <video className="videoBg" autoPlay muted loop>
-                                    <source src="./hero.webm"></source>
+                                    <source src="./hero.mp4"></source>
                                 </video>
                             </div>
                             <Container className="align-items-center h-100" style={{zIndex:1}}>
