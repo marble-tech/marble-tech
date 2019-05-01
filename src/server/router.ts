@@ -32,8 +32,8 @@ router.get('/', (req, res) => {
 
 // Deal with not registered endpoints
 router.get('*', (req, res) => {
-  console.log(`${process.env.REACT_APP_API}?q=${req.url}`);
-  res.redirect(`${process.env.REACT_APP_API}?q=${req.url}`);
+  console.log(`${process.env.REACT_APP_API}?p=${req.url}`);
+  res.redirect(`${process.env.REACT_APP_API}?p=${req.url}`);
 });
 
 export default router;
