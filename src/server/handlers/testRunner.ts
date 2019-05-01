@@ -23,7 +23,7 @@ export async function testRunner(appFilePath: string, testFilePath: string){
         return {title: test.title, state: test.state};
       });
       // Store score
-      const score = (((results.length)-failures)/results.length)*100;
+      const score = Math.round((((results.length)-failures)/results.length)*100);
       // Return test results, failures and score
       resolve({ 
         results, failures, score
