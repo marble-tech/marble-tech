@@ -119,6 +119,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
                                 id="password"
                                 value={this.state.password} 
                                 onChange={this._onChange}
+                                onKeyUp={(e:any)=>e.keyCode==13 ? this._handleSubmit() : "" }
                             />
                         </Form.Group>
                         {this._renderServerErrors()}

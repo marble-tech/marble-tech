@@ -54,7 +54,7 @@ export class Dashboard extends Component<DashboardProps,DashboardState>{
             const loggedUser = await authService.authUser();
             this.setState({userDetails: loggedUser});
 
-            await userService.getRank()
+            await userService.getRank(6)
                 .then((res:any)=>{
                     this.setState({rank:res})
                 })
