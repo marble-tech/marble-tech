@@ -14,10 +14,10 @@ export class Footer extends React.Component {
                 className="row no-gutters p-0"
                 style={{ minHeight: "200px", backgroundColor:"#757575" }}
             >
-                <Container style={{}}>
+                <Container>
                     <div className="row py-5">
 
-                    <Col sm={3} className='mx-auto'>
+                    <Col sm={4} className='mx-auto'>
                         <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Product</strong></h5>
                         <Link className='tos-link' to='/'>
                             <h6 className='tos'>Features (not implemented)</h6>
@@ -25,23 +25,7 @@ export class Footer extends React.Component {
                         <Link className='tos-link' to={'/termsOfService'}>
                             <h6 className='tos'>Terms of Service</h6>
                         </Link>
-                    </Col>
-
-                    <Col sm={3} className='mx-auto'>
-                    <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Resources</strong></h5>
-                        <a className='tos-link' href='https://nodejs.org' target="_blank">
-                            <h6 className='tos'>NodeJs</h6>
-                        </a>
-                        <a className='tos-link' href='https://expressjs.com/' target="_blank">
-                            <h6 className='tos'>ExpressJs</h6>
-                        </a>
-                        <a className='tos-link' href='https://www.typescriptlang.org/' target="_blank">
-                            <h6 className='tos'>TypeScript</h6>
-                        </a>
-                    </Col>
-
-                    <Col sm={3} className='mx-auto'>
-                        <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Support</strong></h5>
+                        <h5 className='border-bottom px-2 py-1 mb-3 text-white mt-4' ><strong>Support</strong></h5>
                         <Link className='tos-link' to={'/'}>
                             <h6 className='tos'>Help (not implemented)</h6>
                         </Link>
@@ -51,6 +35,20 @@ export class Footer extends React.Component {
                         <Link className='tos-link' to={'/'}>
                             <h6 className='tos'>Contact Us (not implemented)</h6>
                         </Link>
+                        
+                    </Col>
+
+                    <Col sm={2} className='mx-auto'>
+                        <h5 className='border-bottom px-2 py-1 mb-3 text-white' ><strong>Resources</strong></h5>
+                        <a className='tos-link' href='https://nodejs.org' target="_blank">
+                            <h6 className='tos'>NodeJs</h6>
+                        </a>
+                        <a className='tos-link' href='https://expressjs.com/' target="_blank">
+                            <h6 className='tos'>ExpressJs</h6>
+                        </a>
+                        <a className='tos-link' href='https://www.typescriptlang.org/' target="_blank">
+                            <h6 className='tos'>TypeScript</h6>
+                        </a>
                     </Col>
 
                     </div>

@@ -14,9 +14,11 @@ export class UserService {
             method:'GET'})
             .then((res:any) => {return res})
     }
-    public getRank(){
+    public getRank(limit:number){
+        let l = {limit:limit}
         return api.fetch(this.domain+'/rank',{
-            method:'POST'})
+            method:'POST',
+            body: JSON.stringify(l)})
             .then((res:any) => {return res})
     }
     public get(id:number){
