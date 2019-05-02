@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { testRunner } from '../handlers/testRunner';
 import { ChallengeService } from '../services/challengeService';
 import { validateChallenge, validateUpdatedChallenge } from '../validation/challengeValidation';
-import { Challenge } from '../entities/Challenge';
 import { UserService } from '../services/userService';
 import { UserChallengeService } from '../services/userChallengeService';
 import { UserChallenge } from '../entities/UserChallenge';
@@ -119,7 +118,7 @@ export class ChallengeController {
         const challengeRetrieved = await challengeService.findById(id); // get challenge from DB
 
         if (!challengeRetrieved) return res.status(404).json({ Error: "Challenge not found." }) // return error if not found
-
+        
         // return status 200 and the challenge found
         return res.status(200).json(challengeRetrieved);
 

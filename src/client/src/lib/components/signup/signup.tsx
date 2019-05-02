@@ -15,6 +15,7 @@ interface SignupProps {
 
 interface SignupState {
     email:string;
+    username:string;
     password:string;
     f_name:string;
     l_name:string;
@@ -24,6 +25,7 @@ interface SignupState {
     validated:boolean;
     err: {
         email:string | null,
+        username:string | null,
         password:string | null,
         f_name:string | null,
         l_name:string | null,
@@ -37,6 +39,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
         super(props);
        this.state ={
             email:"",
+            username:"",
             password:"",
             f_name:"",
             l_name:"",
@@ -48,6 +51,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
                 f_name: null,
                 l_name: null,
                 email: null,
+                username: null,
                 password: null,
                 confirmPassword:null
             },
@@ -69,6 +73,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
         data.err={
             f_name: null,
             l_name: null,
+            username:null,
             email: null,
             password: null,
             confirmPassword:null
@@ -102,6 +107,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
         this.setState({ isLoading: true });
         (async()=>{
             await userService.create({
+                username:this.state.username,
                 email: this.state.email,
                 password: this.state.password,
                 f_name: this.state.f_name,
@@ -128,9 +134,9 @@ export class Signup extends React.Component<SignupProps,SignupState> {
             </Row>)
         }
         return (
-            <Row className="h-100 pr-4">
-                <Col className="py-4"><h1>Sign Up</h1>
-                <Form className="my-3" >
+            <Row>
+                <Col ><h1>Sign Up</h1>
+                <Form>
                     <Form.Group>
                     <Form.Control
                             type="text"
@@ -155,6 +161,19 @@ export class Signup extends React.Component<SignupProps,SignupState> {
                                 />
                             <Form.Control.Feedback type="invalid">
                                 {this.state.err.l_name}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Control
+                                type="text"
+                                id="username"
+                                placeholder="Username" 
+                                value={this.state.username} 
+                                onChange={this._handleChange}
+                                isInvalid={!!this.state.err.username}
+                                />
+                            <Form.Control.Feedback type="invalid">
+                                {this.state.err.username}
                             </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group>
@@ -188,7 +207,6 @@ export class Signup extends React.Component<SignupProps,SignupState> {
                             type="PASSWORD" 
                             id="confirmPassword"
                             placeholder="Confirm Password"
-                            
                             onChange={this._handleChange}
                             isInvalid={!!this.state.err.confirmPassword}
                         />
@@ -201,6 +219,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
                         disabled={!validated}
                         type="button" 
                         onClick={this._handleSubmit}
+                        className={!validated ? "btn-secondary":""}
                     >SIGN UP</Button>
                    
                     <h6 className="mt-5 text-center">Already has an account? <Link to="/login">Login</Link></h6>

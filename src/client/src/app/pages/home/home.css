@@ -4,3 +4,7 @@
   top: 50%;
   background-color: rgba(0,0,0,.40);
 }
+.grad {
+  height: 200px;
+  background-image: linear-gradient(to top, rgba(255,0,0,0), rgb(117, 117, 117)); /* Standard syntax (must be last) */
+}

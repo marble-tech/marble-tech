@@ -22,6 +22,7 @@ interface LoginState {
     isLoading: boolean;
 }
 const auth:AuthService = new AuthService;
+
 export class Login extends React.Component<LoginProps,LoginState> {
     public constructor(props: LoginProps) {
         super(props);
@@ -38,7 +39,10 @@ export class Login extends React.Component<LoginProps,LoginState> {
         this._onChange = this._onChange.bind(this)
         this._handleSubmit = this._handleSubmit.bind(this)
     }
-
+    /**
+     * 
+     * @param e 
+     */
     private _onChange(e:any) {
         this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
     }
@@ -94,7 +98,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
     public render() {
         const { isLoading } = this.state;
         return (
-            <Row className="align-items-center h-100 pr-4">
+            <Row className="align-items-center h-100">
                 <Col>
                     <h1>Sign in</h1>
                     <Form className="my-3">
@@ -115,6 +119,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
                                 id="password"
                                 value={this.state.password} 
                                 onChange={this._onChange}
+                                onKeyUp={(e:any)=>e.keyCode==13 ? this._handleSubmit() : "" }
                             />
                         </Form.Group>
                         {this._renderServerErrors()}
@@ -126,7 +131,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
                         <h6 className="mt-5 text-center">Don't have an account? <Link to="/register">Register here</Link></h6>
 
                     </Form>
-                    <Loading show={isLoading}/>
+                    {/* <Loading show={isLoading}/> */}
                 </Col>
             </Row>
         );

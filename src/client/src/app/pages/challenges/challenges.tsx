@@ -13,7 +13,8 @@ import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 
 interface challengesRoute {
     title: string;
-    path: string;    
+    path: string;  
+    id: number;  
 }
 interface ChallengesProps{
     location?: any;
@@ -28,6 +29,7 @@ interface ChallengesState{
     title: string|null;
     level: string|null;
     description: string;
+    content: string;
     sampleAnswer: string;
     fbModalShow:boolean;
     challengeId: number | null;
@@ -48,6 +50,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             title: null,
             level: null,
             description: "",
+            content: "",
             sampleAnswer: "",
             challengesList: null,
             fbModalShow: false,
@@ -80,9 +83,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _renderChallengeDescription() {
-        const { description } = this.state;
-        if (!!description) {
-            let data = description.split('<CodeBlock>')
+        const { content } = this.state;
+        if (!!content) {
+            let data = content.split('<CodeBlock>')
             return  data.map((item, index) =>{
                 if (index%2==1){
                     return <CodeBlock key={index}>{item}</CodeBlock>
@@ -93,6 +96,31 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         } else {
             return <div></div>;
         }
+    }
+    private _renderChallenge(){
+        let { title, content, challengesList, level } = this.state;
+        if (title){
+            return <Content className="py-5">
+                        <h2>
+                            {title}
+                            <small className="text-muted"> - {level} level</small>
+                        </h2>
+                        <Row><Col>{this._renderChallengeDescription()}</Col></Row>
+                        <Form>
+                            <Form.Group controlId="challengeAns">
+                            <Form.Label>Let's code:</Form.Label>
+                            <Form.Control as="textarea" rows={10} onChange={this._onChange} value={this.state.challengeAns} />
+                            </Form.Group>
+                        </Form>
+                        <a className="btn btn-primary text-white float-right" onClick={this._handleSubmit}><strong>POST</strong></a>
+                        {this._renderServerErrors()}
+                        {this._renderFBModal()}
+                </Content>
+
+        }else{
+            <div></div>
+        }
+        
     }
     private _renderSidebar() {
         const {challengesList} = this.state
@@ -105,11 +133,28 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _renderFBModal() {
-        let modalClose = () => this.setState({fbModalShow:false})
+        const {match, location, history} = this.props
+        let nextChallenge      
+         
+        let modalCloseOnSuccess = () => {
+            this.setState({fbModalShow:false, challengeAns:""})
+            if(this.state.challengesList){
+                nextChallenge = this.state.challengesList.filter(element => element.id == (+match.params.id + 1))
+                if(nextChallenge[0]){
+                    this.props.history.push(nextChallenge[0].path)
+                }else{
+                    this.props.history.push("/dashboard")
+                }
+            }
+            
+        };
+        let modalCloseOnFailure = () => {
+            this.setState({fbModalShow:false})
+        };
         const {feedback, fbModalShow, } = this.state
-        if (!!feedback) {
+        if (feedback) {
             return (
-                <FeedbackModal show={fbModalShow} feedback={feedback} onHide={modalClose}/>
+                <FeedbackModal show={fbModalShow} feedback={feedback} onHide={feedback.failures>0?modalCloseOnFailure:modalCloseOnSuccess}/>
             )
         } else {
             return <div></div>;
@@ -139,8 +184,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         (async () => {
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
-                    let {title, description, sampleAnswer, level, id } = res;
-                    this.setState({title, description, sampleAnswer, level, challengeId: id  })
+                    let {title, description, content, sampleAnswer, level, id } = res;
+                    this.setState({title, description, content, sampleAnswer, level, challengeId: id  })
                 })
                 .catch((e:any)=>{
                     console.log(e)
@@ -166,15 +211,16 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     componentDidUpdate(nextProps:any, prevState:any) {
         if(this.props.match.params.id!==nextProps.match.params.id){
             // clear previews state 
-            this.setState({description: ""})
+            this.setState({content: ""})
             this._loadChallengeData();
+            console.log(this.state.content, 'bla');
         }
     }
     public componentDidMount() {
         this._loadChallengeData();
     }
     render(){
-        let { title, description, challengesList, level } = this.state;
+        
         return (
             <Container fluid>
                 <Row>
@@ -182,23 +228,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                     {this._renderSidebar()}
                 </div>
                 <Col md={8} className="px-3">
-                    <Content className="py-5">
-                        <h2>
-                            {title}
-                            <small className="text-muted"> - {level} level</small>
-                        </h2>
-                        <Row><Col>{this._renderChallengeDescription()}</Col></Row>
-                        <Form>
-                            <Form.Group controlId="challengeAns">
-                            <Form.Label>Let's code:</Form.Label>
-                            <Form.Control as="textarea" rows={10} onChange={this._onChange} />
-                            </Form.Group>
-                        </Form>
-                        <Button className="float-right" variant="primary" onClick={this._handleSubmit}><strong>POST</strong></Button>
-                        {/* <Button className="float-right" variant="primary" onClick={()=>this.setState({fbModalShow:true})}><strong>POST</strong></Button> */}
-                        {this._renderServerErrors()}
-                        {this._renderFBModal()}
-                    </Content>
+                    {this._renderChallenge()} 
                 </Col>
                 </Row>
                 <Loading show={this.state.pageLoading}/>

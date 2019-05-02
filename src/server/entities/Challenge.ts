@@ -34,6 +34,9 @@ export class Challenge {
   @Column({nullable: false, type: "text"})
   public description!: string;
 
+  @Column({nullable: false, type: 'text'})
+  public content!: string;
+
   @Column({nullable: false, type: "text"})
   public appFile!: string;
 
@@ -60,6 +63,7 @@ export class Challenge {
   public constructor(
     title: string,
     description: string,
+    content: string,
     sampleAnswer: string,
     level: string,
     appFile: string,
@@ -67,6 +71,7 @@ export class Challenge {
   ){
     this.title = title;
     this.description = description;
+    this.content = content;
     this.sampleAnswer = sampleAnswer;
     this.level = level;
     this.appFile = appFile;
