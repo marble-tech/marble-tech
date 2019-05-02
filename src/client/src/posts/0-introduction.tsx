@@ -14,9 +14,9 @@ export function introduction(props?:any) {
         Prerequisites
         </p>
         <ul>
-            <li><a href="https://nodejs.org">Node.js</a></li>
-            <li><a href="https://gitforwindows.org/">Git Bash</a> (for windows users)</li>
-            <li><a href="https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/">MySQL 5.7 Database</a></li>
+            <li><a href="https://nodejs.org"  target="_blank">Node.js</a></li>
+            <li><a href="https://gitforwindows.org/"  target="_blank">Git Bash</a> (for windows users)</li>
+            <li><a href="https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/"  target="_blank">MySQL 5.7 Database</a></li>
         </ul>
         <p className="lead">
             Scenario
