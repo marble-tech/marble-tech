@@ -5,11 +5,11 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { Content } from "../../../lib/components";
 import { Sidebar } from '../../../lib/components/sidebar/sidebar';
-import Button from 'react-bootstrap/Button';
 import {ChallengeService} from "../../../services/ChallengeService"
 import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackModal';
 import { Loading } from '../../../lib/components/loading/loading';
 import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
+import { CompilerError } from '../../../lib/components/compilerError/compilerError';
 
 interface challengesRoute {
     title: string;
@@ -73,11 +73,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
     }
     private _renderServerErrors() {
-        if (!!this.state.error) {
-            return <div className="text-center h5" style={{
-                width: "100%",
-                marginTop: "0.25rem",
-                color: "#dc3545"}}><strong>Error: </strong>{this.state.error}</div>;
+        if (this.state.error) {
+            return <CompilerError error={this.state.error}></CompilerError>;
         } else {
             return <div></div>;
         }
@@ -98,9 +95,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _renderChallenge(){
-        let { title, content, challengesList, level } = this.state;
+        let { title, level, challengeAns } = this.state;
         if (title){
-            return <Content className="py-5">
+            return <Content className="pt-5">
                         <h2>
                             {title}
                             <small className="text-muted"> - {level} level</small>
@@ -109,12 +106,15 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                         <Form>
                             <Form.Group controlId="challengeAns">
                             <Form.Label>Let's code:</Form.Label>
-                            <Form.Control as="textarea" rows={10} onChange={this._onChange} value={this.state.challengeAns} />
+                            <Form.Control 
+                                as="textarea" 
+                                onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
+                                rows={10} 
+                                onChange={this._onChange} 
+                                value={challengeAns} />
                             </Form.Group>
                         </Form>
                         <a className="btn btn-primary text-white float-right" onClick={this._handleSubmit}><strong>POST</strong></a>
-                        {this._renderServerErrors()}
-                        {this._renderFBModal()}
                 </Content>
 
         }else{
@@ -211,7 +211,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     componentDidUpdate(nextProps:any, prevState:any) {
         if(this.props.match.params.id!==nextProps.match.params.id){
             // clear previews state 
-            this.setState({content: ""})
+            this.setState({content: "", challengeAns:"", error:null})
             this._loadChallengeData();
             console.log(this.state.content, 'bla');
         }
@@ -223,7 +223,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         
         return (
             <Container fluid>
-                <Row>
+                <Row className="pb-3">
                 <div style={{ width: '276px' }} className=" bg-light ">
                     {this._renderSidebar()}
                 </div>
@@ -231,6 +231,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                     {this._renderChallenge()} 
                 </Col>
                 </Row>
+                {this._renderServerErrors()}
+                {this._renderFBModal()}
                 <Loading show={this.state.pageLoading}/>
             </Container>
         )

@@ -1,10 +1,11 @@
 import React from 'react';
 import {  Route as ReactRoute, Redirect, RouteComponentProps } from 'react-router-dom';
 import * as authGuard from '../../../helpers/authGuard';
+import { NotFound } from '../../../app/pages/notFound/notFound';
 
 interface ProtectedRouteProps {
     component: JSX.Element,
-    path: string,
+    path?: string,
     isProtected?:boolean; 
     exact?:boolean;
 }
@@ -16,7 +17,8 @@ export class Route extends React.Component<ProtectedRouteProps>{
     render(){
         const { component, isProtected, ...rest } = this.props;
         if(!!isProtected){
-            return ( <ReactRoute 
+            return ( 
+                <ReactRoute 
                     {...rest}
                     render={props =>
                     authGuard.loggedIn() ? (
@@ -34,9 +36,11 @@ export class Route extends React.Component<ProtectedRouteProps>{
                 );
         
         }else{
-            return (<ReactRoute 
-                {...rest}
-                render={props =>React.cloneElement(component, props={...props})}/>
+            return (
+                    <ReactRoute 
+                    {...rest}
+                    render={props =>React.cloneElement(component, props={...props})}/>
+                
             );
         }
         
