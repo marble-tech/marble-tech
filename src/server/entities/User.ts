@@ -20,10 +20,10 @@ export class User {
   @Column({nullable: false, unique: true, readonly: true})
   public email!: string;
 
-  @Column({nullable: false, unique: true})
+  @Column({nullable: false, unique: true, length:'11'})
   public username!: string;
 
-  @Column({nullable: false})
+  @Column({nullable: false, length:'12'})
   public password!: string;
 
   @OneToMany(type => UserChallenge, UserChallenge => UserChallenge.user)
