@@ -31,13 +31,21 @@ export class UserController {
         try {
             const newUser = req.body; // get information from body
             const result = validateUser(newUser); // validate against schema
-
+            console.log(result);
             // check if validation returned error, returning 400 and displaying message if so.
-            if (result.error) return res.status(400).json({ Error: "User details invalid. Please check your fields." }); // ir invalid, return 400 with message
+            if (result.error) {
+                return res.status(400).json({ Error: "User details invalid. Please check your fields." });
+             } // ir invalid, return 400 with message
 
             // save user to the DB
             const user = await userService.create(newUser)
                 .catch(error => { //catch any error
+                    console.log(error);
+                    if(error.detail.includes('email')){
+                        error.detail = `Email ${error.parameters[2]} already exists`;
+                    }else if(error.detail.includes('username')){
+                        error.detail = `Username ${error.parameters[3]} already exists`;
+                    }
                     res.status(409).json({ Error: error.detail });
                 });
 

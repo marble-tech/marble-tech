@@ -8,10 +8,10 @@ import * as joi from 'joi';
 export function validateUser(user: User) {
   const schema = joi.object({
     email: joi.string().email().required(),
-    password: joi.string().required(),
-    f_name: joi.string().required(),
-    l_name: joi.string().required(),
-    username: joi.string().required()
+    password: joi.string().min(6).max(12).required(),
+    f_name: joi.string().min(3).required(),
+    l_name: joi.string().min(3).required(),
+    username: joi.string().alphanum().min(6).max(11).required()
     // The strip unknown options removes unknown elements from 
     // objects and arrays, blocking their inclusion in the database 
   }).options({ stripUnknown: true });
@@ -26,7 +26,7 @@ export function validateUser(user: User) {
 export function validateLogin(data: any) {
   const schema = joi.object({
     email: joi.string().email().required(),
-    password: joi.string().required(),
+    password: joi.string().min(6).max(12).required(),
   }).options({ stripUnknown: true });
 
   return joi.validate(data, schema);
