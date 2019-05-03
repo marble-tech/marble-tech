@@ -10,31 +10,32 @@ describe('Challenge 2', () => {
         testApp = await createApp();
     });
 
-    it("User should be able to access the page on route '/id'.", (done) => {
-        (async () => {
-            request(testApp)
-              .get('/:id')
-              .expect(200)
-              .end((error, res) => {
-                console.log('status: ', res.status, ', message: ', res.text);
-                if (error)  done(error);
-                else done();
-              });
-        })();
-    });
-
-    it("User should be able to get a text response with the number input in the URL.", (done) => {
+    it("Client should be able to access the endpoint '/users/:name'", (done) => {
       (async () => {
-          
           request(testApp)
-            .get('/:54')
+            .get('/users/john')
             .expect(200)
             .end((error, res) => {
-              expect(res.body).eql('54’);
+              //expect(res.text).eql('john');
               console.log('status: ', res.status, ', message: ', res.text);
               if (error)  done(error);
               else done();
             });
       })();
-  });
+     });
+
+     it("Client should be able to get a response with the name sent in the parameter.", (done) => {
+      (async () => {
+          request(testApp)
+            .get('/users/john')
+            .expect(200)
+            .end((error, res) => {
+              expect(res.text).eql('john');
+              console.log('status: ', res.status, ', message: ', res.text);
+              if (error)  done(error);
+              else done();
+            });
+      })();
+     });
+    
 });

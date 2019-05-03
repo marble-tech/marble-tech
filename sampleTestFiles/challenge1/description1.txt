@@ -1,3 +1,1 @@
-<p>In Express you define routing using methods of the express object. One of the available methods is <strong style='color:blue'>app.get()</strong> that handles requests to the HTTP GET method. This method takes a string as the first argument and a callback function that takes a request and response arguments.<br/><strong><p>Eg.</p></strong><CodeBlock>app.get('route', (req, res) => {
-  res.send('text');
-});<CodeBlock>In this challenge you are required to implement a <strong style='color:blue'>GET</strong> method endpoint where the client should receive a response with the text <strong style='color:blue'>Home Page</strong> (same capitalization). We have already started an express app and you are to use the <span style='color:blue'>app.get()</span> function.</p>
+Learn how to use the express app.get() method to return a text message to the client application.

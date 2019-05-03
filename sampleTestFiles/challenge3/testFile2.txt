@@ -15,18 +15,36 @@ describe('Challenge 3', () => {
       "email": "user@email.com"
     }
 
-    it("User should be able to receive a JSON with the property name: user, email: user@email.com", (done) => {
+    it("Client should be able to receive a JSON with an object {id: 10, name: 'user', email: 'user@email.com'} on route '/users'", (done) => {
+      (async () => {
+          request(testApp)
+            .post('/users')
+            .send(user)
+            .end((error, res) => {
+              expect(res.body.id).to.eql(10);
+              expect(res.body.name).to.eql('user');
+              expect(res.body.email).to.eql('user@email.com');
+              console.log('status: ', res.status, ', message: ', res.text);
+              if (error)  done(error);
+              else done();
+            });
+      })();
+    });
+
+    it("Client should be able to receive a response status of 201 'Created' ", (done) => {
       (async () => {
           request(testApp)
             .post('/users')
             .send(user)
             .expect(201)
             .end((error, res) => {
-              expect(res.body).eql({id: 1, name: 'user', email:'user@email.com'});
-              console.log('status: ', res.status, ', message: ', res.text);
-              if (error)  done(error);
-              else done();
+                console.log('This is the response status', res.status);
+                //expect(res.status).to.equal(201);
+                if (error)  done(error);
+                else done();
+              
             });
       })();
-  });
+    });
+
 });

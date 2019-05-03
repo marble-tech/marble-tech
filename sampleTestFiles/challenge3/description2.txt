@@ -1,12 +1,1 @@
-<p>Another available method in Express object is <strong style='color:blue'>app.post()</strong> that handles requests to the HTTP POST method. This method takes a string as the first argument and a callback function that takes a request and response arguments.<br/><strong><p>Eg.</p></strong><CodeBlock>app.post('route', (request, response) => {
-  const somePropertyValue = request.body.someProperty;
-  const myObject = {
-    property: somePropertyValue,
-    anotherProperty: 5
-  }
-  response.status(201).json(myObject);
-});<CodeBlock>In this challenge you are required to implement a <strong style='color:blue'>POST</strong> method endpoint getting the request.body.name and request.body.email properties sent by the client and returning a user object adding an <strong style='color:blue'>id</strong> property with the value of <strong  style='color:blue'>1</strong> (it should be a number) in the following format: <br><br> <CodeBlock>{
-  id: 1
-  name: 'value sent by user',
-  email: 'value sent by user'
-}<CodeBlock> 
+This is the challenge 3 description
