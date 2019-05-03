@@ -1,0 +1,23 @@
+<p>Take a look at the current URL in your browser. We are accessing the path <strong style='color:blue'>/challenges/2</strong>.
+Our endpoint extracts the number <strong style='color:blue'>2</strong> from the URL as a parameter and uses it to access the information needed.
+</p>
+
+<p><strong>Eg.</strong></p>
+
+<p>
+In this example we are creating a <strong style='color:blue'>GET</strong> method endpoint on the route <strong style='color:blue'>'/images/'</strong> with a parameter <strong style='color:blue'>:id</strong>. The id is then extracted from the <strong style='color:blue'>request.params.id</strong> and stored in a constant named <strong style='color:blue'>id</strong>. At the end we are retrieving the id to the client with the <strong style='color:blue'>response.send()</strong> method.
+</p>
+
+<CodeBlock>app.get('/images/:id', (request, response) => {
+  const id = request.params.id;
+  response.send(id);
+});<CodeBlock>
+
+<p>In this challenge you are required to:
+<ul>
+  <li>Implement a <strong style='color:blue'>GET</strong> method endpoint on the route <strong style='color:blue'>'/users/'</strong> with a parameter <strong style='color:blue'>':name'</strong></li>
+  <li>Send back to the client the extracted name.</li>
+</ul>
+</p>
+
+<p>As usual, we have already started an express app and you are to use the <strong style='color:blue'>app.get()</strong> method.</p>

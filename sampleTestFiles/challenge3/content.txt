@@ -1,0 +1,50 @@
+<p>Another available method in Express object is <strong style='color:blue'>app.post()</strong> that handles requests to the HTTP POST method. This method takes a string as the first argument and a callback function that takes a request and response arguments.</p>
+
+<p>
+In this challenge we are going to use the <strong style='color:blue'>response.status()</strong> method. It is used to inform the client about the requested transaction status. The status <strong style='color:blue'>201</strong> means that the requested transaction was accepted and a new resource was successfully created. A list of all available status can be found at <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Status' target="_blank">developer.mozilla.org</a>.  
+</p>
+
+<p><strong>Eg.</strong></p>
+
+<p>In this example we have implemented a <strong style='color:blue'>POST</strong> method endpoint on the route <strong style='color:blue'>'/laptops'</strong> where we expect to receive the variables <strong style='color:blue'>brand</strong> and <strong style='color:blue'>color</strong> in the request body.
+</p>
+
+<p>
+Next we have created a new <strong style='color:blue'>laptop</strong> object with the extracted values from the <strong style='color:blue'>request.body</strong> and added the <strong style='color:blue'>id</strong> property with value of <strong style='color:blue'>1</strong>.
+</p>
+
+<p>
+Finally we sent the status <strong style='color:blue'>201</strong> (Created) and the created <strong style='color:blue'>laptop</strong> (in JSON format) back to the client.
+</p>
+
+<CodeBlock>app.post('/laptops', (request, response) => {
+  // Extract values from request.body
+  const brand = request.body.brand;
+  const color = request.body.color;
+  // Create a new resource with id: 1
+  const laptop = {
+    id: 1,
+    brand: brand,
+    color: color
+  }
+  // Return the created resource with a status 201 (Created)
+  response.status(201).json(laptop);
+});<CodeBlock>
+
+<p>In this challenge you are required to:
+<ul>
+  <li>Implement a <strong style='color:blue'>POST</strong> method endpoint in the route <strong style='color:blue'>'/users'</strong> getting the <strong style='color:blue'>request.body.name</strong> and <strong style='color:blue'>request.body.email</strong> properties sent by the client.
+  </li>
+<br/>
+  <li>Create a user object adding an id of <strong style='color:blue'>10</strong> (number type) in the following format: <CodeBlock>const user = {
+  id: 10,
+  name: 'value sent by client',
+  email: 'value sent by client'
+}<CodeBlock>
+  </li>
+</ul>
+
+<ul>
+  <li>Return a response status of <strong style='color:blue'>201</strong> (Created) along with the created <strong style='color:blue'>user object</strong> in a <strong style='color:blue'>JSON</strong> format.</li>
+</ul>
+</p>

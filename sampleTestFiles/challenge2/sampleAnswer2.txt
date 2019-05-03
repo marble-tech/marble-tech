@@ -1,4 +1,4 @@
-app.get("/:id", (req, res) => {
-    const id = req.params.id;
-    res.send(id);
+app.get('/users/:name', (request, response) => {
+  const name = request.params.name;
+  response.send(name);
 });
