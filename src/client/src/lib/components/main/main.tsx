@@ -2,8 +2,6 @@ import React from "react";
 import { Switch, Redirect } from "react-router";
 import { routes } from "../../../app/config/routing";
 import { Route } from "../route/route";
-import {  Route as ReactRoute } from 'react-router-dom'
-import { NotFound } from "../../../app/pages/notFound/notFound"
 
 export class Main extends React.Component{
     render(){   
