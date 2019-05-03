@@ -24,12 +24,13 @@ export class Register extends React.Component{
                     </Row>
                 </Hero>
                 <Container fluid >
-                    <Section>
+                <Section>
                         <Col className="text-center">
-                            <Image src="./images/fer.jpeg" width={171} height={180} roundedCircle className="mb-3"/>
+                            <Image src="./images/fer.jpeg" width={171} height={180} roundedCircle className="mb-3" />
                             <h3>Fernando Marinho</h3>
                             <p>
-                              IT undergraduate at CCT College Dublin.
+                              IT undergraduate at CCT College Dublin. I am passionated about helping others students 
+                              on the path of developing their IT skills. 
                             </p>
                         </Col>
                         <Col className="text-center">
@@ -40,7 +41,7 @@ export class Register extends React.Component{
                             </p>
                         </Col>
                         <Col className="text-center">
-                            <Image src="./images/luc.jpeg" width={171} height={180} roundedCircle className="mb-3"/>
+                            <Image src="./images/luc.jpeg" width={171} height={180} roundedCircle className="mb-3" />
                             <h3>Lucival Nascimento</h3>
                             <p>
                               Full-stack developer dived in the world of FinTech Start-ups and never left.
@@ -48,7 +49,7 @@ export class Register extends React.Component{
                             </p>
                         </Col>
                         <Col className="text-center">
-                            <Image src="./images/rafa.jpeg" width={171} height={180} roundedCircle className="mb-3"/>
+                            <Image src="./images/rafa.jpeg" width={171} height={180} roundedCircle className="mb-3" />
                             <h3>Rafael Barros</h3>
                             <p>
                               Software development enthusiastic and author of <a target="_blank" href='https://rbsprogramming.com'>
