@@ -20,7 +20,7 @@ export class Home extends React.Component {
                             <blockquote className="blockquote m-0">
                                 <strong><p className="mb-0 h5 text-white">"Whether you want to uncover the secrets of the universe, or you just want to pursue a
                                         career in the 21st century, basic computer programming is an essential skill to learn.”</p></strong>
-                                <footer className="blockquote-footer text-white">Stephen Hawking<cite title="Source Title">Source Title</cite></footer>
+                                <footer className="blockquote-footer text-white">Stephen Hawking</footer>
                             </blockquote>
                         </div>
                         <div className="grad">

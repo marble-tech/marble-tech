@@ -136,7 +136,7 @@ export class Signup extends React.Component<SignupProps,SignupState> {
         return (
             <Row>
                 <Col ><h1>Sign Up</h1>
-                <Form>
+                <Form className="text-center">
                     <Form.Group>
                     <Form.Control
                             type="text"

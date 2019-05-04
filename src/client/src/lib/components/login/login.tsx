@@ -101,7 +101,7 @@ export class Login extends React.Component<LoginProps,LoginState> {
             <Row className="align-items-center h-100">
                 <Col>
                     <h1>Sign in</h1>
-                    <Form className="my-3">
+                    <Form className="my-3 text-center">
                         <Form.Group>
                             <Form.Control
                                 onBlur={()=>this._handleBlur('email')}
@@ -117,14 +117,16 @@ export class Login extends React.Component<LoginProps,LoginState> {
                                 onBlur={()=>this._handleBlur('email')}
                                 type="PASSWORD" 
                                 id="password"
+                                placeholder="Password" 
                                 value={this.state.password} 
                                 onChange={this._onChange}
-                                onKeyUp={(e:any)=>e.keyCode==13 ? this._handleSubmit() : "" }
+                                onKeyDown={(e:any)=>e.keyCode==13 ? this._handleSubmit() : "" }
                             />
                         </Form.Group>
                         {this._renderServerErrors()}
                         {this._renderValidationErrors()}
                         <Button style={{width:'155px'}}
+
                             type="button" 
                             onClick={this._handleSubmit}
                         >LOGIN</Button>

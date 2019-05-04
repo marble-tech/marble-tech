@@ -1,18 +1,1 @@
-<p> In the previous challenge, you have implemented the route for the <strong style='color:blue'>Home Page</strong>. It was triggered when accessing the root address <strong style='color:blue'>/</strong>.
-</br>However, in many cases, we need to access a specific resource in our server. </br>Take a look at the current URL in your browser. We are accessing the path <strong style='color:blue'>/challenges/2</strong>.
-Our endpoint retrieves the ID number from the URL and uses it to access our database.
-This can be done statically or dynamically. </br>If we decided to statically define all endpoints, every new challenge would need a new endpoint (hard coding). </br>For example, if we decided to add challenge number 10, a new route would need to be added, mapping <strong style='color:blue'>/challenges/10</strong> to the related resource.
-</br>This can also be done dynamically by retrieving the ID from the URL as a variable and using it to access the information needed.
-</br>Remember the <strong style='color:blue'>request (req) </strong>? It contains all the information about the request that was sent to the server. One of the fields available is the <strong style='color:blue'>params</strong>. </br>It wraps all parameters added to the URL. In our example, we would like to call this parameter <strong style='color:blue'>id </strong> and retrieve it in our endpoint. </br>So, for this purpose we need to <strong style='color:blue'>create a new variable</strong> to store the information available, in this case, at <strong style='color:blue'>req.params.id </strong>.
-</br>Finally, we would like to display this information.
-</p><p>
-The general structure of this endpoint would be:
-
-</br>Eg.</p></strong><CodeBlock>app.get('route/:params', (req, res) => {
-  // create new variable to store the parameter from req.params
-  res.send(‘stores variable’);
-});<CodeBlock>
-
-</br>In this challenge you are required to implement a <strong style='color:blue'>GET</strong> method endpoint that retrieves the parameter <strong style='color:blue'>id </strong> from the URL and returns it to the client.
-</br>For example, when accessing the URL 
-</br>As usual, we have already started an express app and you are to use the <span style='color:blue'>app.get()</span> function.</p>
+Learn how to use the express app.get() method to extract parameters from the application endpoint.

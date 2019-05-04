@@ -1,12 +1,11 @@
-import React, { Component, CSSProperties } from 'react';
-import { Collapse, Row, Col, Container } from 'react-bootstrap';
-import { Image } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Row, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { validateUserEdit } from "../../../validation/userValidation";
+import { validateUser } from "../../../validation/userValidation";
 import { UserService } from '../../../services/UserService';
 import { Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { Loading } from '../loading/loading';
+
 interface UserDetails{
     f_name: string;
     id: number;
@@ -75,7 +74,7 @@ export class EditUserProfile extends Component<Props, State>{
             password: null,
             confirmPassword: null
         }
-        let validated = validateUserEdit(data)
+        let validated = validateUser(data)
         if (!!validated.error){
             
             let detail = validated.error.details[0]
