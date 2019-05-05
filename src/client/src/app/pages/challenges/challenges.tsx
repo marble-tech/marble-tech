@@ -10,6 +10,7 @@ import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackMod
 import { Loading } from '../../../lib/components/loading/loading';
 import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 import { CompilerError } from '../../../lib/components/compilerError/compilerError';
+import Editor from '../../../lib/components/monacoEditor/editor';
 
 interface challengesRoute {
     title: string;
@@ -95,6 +96,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _renderChallenge(){
+        console.log(this.state);
         let { title, level, challengeAns } = this.state;
         if (title){
             return <Content className="pt-5">
@@ -105,13 +107,18 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                         <Row><Col>{this._renderChallengeDescription()}</Col></Row>
                         <Form>
                             <Form.Group controlId="challengeAns">
-                            <Form.Label>Let's code:</Form.Label>
-                            <Form.Control 
-                                as="textarea" 
-                                onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
-                                rows={10} 
-                                onChange={this._onChange} 
-                                value={challengeAns} />
+                                <Form.Label>Let's code:</Form.Label>
+                                <Editor 
+                                    onChange={this._onChange}
+                                    value={challengeAns}
+                                />
+                                {/* <Form.Control 
+                                    as="textarea" 
+                                    onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
+                                    rows={10} 
+                                    onChange={this._onChange} 
+                                    value={challengeAns} 
+                                /> */}
                             </Form.Group>
                         </Form>
                         <a className="btn btn-primary text-white float-right" onClick={this._handleSubmit}><strong>POST</strong></a>
