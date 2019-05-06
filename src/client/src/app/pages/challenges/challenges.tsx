@@ -10,7 +10,6 @@ import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackMod
 import { Loading } from '../../../lib/components/loading/loading';
 import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 import { CompilerError } from '../../../lib/components/compilerError/compilerError';
-import Editor from '../../../lib/components/monacoEditor/editor';
 import MonacoEditor from 'react-monaco-editor';
 
 interface challengesRoute {
