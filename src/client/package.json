@@ -43,5 +43,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "monaco-editor-webpack-plugin": "^1.7.0"
+  }
 }

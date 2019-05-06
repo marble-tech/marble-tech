@@ -11,6 +11,7 @@ import { Loading } from '../../../lib/components/loading/loading';
 import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 import { CompilerError } from '../../../lib/components/compilerError/compilerError';
 import Editor from '../../../lib/components/monacoEditor/editor';
+import MonacoEditor from 'react-monaco-editor';
 
 interface challengesRoute {
     title: string;
@@ -46,7 +47,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     public constructor(props: ChallengesProps) {
         super(props);
         this.state = {
-            challengeAns:"",
+            challengeAns:"// Start coding here...",
             error: null,
             title: null,
             level: null,
@@ -70,8 +71,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         this._handleSubmit = this._handleSubmit.bind(this)
     }
 
-    private _onChange(e:any) {
-        this.setState({challengeAns:e.value, error:null })
+    private _onChange(newValue:any ,e:any) {
+        this.setState({challengeAns:newValue, error:null })
     }
     private _renderServerErrors() {
         if (this.state.error) {
@@ -95,7 +96,15 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             return <div></div>;
         }
     }
+    editorDidMount(editor:any, monaco: any) {
+        console.log('editorDidMount', editor);
+        editor.focus();
+    }
     private _renderChallenge(){
+        const options = {
+            selectOnLineNumbers: true,
+            minimap: {enabled: false}
+          };
         let { title, level, challengeAns } = this.state;
         if (title){
             return <Content className="pt-5">
@@ -107,11 +116,23 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                         <Form>
                             <Form.Group controlId="challengeAns">
                                 <Form.Label>Let's code:</Form.Label>
-                                    <Editor 
+                                    {/* <Editor 
                                         onChange={this._onChange}
                                         value={challengeAns}
+                                    /> */}
+                                    <div className="rounded-lg py-3 px-4 mb-4" style={{backgroundColor:"#1e1e1e"}}>
+                                        <MonacoEditor
+                                        width="100%"
+                                        height="300"
+                                        language="typescript"
+                                        theme="vs-dark"
+                                        value={challengeAns}
+                                        options={options}
+                                        onChange={this._onChange}
+                                        editorDidMount={this.editorDidMount}
                                     />
-                                
+                                    </div>
+
                                 {/* <Form.Control 
                                     as="textarea" 
                                     onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
@@ -192,7 +213,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
                     let {title, description, content, sampleAnswer, level, id, startingCode } = res;
-                    this.setState({title, description, content, sampleAnswer, level, challengeId: id, challengeAns: startingCode})
+                    this.setState({title, description, content, sampleAnswer, level, challengeId: id})
                 })
                 .catch((e:any)=>{
                     console.log(e)
@@ -218,9 +239,9 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     componentDidUpdate(nextProps:any, prevState:any) {
         if(this.props.match.params.id!==nextProps.match.params.id){
             // clear previews state 
-            this.setState({content: "", challengeAns:"", error:null})
+            this.setState({content: "", challengeAns:"// Start coding in here...", error:null})
+            console.log(this.state.challengeAns)
             this._loadChallengeData();
-            console.log(this.state.content, 'bla');
         }
     }
     public componentDidMount() {
