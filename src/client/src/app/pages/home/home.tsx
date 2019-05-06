@@ -54,7 +54,7 @@ export class Home extends React.Component {
                         <Col className="text-center">
                             <h2 >About us</h2>
                             <p className="lead text-center pt-2">
-                                Marble Tech is a project create by students for students to help, support and promote 
+                                Marble Tech is a project created by students for students to help, support and promote 
                                 the learning of server side technology such as NodeJS, ExpressJS and others all using Typescript. Marble is composed 
                                 of two main features: a tutorial of how to build a server and a sequence of practical 
                                 challenges for learners that are willing to improve their knowledge about the subject.
@@ -64,22 +64,22 @@ export class Home extends React.Component {
                     <Section>
                         <Col className="text-center">
                             <Image src="./images/fer.jpeg" width={171} height={180} roundedCircle className="mb-3" />
-                            <h3>Fernando Marinho</h3>
+                            <h3><a href="https://www.linkedin.com/in/fernandomarinhosilva/"  target="_blank">Fernando Marinho</a></h3>
                             <p>
-                              IT undergraduate at CCT College Dublin. I am passionated about helping others students 
-                              on the path of developing their IT skills. 
+                              Fullstack developer passionate about helping others students 
+                              on the path of developing their IT skills. IT undergraduate at CCT College Dublin
                             </p>
                         </Col>
                         <Col className="text-center">
                             <Image src="./images/gus.jpeg" width={171} height={180} roundedCircle className="mb-3" />
-                            <h3>Gustavo Lessa</h3>
+                            <h3><a href="https://www.linkedin.com/in/gustavolessa23/"  target="_blank">Gustavo Lessa</a></h3>
                             <p>
-                              IT undergraduate at CCT College Dublin.
+                              Software developer and problem solver, focused in java and backend technologies. IT undergraduate at CCT College Dublin.
                             </p>
                         </Col>
                         <Col className="text-center">
                             <Image src="./images/luc.jpeg" width={171} height={180} roundedCircle className="mb-3" />
-                            <h3>Lucival Nascimento</h3>
+                            <h3><a href="https://www.linkedin.com/in/lucival-nascimento/"  target="_blank">Lucival Nascimento</a></h3>
                             <p>
                               Full-stack developer dived in the world of FinTech Start-ups and never left.
                               IT undergraduate at CCT College Dublin.
@@ -87,7 +87,7 @@ export class Home extends React.Component {
                         </Col>
                         <Col className="text-center">
                             <Image src="./images/rafa.jpeg" width={171} height={180} roundedCircle className="mb-3" />
-                            <h3>Rafael Barros</h3>
+                            <h3><a href="https://www.linkedin.com/in/rbsrafa/"  target="_blank">Rafael Barros</a></h3>
                             <p>
                               Software development enthusiastic and author of <a target="_blank" href='https://rbsprogramming.com'>
                               rbsprogramming.com</a> tutorials blog. IT undergraduate at CCT College Dublin.

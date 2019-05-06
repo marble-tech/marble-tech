@@ -26,7 +26,9 @@ export default class Editor extends Component<Props, State> {
 
   onChange(newValue:any, e:any) {
     console.log('onChange', newValue, e);
-    //this.props.onChange(e);
+    this.setState({code:newValue});
+    e.value = this.state.code;
+    this.props.onChange(e);
   }
 
   render() {
@@ -37,16 +39,19 @@ export default class Editor extends Component<Props, State> {
       minimap: {enabled: false}
     };
     return (
-      <MonacoEditor
+      <div className="rounded-lg py-3 px-4 mb-4" style={{backgroundColor:"#1e1e1e"}}>
+        <MonacoEditor
         width="100%"
         height="300"
-        language="javascript"
+        language="typescript"
         theme="vs-dark"
         value={code}
         options={options}
-        onChange={this.onChange}
+        onChange={this.onChange.bind(this)}
         editorDidMount={this.editorDidMount}
       />
+      </div>
+      
     );
   }
 

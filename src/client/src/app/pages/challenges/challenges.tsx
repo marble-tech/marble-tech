@@ -71,7 +71,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     }
 
     private _onChange(e:any) {
-        this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
+        this.setState({challengeAns:e.value, error:null })
     }
     private _renderServerErrors() {
         if (this.state.error) {
@@ -96,7 +96,6 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         }
     }
     private _renderChallenge(){
-        console.log(this.state);
         let { title, level, challengeAns } = this.state;
         if (title){
             return <Content className="pt-5">
@@ -108,10 +107,11 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                         <Form>
                             <Form.Group controlId="challengeAns">
                                 <Form.Label>Let's code:</Form.Label>
-                                <Editor 
-                                    onChange={this._onChange}
-                                    value={challengeAns}
-                                />
+                                    <Editor 
+                                        onChange={this._onChange}
+                                        value={challengeAns}
+                                    />
+                                
                                 {/* <Form.Control 
                                     as="textarea" 
                                     onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
@@ -191,8 +191,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         (async () => {
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
-                    let {title, description, content, sampleAnswer, level, id } = res;
-                    this.setState({title, description, content, sampleAnswer, level, challengeId: id  })
+                    let {title, description, content, sampleAnswer, level, id, startingCode } = res;
+                    this.setState({title, description, content, sampleAnswer, level, challengeId: id, challengeAns: startingCode})
                 })
                 .catch((e:any)=>{
                     console.log(e)
