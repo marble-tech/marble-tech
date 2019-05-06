@@ -10,7 +10,6 @@ import { FeedbackModal } from '../../../lib/components/feedbackModal/feedbackMod
 import { Loading } from '../../../lib/components/loading/loading';
 import { CodeBlock } from '../../../lib/components/codeBlock/codeBlock';
 import { CompilerError } from '../../../lib/components/compilerError/compilerError';
-import Editor from '../../../lib/components/monacoEditor/editor';
 
 interface challengesRoute {
     title: string;
@@ -71,7 +70,7 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
     }
 
     private _onChange(e:any) {
-        this.setState({challengeAns:e.value, error:null })
+        this.setState({ ...this.state, [e.target.id]:e.target.value, error:null })
     }
     private _renderServerErrors() {
         if (this.state.error) {
@@ -106,19 +105,13 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
                         <Row><Col>{this._renderChallengeDescription()}</Col></Row>
                         <Form>
                             <Form.Group controlId="challengeAns">
-                                <Form.Label>Let's code:</Form.Label>
-                                    <Editor 
-                                        onChange={this._onChange}
-                                        value={challengeAns}
-                                    />
-                                
-                                {/* <Form.Control 
-                                    as="textarea" 
-                                    onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
-                                    rows={10} 
-                                    onChange={this._onChange} 
-                                    value={challengeAns} 
-                                /> */}
+                            <Form.Label>Let's code:</Form.Label>
+                            <Form.Control 
+                                as="textarea" 
+                                onKeyDown={(e:any)=>e.keyCode==9?e.preventDefault():""}
+                                rows={10} 
+                                onChange={this._onChange} 
+                                value={challengeAns} />
                             </Form.Group>
                         </Form>
                         <a className="btn btn-primary text-white float-right" onClick={this._handleSubmit}><strong>POST</strong></a>
@@ -191,8 +184,8 @@ export class Challenges extends React.Component<ChallengesProps,ChallengesState>
         (async () => {
             await challService.get(this.props.match.params.id)
                 .then((res:any)=> {
-                    let {title, description, content, sampleAnswer, level, id, startingCode } = res;
-                    this.setState({title, description, content, sampleAnswer, level, challengeId: id, challengeAns: startingCode})
+                    let {title, description, content, sampleAnswer, level, id } = res;
+                    this.setState({title, description, content, sampleAnswer, level, challengeId: id  })
                 })
                 .catch((e:any)=>{
                     console.log(e)
