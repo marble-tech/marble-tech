@@ -49,8 +49,8 @@ export class EditUserProfile extends Component<Props, State>{
             email: email,
             f_name: f_name,
             l_name: l_name,
-            password: password,
-            confirmPassword: password,
+            password: '',
+            confirmPassword: '',
             validated: true,
             err_form: null,
             err: {
