@@ -150,7 +150,10 @@ export class UserController {
             const user = await userService.findById(id); // retrieve user using the ID
             if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
 
-            user.password = await bcrypt.hash(user.password, 10);
+            if(values.password){
+                values.password = await bcrypt.hash(values.password, 10);
+            }
+
             const savedUser = await userService.update(user as User, values); // call service function to update user
 
             // if it was successfull, display message and the user info
