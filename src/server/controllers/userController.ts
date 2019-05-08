@@ -11,6 +11,7 @@ import * as path from 'path'
 import { convertToDataUrl } from '../handlers/convertToDataUrl';
 import { ChallengeStatus } from '../entities/Challenge';
 import { UserDashboardChallengeEntry } from '../entities/UserChallenge';
+import * as bcrypt from 'bcrypt';
 
 const userService = new UserService(); // service related to user information
 const profileImageService = new ProfileImageService(); // service related to profile image
@@ -37,7 +38,9 @@ export class UserController {
                 return res.status(400).json({ Error: "User details invalid. Please check your fields." });
              } // ir invalid, return 400 with message
 
-            // save user to the DB
+            newUser.password = await bcrypt.hash(newUser.password, 10);
+
+            // save user to the DBa
             const user = await userService.create(newUser)
                 .catch(error => { //catch any error
                     console.log(error);
