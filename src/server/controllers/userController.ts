@@ -1,4 +1,3 @@
-import { uploader } from './../middlewares/fileUploader';
 import { ProfileImage } from './../entities/ProfileImage';
 import * as express from "express";
 import { User, RankEntry } from "../entities/User";
@@ -6,8 +5,6 @@ import { UserService } from "../services/userService";
 import { validateUser } from "../validation/userValidation";
 import { ProfileImageService } from '../services/profileImageService';
 import { testFileRemover } from '../handlers/testFileRemover';
-import * as fs from 'fs';
-import * as path from 'path'
 import { convertToDataUrl } from '../handlers/convertToDataUrl';
 import { ChallengeStatus } from '../entities/Challenge';
 import { UserDashboardChallengeEntry } from '../entities/UserChallenge';
@@ -153,6 +150,7 @@ export class UserController {
             const user = await userService.findById(id); // retrieve user using the ID
             if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
 
+            user.password = await bcrypt.hash(user.password, 10);
             const savedUser = await userService.update(user as User, values); // call service function to update user
 
             // if it was successfull, display message and the user info
