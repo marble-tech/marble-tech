@@ -8,7 +8,7 @@ import * as joi from 'joi';
 export function validateUser(user: User) {
   const schema = joi.object({
     email: joi.string().email().required(),
-    password: joi.string().min(6).max(12).required(),
+    password: joi.string().min(6).required(),
     f_name: joi.string().min(3).required(),
     l_name: joi.string().min(3).required(),
     username: joi.string().alphanum().min(6).max(11).required()
@@ -26,7 +26,7 @@ export function validateUser(user: User) {
 export function validateLogin(data: any) {
   const schema = joi.object({
     email: joi.string().email().required(),
-    password: joi.string().min(6).max(12).required(),
+    password: joi.string().min(6).required(),
   }).options({ stripUnknown: true });
 
   return joi.validate(data, schema);

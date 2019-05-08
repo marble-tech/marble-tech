@@ -45,7 +45,7 @@ export class UserService {
    * Returns its profile image
    * @param id 
    */
-  public findById(id: number) {
+  public findById(id: any) {
     return getUserRepository().findOne(id, { relations: ['profileImage'] });
   }
 

@@ -24,7 +24,7 @@ export class AuthController {
         const AUTH_SECRET = process.env.AUTH_SECRET; // get salt from environment
         const userDetails = req.body; // get user details from body
         const result = await validateLogin(userDetails); // validate details against schema
-        console.log(userDetails);
+        //console.log(userDetails);
         // if it's not valid
         if (result.error) return res.status(400).json({ Error: "User details invalid. Please check fields." });
 

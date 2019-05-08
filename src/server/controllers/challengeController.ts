@@ -171,6 +171,7 @@ export class ChallengeController {
 
       // get logged user, to save to DB.
       const loggedUser = await userService.findById((req as any).userId);
+
       if (!loggedUser) return res.status(404).json({ Error: "User not found." }) // return error if not found
 
       // get challenge info, to save to DB
@@ -190,7 +191,7 @@ export class ChallengeController {
     } catch (error) {
       // remove test files
       testFileRemover([(req as any).appFilePath, (req as any).testFilePath]);
-
+      console.log('*******************', error);
       // retrieve error info as string[] and filter result to clear error messages.
       let errors = error.diagnosticText.split('\n') as Array<string>;
       errors = errors.filter(e => e !== '');

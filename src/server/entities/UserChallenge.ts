@@ -10,11 +10,11 @@ import { User } from "./User";
 export class UserChallenge {
 
   @ManyToOne(type => User, user => user.challenges)
-  @PrimaryColumn({nullable: false, type: 'int'})
+  //@PrimaryColumn({nullable: false, type: 'int', transformer: })
   public user!: User;
 
   @ManyToOne(type => Challenge, challenge => challenge.attempts)
-  @PrimaryColumn({nullable: false, type: 'int'})
+  //@PrimaryColumn({nullable: false, type: 'int'})
   public challenge!: Challenge;
 
   @PrimaryColumn({nullable: false, name: 'date', type: 'timestamp'})
