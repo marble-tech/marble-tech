@@ -1,16 +1,14 @@
-import { uploader } from './../middlewares/fileUploader';
 import { ProfileImage } from './../entities/ProfileImage';
 import * as express from "express";
 import { User, RankEntry } from "../entities/User";
 import { UserService } from "../services/userService";
-import { validateUser } from "../validation/userValidation";
+import { validateUser, validateUserUpdate } from "../validation/userValidation";
 import { ProfileImageService } from '../services/profileImageService';
 import { testFileRemover } from '../handlers/testFileRemover';
-import * as fs from 'fs';
-import * as path from 'path'
 import { convertToDataUrl } from '../handlers/convertToDataUrl';
 import { ChallengeStatus } from '../entities/Challenge';
 import { UserDashboardChallengeEntry } from '../entities/UserChallenge';
+import * as bcrypt from 'bcrypt';
 
 const userService = new UserService(); // service related to user information
 const profileImageService = new ProfileImageService(); // service related to profile image
@@ -31,13 +29,15 @@ export class UserController {
         try {
             const newUser = req.body; // get information from body
             const result = validateUser(newUser); // validate against schema
-            console.log(result);
+ 
             // check if validation returned error, returning 400 and displaying message if so.
             if (result.error) {
                 return res.status(400).json({ Error: "User details invalid. Please check your fields." });
              } // ir invalid, return 400 with message
 
-            // save user to the DB
+            newUser.password = await bcrypt.hash(newUser.password, 10);
+
+            // save user to the DBa
             const user = await userService.create(newUser)
                 .catch(error => { //catch any error
                     console.log(error);
@@ -141,14 +141,25 @@ export class UserController {
             // add validation
             const values = req.body; // retrieve information to update from body
 
+            const result = validateUserUpdate(values); // validate against schema
+ 
+            // check if validation returned error, returning 400 and displaying message if so.
+            if (result.error) {
+                return res.status(400).json({ Error: "Invalid details, please check your inputs and password." });
+             }
+
             const id = req.params.id; // retrieve user ID from params
             const loggedId = (req as any).userId; // retrieve logged user ID from token
 
             // check if user can perform this operation, by comparing the retrieved IDs.
             if (loggedId != id) return res.status(403).json({ Error: "You are not allowed to update this user!" });
-
+            
             const user = await userService.findById(id); // retrieve user using the ID
             if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
+
+            if(values.password){
+                values.password = await bcrypt.hash(values.password, 10);
+            }
 
             const savedUser = await userService.update(user as User, values); // call service function to update user
 

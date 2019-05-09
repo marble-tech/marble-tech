@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { validateLogin } from "../validation/userValidation"
 import { AuthService } from "../services/authService";
 import { UserService } from "../services/userService";
+import * as bcrypt from 'bcrypt';
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -23,24 +24,30 @@ export class AuthController {
         const AUTH_SECRET = process.env.AUTH_SECRET; // get salt from environment
         const userDetails = req.body; // get user details from body
         const result = await validateLogin(userDetails); // validate details against schema
-
+        //console.log(userDetails);
         // if it's not valid
         if (result.error) return res.status(400).json({ Error: "User details invalid. Please check fields." });
 
-        // try to get user using the provided details
-        const match = await userService.findById(userDetails as any);
+        const user = await userService.findById({email: userDetails.email} as any);
 
-        // if there's no match, return error
-        if (match === undefined) return res.status(404).json({ Error: "Authentication failed!" });
+        if(!user) return res.status(404).json({Error: 'User not found'});
 
-        // if salt is not defined, return error
-        if (AUTH_SECRET === undefined) return res.status(500).json({ Error: "Authentication couldn't be completed. Please check the authentication salt." });
+        const hashed = await bcrypt.compare(userDetails.password, user.password);
+        if(hashed){
 
-        // Sign the information using salt
-        const token = jwt.sign({ id: match.id }, AUTH_SECRET); // validate to generate token
+            // if salt is not defined, return error
+            if (AUTH_SECRET === undefined) return res.status(500).json({ Error: "Authentication couldn't be completed. Please check the authentication salt." });
 
-        // return status 200 and the token
-        return res.status(200).json({ 'Result': `User [ID = ${match.id}] logged successfully!`, token: token, user: match });
+            // Sign the information using salt
+            const token = jwt.sign({ id: user.id }, AUTH_SECRET); // validate to generate token
+
+            // return status 200 and the token
+            return res.status(200).json({ 'Result': `User [ID = ${user.id}] logged successfully!`, token: token, user: user });
+
+        }else{
+            return res.status(400).json({Error: 'Authentication failed'});
+        }
+
     }
 
     /**
