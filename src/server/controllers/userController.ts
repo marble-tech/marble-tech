@@ -2,7 +2,7 @@ import { ProfileImage } from './../entities/ProfileImage';
 import * as express from "express";
 import { User, RankEntry } from "../entities/User";
 import { UserService } from "../services/userService";
-import { validateUser } from "../validation/userValidation";
+import { validateUser, validateUserUpdate } from "../validation/userValidation";
 import { ProfileImageService } from '../services/profileImageService';
 import { testFileRemover } from '../handlers/testFileRemover';
 import { convertToDataUrl } from '../handlers/convertToDataUrl';
@@ -141,7 +141,7 @@ export class UserController {
             // add validation
             const values = req.body; // retrieve information to update from body
 
-            const result = validateUser(values); // validate against schema
+            const result = validateUserUpdate(values); // validate against schema
  
             // check if validation returned error, returning 400 and displaying message if so.
             if (result.error) {
