@@ -20,7 +20,7 @@ export function validateUser(user: User) {
 }
 
 /**
- * Validates user creation
+ * Validates user update
  * @param user 
  */
 export function validateUserUpdate(user: User) {
