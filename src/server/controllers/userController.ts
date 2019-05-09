@@ -29,7 +29,7 @@ export class UserController {
         try {
             const newUser = req.body; // get information from body
             const result = validateUser(newUser); // validate against schema
-            console.log(result);
+ 
             // check if validation returned error, returning 400 and displaying message if so.
             if (result.error) {
                 return res.status(400).json({ Error: "User details invalid. Please check your fields." });
@@ -141,12 +141,19 @@ export class UserController {
             // add validation
             const values = req.body; // retrieve information to update from body
 
+            const result = validateUser(values); // validate against schema
+ 
+            // check if validation returned error, returning 400 and displaying message if so.
+            if (result.error) {
+                return res.status(400).json({ Error: "Invalid details, please check your inputs and password." });
+             }
+
             const id = req.params.id; // retrieve user ID from params
             const loggedId = (req as any).userId; // retrieve logged user ID from token
 
             // check if user can perform this operation, by comparing the retrieved IDs.
             if (loggedId != id) return res.status(403).json({ Error: "You are not allowed to update this user!" });
-
+            
             const user = await userService.findById(id); // retrieve user using the ID
             if (!user) return res.status(404).json({ Error: "User not found." }) // return error if not found
 

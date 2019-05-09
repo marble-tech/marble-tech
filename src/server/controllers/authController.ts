@@ -29,12 +29,11 @@ export class AuthController {
         if (result.error) return res.status(400).json({ Error: "User details invalid. Please check fields." });
 
         const user = await userService.findById({email: userDetails.email} as any);
-        console.log('User', user);
+
         if(!user) return res.status(404).json({Error: 'User not found'});
 
         const hashed = await bcrypt.compare(userDetails.password, user.password);
         if(hashed){
-            console.log('Hashed', hashed);
 
             // if salt is not defined, return error
             if (AUTH_SECRET === undefined) return res.status(500).json({ Error: "Authentication couldn't be completed. Please check the authentication salt." });
