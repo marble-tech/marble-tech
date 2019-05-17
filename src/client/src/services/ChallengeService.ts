@@ -6,7 +6,7 @@ const api  = new ApiService;
 export class ChallengeService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || process.env.REACT_APP_API + '/challenges'
+        this.domain = domain || '/api/v1/challenges'
     }
 
     public getAll(){

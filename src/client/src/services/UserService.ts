@@ -6,7 +6,7 @@ const api  = new ApiService;
 export class UserService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || process.env.REACT_APP_API + '/users'
+        this.domain = domain || '/api/v1/users'
     }
 
     public getAll(){

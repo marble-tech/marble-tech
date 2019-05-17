@@ -7,7 +7,7 @@ const api = new ApiService;
 export class AuthService {
     domain:string
     constructor(domain?:string){
-        this.domain = domain || process.env.REACT_APP_API + '/auth'
+        this.domain = domain || '/api/v1/auth';
     }
 
     public login(username:any, password:any){
