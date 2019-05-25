@@ -66,7 +66,7 @@ export class Home extends React.Component {
                             <Image src="./images/fer.jpeg" width={171} height={180} roundedCircle className="mb-3" />
                             <h3><a href="https://www.linkedin.com/in/fernandomarinhosilva/"  target="_blank">Fernando Marinho</a></h3>
                             <p>
-                              IT undergraduate at CCT College Dublin. I am passionate about helping others students 
+                              IT undergraduate at CCT College Dublin. I am passionate about helping other students 
                               on the path of developing their IT skills. 
                             </p>
                         </Col>
