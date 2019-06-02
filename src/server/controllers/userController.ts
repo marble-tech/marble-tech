@@ -8,7 +8,7 @@ import { testFileRemover } from '../handlers/testFileRemover';
 import { convertToDataUrl } from '../handlers/convertToDataUrl';
 import { ChallengeStatus } from '../entities/Challenge';
 import { UserDashboardChallengeEntry } from '../entities/UserChallenge';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const userService = new UserService(); // service related to user information
 const profileImageService = new ProfileImageService(); // service related to profile image
@@ -29,14 +29,14 @@ export class UserController {
         try {
             const newUser = req.body; // get information from body
             const result = validateUser(newUser); // validate against schema
- 
+            
             // check if validation returned error, returning 400 and displaying message if so.
             if (result.error) {
                 return res.status(400).json({ Error: "User details invalid. Please check your fields." });
-             } // ir invalid, return 400 with message
-
+            } // ir invalid, return 400 with message
+             
             newUser.password = await bcrypt.hash(newUser.password, 10);
-
+            
             // save user to the DBa
             const user = await userService.create(newUser)
                 .catch(error => { //catch any error

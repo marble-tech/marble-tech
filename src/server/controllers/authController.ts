@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { validateLogin } from "../validation/userValidation"
 import { AuthService } from "../services/authService";
 import { UserService } from "../services/userService";
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const authService = new AuthService();
 const userService = new UserService();

@@ -29,9 +29,9 @@ export async function createDbConnection() {
       UserChallenge,
       ProfileImage
     ],
-    extra: {
-      ssl: true
-    },
+    // extra: {
+    //   ssl: true
+    // },
     synchronize: true
   });
 
