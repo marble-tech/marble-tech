@@ -1,4 +1,6 @@
-# MARBLE 
+![alt text](https://github.com/ferdoms/marble-tech/blob/readme/src/client/public/images/logo1.png "Logo Title Text 2")
+
+# MARBLE  
 
 **A web app for students to improve their programming skills through challenging exercises**
 
